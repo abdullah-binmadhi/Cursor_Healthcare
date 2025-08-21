@@ -1,0 +1,265 @@
+# Healthcare Data Pipeline Configuration
+# This file contains configuration settings for the healthcare ETL pipeline
+
+# Pipeline Configuration
+pipeline:
+  name: "Healthcare Analytics Pipeline"
+  version: "1.0.0"
+  description: "ETL pipeline for healthcare data processing and analytics"
+
+# Data Source Configuration
+source:
+  type: "csv"  # csv, api, database, s3
+  path: "healthcare_dataset.csv"
+  encoding: "utf-8"
+  delimiter: ","
+  
+  # API Configuration (for future use)
+  api:
+    base_url: "https://api.healthcare.com"
+    endpoint: "/patients"
+    headers:
+      Authorization: "Bearer ${API_TOKEN}"
+    timeout: 30
+    
+  # Database Source Configuration (for future use)
+  database:
+    type: "postgresql"
+    host: "localhost"
+    port: 5432
+    database: "source_healthcare"
+    username: "${DB_USER}"
+    password: "${DB_PASSWORD}"
+
+# Target Database Configuration
+target:
+  database: "sqlite"  # sqlite, postgresql, mysql
+  connection: "healthcare_analytics.db"
+  
+  # PostgreSQL Configuration
+  postgresql:
+    host: "localhost"
+    port: 5432
+    database: "healthcare_analytics"
+    username: "${DB_USER}"
+    password: "${DB_PASSWORD}"
+    schema: "public"
+    
+  # MySQL Configuration
+  mysql:
+    host: "localhost"
+    port: 3306
+    database: "healthcare_analytics"
+    username: "${DB_USER}"
+    password: "${DB_PASSWORD}"
+
+# Processing Configuration
+processing:
+  batch_size: 1000
+  max_workers: 4
+  timeout: 300  # seconds
+  
+  # Data Validation
+  validation:
+    enabled: true
+    strict_mode: false
+    max_errors: 1000
+    allow_duplicates: true
+    
+    # Validation Rules
+    rules:
+      patient:
+        required_columns: ["Name", "Age", "Gender", "Insurance Provider"]
+        age_range: [0, 120]
+        valid_genders: ["Male", "Female", "M", "F"]
+        
+      admission:
+        required_columns: ["Date of Admission", "Discharge Date", "Admission Type"]
+        valid_types: ["Emergency", "Elective", "Urgent", "Transfer"]
+        max_length_of_stay: 365
+        
+      financial:
+        required_columns: ["Billing Amount"]
+        min_amount: 0
+        max_amount: 1000000
+
+# Data Transformation
+transformation:
+  # Patient Data Cleaning
+  patient:
+    name_standardization: true
+    gender_standardization: true
+    age_validation: true
+    duplicate_removal: true
+    
+  # Admission Data Cleaning
+  admission:
+    date_standardization: true
+    length_of_stay_calculation: true
+    type_standardization: true
+    
+  # Financial Data Cleaning
+  financial:
+    outlier_removal: true
+    amount_standardization: true
+    currency_conversion: false
+
+# Monitoring and Logging
+monitoring:
+  enabled: true
+  log_level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  log_file: "healthcare_pipeline.log"
+  metrics_file: "pipeline_metrics.json"
+  
+  # Performance Monitoring
+  performance:
+    track_processing_time: true
+    track_memory_usage: true
+    track_database_performance: true
+    
+  # Alerting
+  alerts:
+    enabled: true
+    email:
+      smtp_server: "smtp.gmail.com"
+      smtp_port: 587
+      username: "${EMAIL_USER}"
+      password: "${EMAIL_PASSWORD}"
+      recipients: ["admin@healthcare.com"]
+    
+    # Alert Conditions
+    conditions:
+      processing_time_threshold: 300  # seconds
+      error_rate_threshold: 5.0  # percentage
+      data_quality_threshold: 95.0  # percentage
+
+# Backup Configuration
+backup:
+  enabled: true
+  directory: "backups"
+  retention_days: 30
+  compression: true
+  
+  # Backup Schedule
+  schedule:
+    frequency: "daily"  # daily, weekly, monthly
+    time: "02:00"  # 24-hour format
+    
+  # Backup Types
+  types:
+    database: true
+    logs: true
+    metrics: true
+
+# Scheduling Configuration
+scheduling:
+  enabled: true
+  interval: "daily"  # hourly, daily, weekly, monthly
+  start_time: "01:00"
+  timezone: "UTC"
+  
+  # Schedule Options
+  options:
+    retry_on_failure: true
+    max_retries: 3
+    retry_delay: 300  # seconds
+    parallel_execution: false
+
+# Security Configuration
+security:
+  # Data Encryption
+  encryption:
+    enabled: false
+    algorithm: "AES-256"
+    key_file: "encryption.key"
+    
+  # Access Control
+  access_control:
+    enabled: false
+    users:
+      - username: "admin"
+        role: "admin"
+        permissions: ["read", "write", "delete"]
+      - username: "analyst"
+        role: "analyst"
+        permissions: ["read"]
+
+# Environment-Specific Configurations
+environments:
+  development:
+    target:
+      database: "sqlite"
+      connection: "healthcare_dev.db"
+    monitoring:
+      log_level: "DEBUG"
+    backup:
+      enabled: false
+      
+  staging:
+    target:
+      database: "postgresql"
+      postgresql:
+        host: "staging-db.healthcare.com"
+        database: "healthcare_staging"
+    monitoring:
+      log_level: "INFO"
+    backup:
+      enabled: true
+      retention_days: 7
+      
+  production:
+    target:
+      database: "postgresql"
+      postgresql:
+        host: "prod-db.healthcare.com"
+        database: "healthcare_production"
+    monitoring:
+      log_level: "WARNING"
+      alerts:
+        enabled: true
+    backup:
+      enabled: true
+      retention_days: 90
+    security:
+      encryption:
+        enabled: true
+
+# Custom Transformations
+custom_transformations:
+  # Add custom data transformation functions
+  functions:
+    - name: "standardize_insurance_codes"
+      description: "Standardize insurance provider codes"
+      enabled: true
+      
+    - name: "calculate_risk_scores"
+      description: "Calculate patient risk scores"
+      enabled: false
+      
+    - name: "anonymize_patient_data"
+      description: "Anonymize sensitive patient information"
+      enabled: false
+
+# Data Quality Rules
+data_quality:
+  # Completeness Rules
+  completeness:
+    required_fields: ["Name", "Age", "Gender", "Date of Admission"]
+    threshold: 95.0
+    
+  # Accuracy Rules
+  accuracy:
+    age_range: [0, 120]
+    date_format: "YYYY-MM-DD"
+    amount_format: "decimal"
+    
+  # Consistency Rules
+  consistency:
+    gender_values: ["M", "F"]
+    admission_types: ["Emergency", "Elective", "Urgent", "Transfer"]
+    discharge_statuses: ["Home", "Transfer", "AMA", "Expired", "SNF"]
+    
+  # Timeliness Rules
+  timeliness:
+    max_data_age_days: 7
+    processing_delay_threshold: 24  # hours

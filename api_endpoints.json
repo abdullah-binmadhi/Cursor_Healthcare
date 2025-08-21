@@ -1,0 +1,64 @@
+{
+  "patients": {
+    "endpoint": "/api/patients",
+    "method": "GET",
+    "description": "Get patient information",
+    "sample_response": {
+      "patient_id": "P001",
+      "first_name": "John",
+      "last_name": "Doe",
+      "age": 45,
+      "gender": "M",
+      "insurance_type": "Blue Cross Blue Shield"
+    }
+  },
+  "admissions": {
+    "endpoint": "/api/admissions",
+    "method": "GET",
+    "description": "Get admission information",
+    "sample_response": {
+      "admission_id": "A001",
+      "patient_name": "John Doe",
+      "admission_date": "2024-01-15",
+      "discharge_date": "2024-01-18",
+      "admission_type": "Emergency",
+      "department": "Emergency Medicine"
+    }
+  },
+  "metrics": {
+    "endpoint": "/api/metrics",
+    "method": "GET",
+    "description": "Get key performance metrics",
+    "sample_response": {
+      "patient_count": 9378,
+      "admission_count": 10000,
+      "total_revenue": 15000000,
+      "avg_length_of_stay": 4.2
+    }
+  },
+  "analytics": {
+    "endpoint": "/api/analytics",
+    "method": "GET",
+    "description": "Get analytics data",
+    "sample_response": {
+      "monthly_admissions": [
+        120,
+        135,
+        142,
+        128,
+        156,
+        143
+      ],
+      "top_diagnoses": [
+        "Hypertension",
+        "Diabetes",
+        "Pneumonia"
+      ],
+      "department_performance": {
+        "Emergency Medicine": 2500,
+        "Cardiology": 1800,
+        "Orthopedics": 1200
+      }
+    }
+  }
+}

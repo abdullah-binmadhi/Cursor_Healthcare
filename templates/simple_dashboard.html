@@ -1,0 +1,190 @@
+
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Healthcare Analytics{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1><i class="fas fa-tachometer-alt"></i> Healthcare Analytics Dashboard</h1>
+        <p class="text-muted">Real-time analytics from healthcare data</p>
+    </div>
+</div>
+
+<!-- Key Metrics -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card metric-card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title text-muted">Total Patients</h6>
+                        <h3 class="mb-0">{{ "{:,}".format(main_metrics.total_patients) }}</h3>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-users fa-2x text-primary"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card metric-card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title text-muted">Total Revenue</h6>
+                        <h3 class="mb-0">${{ "{:,.0f}".format(main_metrics.total_revenue) }}</h3>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-dollar-sign fa-2x text-success"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card metric-card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title text-muted">Avg. Age</h6>
+                        <h3 class="mb-0">{{ main_metrics.avg_age }} years</h3>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-user fa-2x text-warning"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card metric-card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title text-muted">Avg. Billing</h6>
+                        <h3 class="mb-0">${{ "{:,.0f}".format(main_metrics.avg_billing) }}</h3>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-chart-line fa-2x text-info"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Charts Row -->
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="fas fa-chart-pie"></i> Gender Distribution</h5>
+            </div>
+            <div class="card-body">
+                <div class="chart-container">
+                    <canvas id="genderChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="fas fa-chart-bar"></i> Department Distribution</h5>
+            </div>
+            <div class="card-body">
+                <div class="chart-container">
+                    <canvas id="departmentChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Admissions -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="fas fa-clock"></i> Recent Admissions</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Patient Name</th>
+                                <th>Age</th>
+                                <th>Gender</th>
+                                <th>Medical Condition</th>
+                                <th>Admission Date</th>
+                                <th>Billing Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for admission in recent_admissions %}
+                            <tr>
+                                <td>{{ admission['Name'] }}</td>
+                                <td>{{ admission['Age'] }}</td>
+                                <td>{{ admission['Gender'] }}</td>
+                                <td>{{ admission['Medical Condition'] }}</td>
+                                <td>{{ admission['Date of Admission'] }}</td>
+                                <td>${{ "{:,.0f}".format(admission['Billing Amount']) }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Gender Distribution Chart
+const genderData = {{ main_metrics.gender_distribution | tojson }};
+const genderCtx = document.getElementById('genderChart').getContext('2d');
+new Chart(genderCtx, {
+    type: 'pie',
+    data: {
+        labels: Object.keys(genderData),
+        datasets: [{
+            data: Object.values(genderData),
+            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0']
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false
+    }
+});
+
+// Department Distribution Chart
+const deptData = {{ enriched_metrics.departments | tojson }};
+const deptCtx = document.getElementById('departmentChart').getContext('2d');
+new Chart(deptCtx, {
+    type: 'bar',
+    data: {
+        labels: Object.keys(deptData),
+        datasets: [{
+            label: 'Admissions',
+            data: Object.values(deptData),
+            backgroundColor: '#36A2EB'
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>
+{% endblock %}

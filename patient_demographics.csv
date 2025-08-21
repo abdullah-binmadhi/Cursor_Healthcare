@@ -1,0 +1,193 @@
+age_group,gender,insurance_type,patient_count,avg_length_of_stay,avg_cost,readmission_rate
+0-17,M,Blue Cross Blue Shield,185,2.3,6693,0.177
+0-17,M,Aetna,102,3.8,6403,0.126
+0-17,M,Cigna,80,4.4,8905,0.195
+0-17,M,UnitedHealthcare,167,3.5,4109,0.136
+0-17,M,Humana,165,6.2,3375,0.141
+0-17,M,Kaiser Permanente,135,3.4,11945,0.193
+0-17,M,Anthem,213,3.1,5174,0.106
+0-17,M,Medicare,71,4.2,10252,0.112
+0-17,M,Medicaid,106,4.2,5080,0.143
+0-17,M,Tricare,163,6.5,9841,0.162
+0-17,M,Health Net,228,6.3,10469,0.246
+0-17,M,Molina Healthcare,98,6.0,11752,0.2
+0-17,F,Blue Cross Blue Shield,208,2.9,7011,0.16
+0-17,F,Aetna,167,5.8,4753,0.144
+0-17,F,Cigna,198,7.5,9353,0.133
+0-17,F,UnitedHealthcare,295,2.8,11523,0.189
+0-17,F,Humana,172,5.7,8525,0.225
+0-17,F,Kaiser Permanente,155,7.2,4547,0.22
+0-17,F,Anthem,244,2.9,5600,0.234
+0-17,F,Medicare,134,3.7,3598,0.206
+0-17,F,Medicaid,169,3.1,6527,0.228
+0-17,F,Tricare,84,2.6,6224,0.126
+0-17,F,Health Net,135,7.1,5106,0.192
+0-17,F,Molina Healthcare,255,2.3,5048,0.227
+18-29,M,Blue Cross Blue Shield,121,4.6,9928,0.134
+18-29,M,Aetna,239,7.4,4108,0.153
+18-29,M,Cigna,227,7.1,6411,0.177
+18-29,M,UnitedHealthcare,290,4.6,5649,0.242
+18-29,M,Humana,223,7.1,11675,0.143
+18-29,M,Kaiser Permanente,118,6.3,8614,0.107
+18-29,M,Anthem,73,3.6,11305,0.234
+18-29,M,Medicare,139,4.2,5616,0.23
+18-29,M,Medicaid,70,4.2,5200,0.144
+18-29,M,Tricare,115,3.7,9921,0.129
+18-29,M,Health Net,151,2.9,6282,0.109
+18-29,M,Molina Healthcare,148,4.4,10465,0.106
+18-29,F,Blue Cross Blue Shield,235,7.0,3707,0.189
+18-29,F,Aetna,280,4.5,3729,0.129
+18-29,F,Cigna,236,5.1,6785,0.225
+18-29,F,UnitedHealthcare,72,4.3,11523,0.169
+18-29,F,Humana,51,3.8,6787,0.185
+18-29,F,Kaiser Permanente,193,2.0,9159,0.205
+18-29,F,Anthem,269,4.2,6787,0.225
+18-29,F,Medicare,74,3.3,5541,0.214
+18-29,F,Medicaid,257,5.5,5597,0.191
+18-29,F,Tricare,218,3.1,11481,0.2
+18-29,F,Health Net,179,3.7,10365,0.109
+18-29,F,Molina Healthcare,186,2.4,7572,0.219
+30-39,M,Blue Cross Blue Shield,259,7.3,9441,0.223
+30-39,M,Aetna,171,4.9,8219,0.217
+30-39,M,Cigna,264,4.4,4012,0.214
+30-39,M,UnitedHealthcare,183,3.1,9414,0.17
+30-39,M,Humana,124,6.8,5102,0.172
+30-39,M,Kaiser Permanente,276,5.7,8359,0.12
+30-39,M,Anthem,157,6.7,3450,0.211
+30-39,M,Medicare,96,5.4,4766,0.237
+30-39,M,Medicaid,145,6.4,10275,0.221
+30-39,M,Tricare,281,2.7,3900,0.141
+30-39,M,Health Net,133,4.4,7993,0.207
+30-39,M,Molina Healthcare,115,2.1,4055,0.249
+30-39,F,Blue Cross Blue Shield,241,6.8,6255,0.18
+30-39,F,Aetna,248,4.6,6882,0.238
+30-39,F,Cigna,182,3.2,11266,0.196
+30-39,F,UnitedHealthcare,288,5.9,5327,0.248
+30-39,F,Humana,213,3.8,10382,0.12
+30-39,F,Kaiser Permanente,257,2.4,7659,0.23
+30-39,F,Anthem,257,7.7,8786,0.202
+30-39,F,Medicare,179,6.9,7538,0.179
+30-39,F,Medicaid,149,7.1,11507,0.171
+30-39,F,Tricare,122,6.7,11625,0.231
+30-39,F,Health Net,298,6.7,11109,0.222
+30-39,F,Molina Healthcare,75,3.3,11568,0.204
+40-49,M,Blue Cross Blue Shield,265,7.9,6096,0.236
+40-49,M,Aetna,123,4.7,3419,0.164
+40-49,M,Cigna,250,7.3,9539,0.173
+40-49,M,UnitedHealthcare,236,4.8,3077,0.179
+40-49,M,Humana,251,5.5,6923,0.237
+40-49,M,Kaiser Permanente,294,7.4,5244,0.232
+40-49,M,Anthem,155,5.1,8448,0.189
+40-49,M,Medicare,51,5.1,6314,0.231
+40-49,M,Medicaid,85,4.3,4417,0.111
+40-49,M,Tricare,281,3.4,5071,0.165
+40-49,M,Health Net,191,5.6,3621,0.14
+40-49,M,Molina Healthcare,51,6.3,8526,0.178
+40-49,F,Blue Cross Blue Shield,273,4.0,4594,0.18
+40-49,F,Aetna,284,4.0,9807,0.21
+40-49,F,Cigna,273,6.8,10034,0.15
+40-49,F,UnitedHealthcare,60,8.0,8000,0.102
+40-49,F,Humana,56,2.5,4425,0.196
+40-49,F,Kaiser Permanente,99,5.6,4901,0.161
+40-49,F,Anthem,288,6.5,7434,0.157
+40-49,F,Medicare,76,4.9,10676,0.125
+40-49,F,Medicaid,200,5.8,8772,0.185
+40-49,F,Tricare,57,5.9,8529,0.133
+40-49,F,Health Net,60,5.0,6869,0.228
+40-49,F,Molina Healthcare,240,6.1,3622,0.193
+50-59,M,Blue Cross Blue Shield,74,4.4,9493,0.108
+50-59,M,Aetna,289,7.7,11366,0.167
+50-59,M,Cigna,166,5.3,3121,0.152
+50-59,M,UnitedHealthcare,99,6.8,8229,0.146
+50-59,M,Humana,71,2.1,3573,0.153
+50-59,M,Kaiser Permanente,244,7.7,8896,0.207
+50-59,M,Anthem,181,3.3,10769,0.158
+50-59,M,Medicare,78,3.0,8879,0.195
+50-59,M,Medicaid,138,2.1,5677,0.173
+50-59,M,Tricare,128,7.0,10802,0.142
+50-59,M,Health Net,218,6.0,6849,0.132
+50-59,M,Molina Healthcare,299,5.1,8242,0.243
+50-59,F,Blue Cross Blue Shield,179,3.9,11090,0.157
+50-59,F,Aetna,52,4.9,8669,0.171
+50-59,F,Cigna,287,7.8,3854,0.223
+50-59,F,UnitedHealthcare,102,2.0,7808,0.164
+50-59,F,Humana,293,6.8,4658,0.119
+50-59,F,Kaiser Permanente,253,7.3,9864,0.139
+50-59,F,Anthem,234,6.3,9433,0.185
+50-59,F,Medicare,126,2.2,4098,0.231
+50-59,F,Medicaid,191,2.1,3518,0.203
+50-59,F,Tricare,283,5.9,6370,0.23
+50-59,F,Health Net,249,3.1,9404,0.139
+50-59,F,Molina Healthcare,88,6.7,5208,0.121
+60-69,M,Blue Cross Blue Shield,103,6.9,5855,0.118
+60-69,M,Aetna,242,6.1,6454,0.11
+60-69,M,Cigna,276,7.4,4619,0.155
+60-69,M,UnitedHealthcare,251,3.4,8407,0.243
+60-69,M,Humana,292,4.4,5896,0.158
+60-69,M,Kaiser Permanente,94,5.8,5839,0.196
+60-69,M,Anthem,230,7.4,6963,0.204
+60-69,M,Medicare,273,7.0,11502,0.189
+60-69,M,Medicaid,238,7.7,10421,0.176
+60-69,M,Tricare,183,7.6,11760,0.119
+60-69,M,Health Net,121,7.5,8313,0.166
+60-69,M,Molina Healthcare,60,3.4,7924,0.175
+60-69,F,Blue Cross Blue Shield,271,5.2,5154,0.213
+60-69,F,Aetna,115,2.8,9261,0.147
+60-69,F,Cigna,296,8.0,5860,0.206
+60-69,F,UnitedHealthcare,96,6.6,8909,0.15
+60-69,F,Humana,88,6.2,11235,0.222
+60-69,F,Kaiser Permanente,127,5.8,5086,0.13
+60-69,F,Anthem,87,6.9,4258,0.23
+60-69,F,Medicare,139,5.6,9161,0.24
+60-69,F,Medicaid,130,5.3,11853,0.216
+60-69,F,Tricare,211,6.1,8244,0.224
+60-69,F,Health Net,72,6.8,3311,0.164
+60-69,F,Molina Healthcare,284,3.4,5532,0.117
+70-79,M,Blue Cross Blue Shield,104,7.9,5087,0.204
+70-79,M,Aetna,60,5.3,9417,0.161
+70-79,M,Cigna,280,6.4,8549,0.14
+70-79,M,UnitedHealthcare,146,3.6,6075,0.131
+70-79,M,Humana,191,4.1,11059,0.154
+70-79,M,Kaiser Permanente,138,6.9,9627,0.204
+70-79,M,Anthem,96,4.6,3691,0.131
+70-79,M,Medicare,68,7.8,10123,0.19
+70-79,M,Medicaid,114,6.9,4421,0.233
+70-79,M,Tricare,204,6.5,6498,0.153
+70-79,M,Health Net,134,7.2,5801,0.232
+70-79,M,Molina Healthcare,214,5.6,7751,0.17
+70-79,F,Blue Cross Blue Shield,80,4.4,6311,0.111
+70-79,F,Aetna,112,5.8,10440,0.132
+70-79,F,Cigna,170,4.2,7218,0.104
+70-79,F,UnitedHealthcare,89,3.9,5804,0.178
+70-79,F,Humana,95,2.8,6136,0.196
+70-79,F,Kaiser Permanente,237,6.5,5321,0.228
+70-79,F,Anthem,151,2.2,5366,0.191
+70-79,F,Medicare,146,4.8,10028,0.119
+70-79,F,Medicaid,196,8.0,9418,0.214
+70-79,F,Tricare,196,3.2,6128,0.194
+70-79,F,Health Net,53,4.1,11847,0.19
+70-79,F,Molina Healthcare,286,5.4,5153,0.222
+80+,M,Blue Cross Blue Shield,137,4.2,3381,0.144
+80+,M,Aetna,149,3.1,8909,0.102
+80+,M,Cigna,180,2.1,9969,0.177
+80+,M,UnitedHealthcare,160,2.4,9202,0.244
+80+,M,Humana,299,7.8,11258,0.124
+80+,M,Kaiser Permanente,135,7.9,6185,0.148
+80+,M,Anthem,256,5.3,3521,0.108
+80+,M,Medicare,241,4.0,9126,0.1
+80+,M,Medicaid,127,2.9,4283,0.145
+80+,M,Tricare,56,5.8,9451,0.116
+80+,M,Health Net,222,3.8,7603,0.153
+80+,M,Molina Healthcare,165,5.1,4056,0.228
+80+,F,Blue Cross Blue Shield,226,7.5,4021,0.164
+80+,F,Aetna,152,3.9,5290,0.152
+80+,F,Cigna,228,7.6,10955,0.103
+80+,F,UnitedHealthcare,159,3.7,6265,0.227
+80+,F,Humana,210,3.3,11108,0.156
+80+,F,Kaiser Permanente,153,3.1,4131,0.128
+80+,F,Anthem,295,4.6,10697,0.221
+80+,F,Medicare,130,5.0,11645,0.233
+80+,F,Medicaid,168,7.9,8710,0.218
+80+,F,Tricare,138,7.0,7113,0.128
+80+,F,Health Net,178,3.4,4193,0.123
+80+,F,Molina Healthcare,71,5.8,11344,0.165

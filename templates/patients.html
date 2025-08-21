@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Patients - Healthcare Analytics{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><i class="fas fa-users"></i> Patients</h1>
+    <div class="text-muted">Total: {{ "{:,}".format(total_count) }} patients</div>
+</div>
+
+{% if error %}
+<div class="alert alert-danger">
+    <i class="fas fa-exclamation-triangle"></i>
+    Unable to load patient data. Please check the database connection.
+</div>
+{% else %}
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Patient ID</th>
+                        <th>Name</th>
+                        <th>Date of Birth</th>
+                        <th>Gender</th>
+                        <th>Insurance</th>
+                        <th>Created Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for patient in patients %}
+                    <tr>
+                        <td>{{ patient[0] }}</td>
+                        <td>{{ patient[1] }} {{ patient[2] }}</td>
+                        <td>{{ patient[3] or 'N/A' }}</td>
+                        <td>{{ patient[4] }}</td>
+                        <td>{{ patient[5] }}</td>
+                        <td>{{ patient[6][:10] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Pagination -->
+        {% if total_pages > 1 %}
+        <nav aria-label="Patient pagination">
+            <ul class="pagination justify-content-center">
+                {% for page in range(1, total_pages + 1) %}
+                <li class="page-item {{ 'active' if page == current_page else '' }}">
+                    <a class="page-link" href="{{ url_for('patients', page=page) }}">{{ page }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </nav>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+{% endblock %}

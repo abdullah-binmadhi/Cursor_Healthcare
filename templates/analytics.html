@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block title %}Analytics - Healthcare Analytics{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><i class="fas fa-chart-line"></i> Analytics</h1>
+</div>
+
+{% if error %}
+<div class="alert alert-danger">
+    <i class="fas fa-exclamation-triangle"></i>
+    Unable to load analytics data. Please check the database connection.
+</div>
+{% else %}
+<!-- Department Performance -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="fas fa-building"></i> Department Performance</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Department</th>
+                                <th>Total Admissions</th>
+                                <th>Avg. Length of Stay</th>
+                                <th>Avg. Cost</th>
+                                <th>Total Revenue</th>
+                                <th>Occupancy Rate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for dept in department_metrics %}
+                            <tr>
+                                <td><strong>{{ dept.department_name }}</strong></td>
+                                <td>{{ "{:,}".format(dept.total_admissions) }}</td>
+                                <td>{{ "%.1f"|format(dept.avg_los) }} days</td>
+                                <td>${{ "{:,.0f}".format(dept.avg_cost) }}</td>
+                                <td>${{ "{:,.0f}".format(dept.total_revenue) }}</td>
+                                <td>{{ "%.1f"|format(dept.occupancy_rate * 100) }}%</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quality Metrics -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="fas fa-shield-alt"></i> Quality Metrics (Last 12 Months)</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Month/Year</th>
+                                <th>HAI</th>
+                                <th>Pressure Ulcers</th>
+                                <th>Falls</th>
+                                <th>Med Errors</th>
+                                <th>Patient Satisfaction</th>
+                                <th>Readmission Rate</th>
+                                <th>Mortality Rate</th>
+                                <th>Avg LOS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for metric in quality_metrics %}
+                            <tr>
+                                <td>{{ metric.month }}/{{ metric.year }}</td>
+                                <td>{{ metric.hospital_acquired_infections }}</td>
+                                <td>{{ metric.pressure_ulcers }}</td>
+                                <td>{{ metric.falls }}</td>
+                                <td>{{ metric.medication_errors }}</td>
+                                <td>{{ "%.1f"|format(metric.patient_satisfaction_avg) }}/5.0</td>
+                                <td>{{ "%.1f"|format(metric.readmission_rate * 100) }}%</td>
+                                <td>{{ "%.1f"|format(metric.mortality_rate * 100) }}%</td>
+                                <td>{{ "%.1f"|format(metric.avg_length_of_stay) }} days</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Financial Performance -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="fas fa-dollar-sign"></i> Financial Performance (Last 12 Months)</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Month/Year</th>
+                                <th>Total Revenue</th>
+                                <th>Total Expenses</th>
+                                <th>Net Income</th>
+                                <th>Operating Margin</th>
+                                <th>Bad Debt</th>
+                                <th>Charity Care</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for financial in financial_performance %}
+                            <tr>
+                                <td>{{ financial.month }}/{{ financial.year }}</td>
+                                <td>${{ "{:,.0f}".format(financial.total_revenue) }}</td>
+                                <td>${{ "{:,.0f}".format(financial.total_expenses) }}</td>
+                                <td class="{{ 'text-success' if financial.net_income > 0 else 'text-danger' }}">
+                                    ${{ "{:,.0f}".format(financial.net_income) }}
+                                </td>
+                                <td>{{ "%.1f"|format(financial.operating_margin * 100) }}%</td>
+                                <td>${{ "{:,.0f}".format(financial.bad_debt) }}</td>
+                                <td>${{ "{:,.0f}".format(financial.charity_care) }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

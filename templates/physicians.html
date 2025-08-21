@@ -1,0 +1,48 @@
+
+{% extends "base.html" %}
+
+{% block title %}Physicians - Healthcare Analytics{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1><i class="fas fa-user-md"></i> Physician Performance</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="fas fa-chart-line"></i> Physician Performance Metrics</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Physician</th>
+                                <th>Total Patients</th>
+                                <th>Avg. Length of Stay</th>
+                                <th>Avg. Satisfaction</th>
+                                <th>Avg. Revenue</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for physician in physicians %}
+                            <tr>
+                                <td>{{ physician.physician_name }}</td>
+                                <td>{{ physician.total_patients }}</td>
+                                <td>{{ physician.avg_length_of_stay }} days</td>
+                                <td>{{ physician.avg_satisfaction_score }}/5.0</td>
+                                <td>${{ "{:,.0f}".format(physician.avg_revenue) }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Admissions - Healthcare Analytics{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><i class="fas fa-hospital"></i> Admissions</h1>
+    <div class="text-muted">Total: {{ "{:,}".format(total_count) }} admissions</div>
+</div>
+
+{% if error %}
+<div class="alert alert-danger">
+    <i class="fas fa-exclamation-triangle"></i>
+    Unable to load admission data. Please check the database connection.
+</div>
+{% else %}
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Admission ID</th>
+                        <th>Patient</th>
+                        <th>Admission Date</th>
+                        <th>Discharge Date</th>
+                        <th>Type</th>
+                        <th>Department</th>
+                        <th>Physician</th>
+                        <th>Length of Stay</th>
+                        <th>Total Charges</th>
+                        <th>Net Revenue</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for admission in admissions %}
+                    <tr>
+                        <td>{{ admission[0] }}</td>
+                        <td>{{ admission[1] }}</td>
+                        <td>{{ admission[2][:10] if admission[2] else 'N/A' }}</td>
+                        <td>{{ admission[3][:10] if admission[3] else 'N/A' }}</td>
+                        <td><span class="badge bg-primary">{{ admission[4] }}</span></td>
+                        <td>{{ admission[5] }}</td>
+                        <td>{{ admission[6] }}</td>
+                        <td>{{ admission[7] or 'N/A' }} days</td>
+                        <td>${{ "{:,.0f}".format(admission[8]) }}</td>
+                        <td>${{ "{:,.0f}".format(admission[9]) }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Pagination -->
+        {% if total_pages > 1 %}
+        <nav aria-label="Admission pagination">
+            <ul class="pagination justify-content-center">
+                {% for page in range(1, total_pages + 1) %}
+                <li class="page-item {{ 'active' if page == current_page else '' }}">
+                    <a class="page-link" href="{{ url_for('admissions', page=page) }}">{{ page }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </nav>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+{% endblock %}

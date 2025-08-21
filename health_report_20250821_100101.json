@@ -1,0 +1,25 @@
+{
+  "timestamp": "2025-08-21 10:01:01.204588",
+  "system_metrics": {
+    "timestamp": "2025-08-21 10:01:01.202984",
+    "cpu_percent": 12.4,
+    "memory_percent": 71.4,
+    "memory_available": 4921868288,
+    "disk_percent": 61.2,
+    "disk_free": 191987519488
+  },
+  "database_health": {
+    "status": "healthy",
+    "patient_count": 9378,
+    "connection_type": "sqlite"
+  },
+  "pipeline_status": {
+    "scheduler_running": false,
+    "current_job": null,
+    "total_jobs": 0,
+    "successful_jobs": 0,
+    "failed_jobs": 0,
+    "last_job": null
+  },
+  "overall_health": "healthy"
+}
