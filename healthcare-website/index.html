@@ -1012,6 +1012,12 @@
                     <div class="chart-card">
                         <div class="chart-header">
                             <div class="chart-title">🎯 Quality Metrics</div>
+                            <div class="chart-controls">
+                                <select id="qualityMetricFilter" onchange="updateQualityChart()">
+                                    <option value="departments">By Department</option>
+                                    <option value="hospital">By Hospital Unit</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="chart-canvas">
                             <canvas id="qualityChart"></canvas>
@@ -1140,18 +1146,48 @@
                     { department_name: 'Orthopedics', patient_satisfaction: 4.3, current_occupancy: 0.72, total_patients: 680, average_cost: 9800, quality_score: 90 }
                 ],
                 physicians: [
+                    // Cardiology (5 doctors)
                     { first_name: 'Sarah', last_name: 'Johnson', specialty: 'Cardiology', patient_satisfaction: 4.8 },
-                    { first_name: 'Michael', last_name: 'Chen', specialty: 'Surgery', patient_satisfaction: 4.7 },
-                    { first_name: 'Emily', last_name: 'Rodriguez', specialty: 'Pediatrics', patient_satisfaction: 4.9 },
-                    { first_name: 'David', last_name: 'Thompson', specialty: 'Emergency', patient_satisfaction: 4.5 },
-                    { first_name: 'Lisa', last_name: 'Park', specialty: 'Oncology', patient_satisfaction: 4.6 },
                     { first_name: 'Robert', last_name: 'Williams', specialty: 'Cardiology', patient_satisfaction: 4.4 },
+                    { first_name: 'Lisa', last_name: 'Chen', specialty: 'Cardiology', patient_satisfaction: 4.6 },
+                    { first_name: 'Mark', last_name: 'Thompson', specialty: 'Cardiology', patient_satisfaction: 4.2 },
+                    { first_name: 'Anna', last_name: 'Rodriguez', specialty: 'Cardiology', patient_satisfaction: 4.7 },
+                    // Surgery (5 doctors)
+                    { first_name: 'Michael', last_name: 'Chen', specialty: 'Surgery', patient_satisfaction: 4.7 },
                     { first_name: 'Jennifer', last_name: 'Davis', specialty: 'Surgery', patient_satisfaction: 4.6 },
-                    { first_name: 'James', last_name: 'Miller', specialty: 'Orthopedics', patient_satisfaction: 4.3 },
-                    { first_name: 'Maria', last_name: 'Garcia', specialty: 'Neurology', patient_satisfaction: 4.5 },
+                    { first_name: 'David', last_name: 'Martinez', specialty: 'Surgery', patient_satisfaction: 4.5 },
+                    { first_name: 'Rachel', last_name: 'Brown', specialty: 'Surgery', patient_satisfaction: 4.3 },
+                    { first_name: 'Steven', last_name: 'Wilson', specialty: 'Surgery', patient_satisfaction: 4.8 },
+                    // Emergency (5 doctors)
+                    { first_name: 'David', last_name: 'Thompson', specialty: 'Emergency', patient_satisfaction: 4.5 },
                     { first_name: 'Christopher', last_name: 'Brown', specialty: 'Emergency', patient_satisfaction: 4.2 },
+                    { first_name: 'Jessica', last_name: 'Miller', specialty: 'Emergency', patient_satisfaction: 4.0 },
+                    { first_name: 'Brian', last_name: 'Garcia', specialty: 'Emergency', patient_satisfaction: 4.3 },
+                    { first_name: 'Nicole', last_name: 'Anderson', specialty: 'Emergency', patient_satisfaction: 4.1 },
+                    // Pediatrics (5 doctors)
+                    { first_name: 'Emily', last_name: 'Rodriguez', specialty: 'Pediatrics', patient_satisfaction: 4.9 },
                     { first_name: 'Amanda', last_name: 'Wilson', specialty: 'Pediatrics', patient_satisfaction: 4.7 },
-                    { first_name: 'Kevin', last_name: 'Taylor', specialty: 'Oncology', patient_satisfaction: 4.4 }
+                    { first_name: 'Daniel', last_name: 'Taylor', specialty: 'Pediatrics', patient_satisfaction: 4.5 },
+                    { first_name: 'Michelle', last_name: 'Lee', specialty: 'Pediatrics', patient_satisfaction: 4.6 },
+                    { first_name: 'Jason', last_name: 'White', specialty: 'Pediatrics', patient_satisfaction: 4.4 },
+                    // Oncology (5 doctors)
+                    { first_name: 'Lisa', last_name: 'Park', specialty: 'Oncology', patient_satisfaction: 4.6 },
+                    { first_name: 'Kevin', last_name: 'Taylor', specialty: 'Oncology', patient_satisfaction: 4.4 },
+                    { first_name: 'Sandra', last_name: 'Johnson', specialty: 'Oncology', patient_satisfaction: 4.7 },
+                    { first_name: 'Paul', last_name: 'Davis', specialty: 'Oncology', patient_satisfaction: 4.2 },
+                    { first_name: 'Karen', last_name: 'Martinez', specialty: 'Oncology', patient_satisfaction: 4.5 },
+                    // Orthopedics (5 doctors)
+                    { first_name: 'James', last_name: 'Miller', specialty: 'Orthopedics', patient_satisfaction: 4.3 },
+                    { first_name: 'Susan', last_name: 'Thompson', specialty: 'Orthopedics', patient_satisfaction: 4.1 },
+                    { first_name: 'Richard', last_name: 'Brown', specialty: 'Orthopedics', patient_satisfaction: 4.4 },
+                    { first_name: 'Linda', last_name: 'Wilson', specialty: 'Orthopedics', patient_satisfaction: 4.0 },
+                    { first_name: 'Thomas', last_name: 'Garcia', specialty: 'Orthopedics', patient_satisfaction: 4.2 },
+                    // Neurology (5 doctors)
+                    { first_name: 'Maria', last_name: 'Garcia', specialty: 'Neurology', patient_satisfaction: 4.5 },
+                    { first_name: 'John', last_name: 'Anderson', specialty: 'Neurology', patient_satisfaction: 4.3 },
+                    { first_name: 'Patricia', last_name: 'Martinez', specialty: 'Neurology', patient_satisfaction: 4.1 },
+                    { first_name: 'William', last_name: 'Taylor', specialty: 'Neurology', patient_satisfaction: 4.4 },
+                    { first_name: 'Barbara', last_name: 'Lee', specialty: 'Neurology', patient_satisfaction: 3.9 }
                 ]
             },
             2023: {
@@ -1513,10 +1549,12 @@
             const ctx = document.getElementById('qualityChart');
             if (!ctx) return;
 
-            // Use year-specific quality data
-            const yearData = healthcareDataByYear[selectedYear] || healthcareDataByYear[2024];
-            const departments = yearData.departments;
-            const avgQuality = departments.reduce((sum, dept) => sum + (dept.quality_score || 90), 0) / departments.length;
+            // Simplified quality chart for HTML version
+            const qualityData = {
+                2024: [94, 91, 88, 89, 92, 85],
+                2023: [91, 88, 85, 86, 89, 82],
+                2022: [88, 85, 82, 83, 86, 79]
+            };
             
             if (chartInstances.qualityChart) {
                 chartInstances.qualityChart.destroy();
@@ -1525,9 +1563,14 @@
             chartInstances.qualityChart = new Chart(ctx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Excellent', 'Good', 'Average', 'Poor'],
+                    labels: ['Excellent (90-100)', 'Good (80-89)', 'Average (70-79)', 'Needs Improvement (<70)'],
                     datasets: [{
-                        data: [avgQuality, 100-avgQuality-10, 8, 2],
+                        data: [
+                            qualityData[selectedYear].filter(score => score >= 90).length * 15,
+                            qualityData[selectedYear].filter(score => score >= 80 && score < 90).length * 12,
+                            qualityData[selectedYear].filter(score => score >= 70 && score < 80).length * 8,
+                            qualityData[selectedYear].filter(score => score < 70).length * 5
+                        ],
                         backgroundColor: ['#10b981', '#3b82f6', '#f59e0b', '#ef4444']
                     }]
                 },
@@ -1539,7 +1582,7 @@
                         tooltip: {
                             callbacks: {
                                 label: function(context) {
-                                    return `${context.label}: ${context.parsed.toFixed(1)}% (${selectedYear})`;
+                                    return `${context.label}: ${context.parsed}% (${selectedYear})`;
                                 }
                             }
                         }
@@ -1647,6 +1690,12 @@
         function updatePhysiciansChart() {
             const selectedSpecialty = document.getElementById('physicianSpecialty').value;
             createPhysiciansChart(currentTrendsYear, selectedSpecialty);
+        }
+        
+        // Function to update quality chart when filter changes
+        function updateQualityChart() {
+            createQualityChart(currentTrendsYear);
+            console.log(`📊 Quality chart updated for ${currentTrendsYear}`);
         }
 
         // Chart metric change handler

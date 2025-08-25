@@ -37,26 +37,67 @@ const healthcareDataByYear = {
             { department_name: 'Oncology', patient_satisfaction: 4.4, current_occupancy: 0.82, total_patients: 380, average_cost: 15800, quality_score: 91 }
         ],
         physicians: [
+            // Cardiology (5 doctors)
             { first_name: 'Sarah', last_name: 'Johnson', specialty: 'Cardiology', patient_satisfaction: 4.8, success_rate: 96, total_patients: 420 },
-            { first_name: 'Michael', last_name: 'Chen', specialty: 'Surgery', patient_satisfaction: 4.7, success_rate: 98, total_patients: 380 },
-            { first_name: 'Emily', last_name: 'Rodriguez', specialty: 'Pediatrics', patient_satisfaction: 4.9, success_rate: 97, total_patients: 350 },
-            { first_name: 'David', last_name: 'Thompson', specialty: 'Emergency', patient_satisfaction: 4.5, success_rate: 94, total_patients: 650 },
-            { first_name: 'Lisa', last_name: 'Park', specialty: 'Oncology', patient_satisfaction: 4.6, success_rate: 95, total_patients: 280 },
             { first_name: 'Robert', last_name: 'Williams', specialty: 'Cardiology', patient_satisfaction: 4.4, success_rate: 93, total_patients: 390 },
+            { first_name: 'Lisa', last_name: 'Chen', specialty: 'Cardiology', patient_satisfaction: 4.6, success_rate: 94, total_patients: 380 },
+            { first_name: 'Mark', last_name: 'Thompson', specialty: 'Cardiology', patient_satisfaction: 4.2, success_rate: 91, total_patients: 340 },
+            { first_name: 'Anna', last_name: 'Rodriguez', specialty: 'Cardiology', patient_satisfaction: 4.7, success_rate: 95, total_patients: 400 },
+            // Surgery (5 doctors)
+            { first_name: 'Michael', last_name: 'Chen', specialty: 'Surgery', patient_satisfaction: 4.7, success_rate: 98, total_patients: 380 },
             { first_name: 'Jennifer', last_name: 'Davis', specialty: 'Surgery', patient_satisfaction: 4.6, success_rate: 96, total_patients: 320 },
-            { first_name: 'James', last_name: 'Miller', specialty: 'Orthopedics', patient_satisfaction: 4.3, success_rate: 92, total_patients: 310 },
-            { first_name: 'Maria', last_name: 'Garcia', specialty: 'Neurology', patient_satisfaction: 4.5, success_rate: 94, total_patients: 270 },
+            { first_name: 'David', last_name: 'Martinez', specialty: 'Surgery', patient_satisfaction: 4.5, success_rate: 94, total_patients: 350 },
+            { first_name: 'Rachel', last_name: 'Brown', specialty: 'Surgery', patient_satisfaction: 4.3, success_rate: 92, total_patients: 290 },
+            { first_name: 'Steven', last_name: 'Wilson', specialty: 'Surgery', patient_satisfaction: 4.8, success_rate: 97, total_patients: 360 },
+            // Emergency (5 doctors)
+            { first_name: 'David', last_name: 'Thompson', specialty: 'Emergency', patient_satisfaction: 4.5, success_rate: 94, total_patients: 650 },
             { first_name: 'Christopher', last_name: 'Brown', specialty: 'Emergency', patient_satisfaction: 4.2, success_rate: 91, total_patients: 580 },
+            { first_name: 'Jessica', last_name: 'Miller', specialty: 'Emergency', patient_satisfaction: 4.0, success_rate: 89, total_patients: 620 },
+            { first_name: 'Brian', last_name: 'Garcia', specialty: 'Emergency', patient_satisfaction: 4.3, success_rate: 92, total_patients: 590 },
+            { first_name: 'Nicole', last_name: 'Anderson', specialty: 'Emergency', patient_satisfaction: 4.1, success_rate: 90, total_patients: 610 },
+            // Pediatrics (5 doctors)
+            { first_name: 'Emily', last_name: 'Rodriguez', specialty: 'Pediatrics', patient_satisfaction: 4.9, success_rate: 97, total_patients: 350 },
             { first_name: 'Amanda', last_name: 'Wilson', specialty: 'Pediatrics', patient_satisfaction: 4.7, success_rate: 95, total_patients: 330 },
-            { first_name: 'Kevin', last_name: 'Taylor', specialty: 'Oncology', patient_satisfaction: 4.4, success_rate: 93, total_patients: 250 }
+            { first_name: 'Daniel', last_name: 'Taylor', specialty: 'Pediatrics', patient_satisfaction: 4.5, success_rate: 93, total_patients: 310 },
+            { first_name: 'Michelle', last_name: 'Lee', specialty: 'Pediatrics', patient_satisfaction: 4.6, success_rate: 94, total_patients: 320 },
+            { first_name: 'Jason', last_name: 'White', specialty: 'Pediatrics', patient_satisfaction: 4.4, success_rate: 92, total_patients: 300 },
+            // Oncology (5 doctors)
+            { first_name: 'Lisa', last_name: 'Park', specialty: 'Oncology', patient_satisfaction: 4.6, success_rate: 95, total_patients: 280 },
+            { first_name: 'Kevin', last_name: 'Taylor', specialty: 'Oncology', patient_satisfaction: 4.4, success_rate: 93, total_patients: 250 },
+            { first_name: 'Sandra', last_name: 'Johnson', specialty: 'Oncology', patient_satisfaction: 4.7, success_rate: 96, total_patients: 270 },
+            { first_name: 'Paul', last_name: 'Davis', specialty: 'Oncology', patient_satisfaction: 4.2, success_rate: 91, total_patients: 240 },
+            { first_name: 'Karen', last_name: 'Martinez', specialty: 'Oncology', patient_satisfaction: 4.5, success_rate: 94, total_patients: 260 },
+            // Orthopedics (5 doctors)
+            { first_name: 'James', last_name: 'Miller', specialty: 'Orthopedics', patient_satisfaction: 4.3, success_rate: 92, total_patients: 310 },
+            { first_name: 'Susan', last_name: 'Thompson', specialty: 'Orthopedics', patient_satisfaction: 4.1, success_rate: 90, total_patients: 290 },
+            { first_name: 'Richard', last_name: 'Brown', specialty: 'Orthopedics', patient_satisfaction: 4.4, success_rate: 93, total_patients: 300 },
+            { first_name: 'Linda', last_name: 'Wilson', specialty: 'Orthopedics', patient_satisfaction: 4.0, success_rate: 88, total_patients: 270 },
+            { first_name: 'Thomas', last_name: 'Garcia', specialty: 'Orthopedics', patient_satisfaction: 4.2, success_rate: 91, total_patients: 280 },
+            // Neurology (5 doctors)
+            { first_name: 'Maria', last_name: 'Garcia', specialty: 'Neurology', patient_satisfaction: 4.5, success_rate: 94, total_patients: 270 },
+            { first_name: 'John', last_name: 'Anderson', specialty: 'Neurology', patient_satisfaction: 4.3, success_rate: 92, total_patients: 250 },
+            { first_name: 'Patricia', last_name: 'Martinez', specialty: 'Neurology', patient_satisfaction: 4.1, success_rate: 90, total_patients: 240 },
+            { first_name: 'William', last_name: 'Taylor', specialty: 'Neurology', patient_satisfaction: 4.4, success_rate: 93, total_patients: 260 },
+            { first_name: 'Barbara', last_name: 'Lee', specialty: 'Neurology', patient_satisfaction: 3.9, success_rate: 87, total_patients: 230 }
         ],
         qualityMetrics: {
-            patientSafety: 94,
-            clinicalExcellence: 91,
-            patientExperience: 88,
-            efficiency: 89,
-            outcomes: 92,
-            innovation: 85
+            // Department-based quality scores with realistic variety
+            departments: {
+                'Cardiology': { safety: 94, efficiency: 91, satisfaction: 88, outcomes: 92, innovation: 85 },
+                'Surgery': { safety: 96, efficiency: 89, satisfaction: 91, outcomes: 95, innovation: 87 },
+                'Emergency': { safety: 87, efficiency: 84, satisfaction: 76, outcomes: 85, innovation: 82 }, // Lower due to high pressure
+                'Pediatrics': { safety: 95, efficiency: 93, satisfaction: 96, outcomes: 94, innovation: 88 },
+                'Oncology': { safety: 93, efficiency: 88, satisfaction: 89, outcomes: 91, innovation: 92 },
+                'Orthopedics': { safety: 91, efficiency: 87, satisfaction: 85, outcomes: 89, innovation: 84 },
+                'Neurology': { safety: 92, efficiency: 89, satisfaction: 87, outcomes: 90, innovation: 86 }
+            },
+            // Hospital-wide metrics
+            hospital: {
+                overall: { safety: 92, efficiency: 88, satisfaction: 87, outcomes: 91, innovation: 86 },
+                'Main Campus': { safety: 93, efficiency: 89, satisfaction: 88, outcomes: 92, innovation: 87 },
+                'Emergency Wing': { safety: 89, efficiency: 85, satisfaction: 82, outcomes: 87, innovation: 84 },
+                'Surgical Center': { safety: 95, efficiency: 91, satisfaction: 90, outcomes: 94, innovation: 88 }
+            }
         }
     },
     2023: {
@@ -70,26 +111,67 @@ const healthcareDataByYear = {
             { department_name: 'Oncology', patient_satisfaction: 4.2, current_occupancy: 0.79, total_patients: 350, average_cost: 15200, quality_score: 88 }
         ],
         physicians: [
+            // Cardiology (5 doctors)
             { first_name: 'Sarah', last_name: 'Johnson', specialty: 'Cardiology', patient_satisfaction: 4.6, success_rate: 94, total_patients: 390 },
-            { first_name: 'Michael', last_name: 'Chen', specialty: 'Surgery', patient_satisfaction: 4.5, success_rate: 96, total_patients: 360 },
-            { first_name: 'Emily', last_name: 'Rodriguez', specialty: 'Pediatrics', patient_satisfaction: 4.7, success_rate: 95, total_patients: 320 },
-            { first_name: 'David', last_name: 'Thompson', specialty: 'Emergency', patient_satisfaction: 4.3, success_rate: 92, total_patients: 620 },
-            { first_name: 'Lisa', last_name: 'Park', specialty: 'Oncology', patient_satisfaction: 4.4, success_rate: 93, total_patients: 260 },
             { first_name: 'Robert', last_name: 'Williams', specialty: 'Cardiology', patient_satisfaction: 4.2, success_rate: 91, total_patients: 370 },
+            { first_name: 'Lisa', last_name: 'Chen', specialty: 'Cardiology', patient_satisfaction: 4.4, success_rate: 92, total_patients: 360 },
+            { first_name: 'Mark', last_name: 'Thompson', specialty: 'Cardiology', patient_satisfaction: 4.0, success_rate: 89, total_patients: 320 },
+            { first_name: 'Anna', last_name: 'Rodriguez', specialty: 'Cardiology', patient_satisfaction: 4.5, success_rate: 93, total_patients: 380 },
+            // Surgery (5 doctors)
+            { first_name: 'Michael', last_name: 'Chen', specialty: 'Surgery', patient_satisfaction: 4.5, success_rate: 96, total_patients: 360 },
             { first_name: 'Jennifer', last_name: 'Davis', specialty: 'Surgery', patient_satisfaction: 4.4, success_rate: 94, total_patients: 300 },
-            { first_name: 'James', last_name: 'Miller', specialty: 'Orthopedics', patient_satisfaction: 4.1, success_rate: 90, total_patients: 290 },
-            { first_name: 'Maria', last_name: 'Garcia', specialty: 'Neurology', patient_satisfaction: 4.3, success_rate: 92, total_patients: 250 },
+            { first_name: 'David', last_name: 'Martinez', specialty: 'Surgery', patient_satisfaction: 4.3, success_rate: 92, total_patients: 330 },
+            { first_name: 'Rachel', last_name: 'Brown', specialty: 'Surgery', patient_satisfaction: 4.1, success_rate: 90, total_patients: 270 },
+            { first_name: 'Steven', last_name: 'Wilson', specialty: 'Surgery', patient_satisfaction: 4.6, success_rate: 95, total_patients: 340 },
+            // Emergency (5 doctors)
+            { first_name: 'David', last_name: 'Thompson', specialty: 'Emergency', patient_satisfaction: 4.3, success_rate: 92, total_patients: 620 },
             { first_name: 'Christopher', last_name: 'Brown', specialty: 'Emergency', patient_satisfaction: 4.0, success_rate: 89, total_patients: 560 },
+            { first_name: 'Jessica', last_name: 'Miller', specialty: 'Emergency', patient_satisfaction: 3.8, success_rate: 87, total_patients: 600 },
+            { first_name: 'Brian', last_name: 'Garcia', specialty: 'Emergency', patient_satisfaction: 4.1, success_rate: 90, total_patients: 570 },
+            { first_name: 'Nicole', last_name: 'Anderson', specialty: 'Emergency', patient_satisfaction: 3.9, success_rate: 88, total_patients: 590 },
+            // Pediatrics (5 doctors)
+            { first_name: 'Emily', last_name: 'Rodriguez', specialty: 'Pediatrics', patient_satisfaction: 4.7, success_rate: 95, total_patients: 320 },
             { first_name: 'Amanda', last_name: 'Wilson', specialty: 'Pediatrics', patient_satisfaction: 4.5, success_rate: 93, total_patients: 310 },
-            { first_name: 'Kevin', last_name: 'Taylor', specialty: 'Oncology', patient_satisfaction: 4.2, success_rate: 91, total_patients: 230 }
+            { first_name: 'Daniel', last_name: 'Taylor', specialty: 'Pediatrics', patient_satisfaction: 4.3, success_rate: 91, total_patients: 290 },
+            { first_name: 'Michelle', last_name: 'Lee', specialty: 'Pediatrics', patient_satisfaction: 4.4, success_rate: 92, total_patients: 300 },
+            { first_name: 'Jason', last_name: 'White', specialty: 'Pediatrics', patient_satisfaction: 4.2, success_rate: 90, total_patients: 280 },
+            // Oncology (5 doctors)
+            { first_name: 'Lisa', last_name: 'Park', specialty: 'Oncology', patient_satisfaction: 4.4, success_rate: 93, total_patients: 260 },
+            { first_name: 'Kevin', last_name: 'Taylor', specialty: 'Oncology', patient_satisfaction: 4.2, success_rate: 91, total_patients: 230 },
+            { first_name: 'Sandra', last_name: 'Johnson', specialty: 'Oncology', patient_satisfaction: 4.5, success_rate: 94, total_patients: 250 },
+            { first_name: 'Paul', last_name: 'Davis', specialty: 'Oncology', patient_satisfaction: 4.0, success_rate: 89, total_patients: 220 },
+            { first_name: 'Karen', last_name: 'Martinez', specialty: 'Oncology', patient_satisfaction: 4.3, success_rate: 92, total_patients: 240 },
+            // Orthopedics (5 doctors)
+            { first_name: 'James', last_name: 'Miller', specialty: 'Orthopedics', patient_satisfaction: 4.1, success_rate: 90, total_patients: 290 },
+            { first_name: 'Susan', last_name: 'Thompson', specialty: 'Orthopedics', patient_satisfaction: 3.9, success_rate: 88, total_patients: 270 },
+            { first_name: 'Richard', last_name: 'Brown', specialty: 'Orthopedics', patient_satisfaction: 4.2, success_rate: 91, total_patients: 280 },
+            { first_name: 'Linda', last_name: 'Wilson', specialty: 'Orthopedics', patient_satisfaction: 3.8, success_rate: 86, total_patients: 250 },
+            { first_name: 'Thomas', last_name: 'Garcia', specialty: 'Orthopedics', patient_satisfaction: 4.0, success_rate: 89, total_patients: 260 },
+            // Neurology (5 doctors)
+            { first_name: 'Maria', last_name: 'Garcia', specialty: 'Neurology', patient_satisfaction: 4.3, success_rate: 92, total_patients: 250 },
+            { first_name: 'John', last_name: 'Anderson', specialty: 'Neurology', patient_satisfaction: 4.1, success_rate: 90, total_patients: 230 },
+            { first_name: 'Patricia', last_name: 'Martinez', specialty: 'Neurology', patient_satisfaction: 3.9, success_rate: 88, total_patients: 220 },
+            { first_name: 'William', last_name: 'Taylor', specialty: 'Neurology', patient_satisfaction: 4.2, success_rate: 91, total_patients: 240 },
+            { first_name: 'Barbara', last_name: 'Lee', specialty: 'Neurology', patient_satisfaction: 3.7, success_rate: 85, total_patients: 210 }
         ],
         qualityMetrics: {
-            patientSafety: 91,
-            clinicalExcellence: 88,
-            patientExperience: 85,
-            efficiency: 86,
-            outcomes: 89,
-            innovation: 82
+            // Department-based quality scores for 2023
+            departments: {
+                'Cardiology': { safety: 91, efficiency: 88, satisfaction: 85, outcomes: 89, innovation: 82 },
+                'Surgery': { safety: 93, efficiency: 86, satisfaction: 88, outcomes: 92, innovation: 84 },
+                'Emergency': { safety: 84, efficiency: 81, satisfaction: 73, outcomes: 82, innovation: 79 }, // Consistent challenges
+                'Pediatrics': { safety: 92, efficiency: 90, satisfaction: 93, outcomes: 91, innovation: 85 },
+                'Oncology': { safety: 90, efficiency: 85, satisfaction: 86, outcomes: 88, innovation: 89 },
+                'Orthopedics': { safety: 88, efficiency: 84, satisfaction: 82, outcomes: 86, innovation: 81 },
+                'Neurology': { safety: 89, efficiency: 86, satisfaction: 84, outcomes: 87, innovation: 83 }
+            },
+            // Hospital-wide metrics for 2023
+            hospital: {
+                overall: { safety: 89, efficiency: 85, satisfaction: 84, outcomes: 88, innovation: 83 },
+                'Main Campus': { safety: 90, efficiency: 86, satisfaction: 85, outcomes: 89, innovation: 84 },
+                'Emergency Wing': { safety: 86, efficiency: 82, satisfaction: 79, outcomes: 84, innovation: 81 },
+                'Surgical Center': { safety: 92, efficiency: 88, satisfaction: 87, outcomes: 91, innovation: 85 }
+            }
         }
     },
     2022: {
@@ -103,26 +185,67 @@ const healthcareDataByYear = {
             { department_name: 'Oncology', patient_satisfaction: 4.0, current_occupancy: 0.76, total_patients: 320, average_cost: 14800, quality_score: 85 }
         ],
         physicians: [
+            // Cardiology (5 doctors)
             { first_name: 'Sarah', last_name: 'Johnson', specialty: 'Cardiology', patient_satisfaction: 4.4, success_rate: 92, total_patients: 360 },
-            { first_name: 'Michael', last_name: 'Chen', specialty: 'Surgery', patient_satisfaction: 4.3, success_rate: 94, total_patients: 340 },
-            { first_name: 'Emily', last_name: 'Rodriguez', specialty: 'Pediatrics', patient_satisfaction: 4.5, success_rate: 93, total_patients: 290 },
-            { first_name: 'David', last_name: 'Thompson', specialty: 'Emergency', patient_satisfaction: 4.1, success_rate: 90, total_patients: 580 },
-            { first_name: 'Lisa', last_name: 'Park', specialty: 'Oncology', patient_satisfaction: 4.2, success_rate: 91, total_patients: 240 },
             { first_name: 'Robert', last_name: 'Williams', specialty: 'Cardiology', patient_satisfaction: 4.0, success_rate: 89, total_patients: 350 },
+            { first_name: 'Lisa', last_name: 'Chen', specialty: 'Cardiology', patient_satisfaction: 4.2, success_rate: 90, total_patients: 340 },
+            { first_name: 'Mark', last_name: 'Thompson', specialty: 'Cardiology', patient_satisfaction: 3.8, success_rate: 87, total_patients: 300 },
+            { first_name: 'Anna', last_name: 'Rodriguez', specialty: 'Cardiology', patient_satisfaction: 4.3, success_rate: 91, total_patients: 360 },
+            // Surgery (5 doctors)
+            { first_name: 'Michael', last_name: 'Chen', specialty: 'Surgery', patient_satisfaction: 4.3, success_rate: 94, total_patients: 340 },
             { first_name: 'Jennifer', last_name: 'Davis', specialty: 'Surgery', patient_satisfaction: 4.2, success_rate: 92, total_patients: 280 },
-            { first_name: 'James', last_name: 'Miller', specialty: 'Orthopedics', patient_satisfaction: 3.9, success_rate: 88, total_patients: 270 },
-            { first_name: 'Maria', last_name: 'Garcia', specialty: 'Neurology', patient_satisfaction: 4.1, success_rate: 90, total_patients: 230 },
+            { first_name: 'David', last_name: 'Martinez', specialty: 'Surgery', patient_satisfaction: 4.1, success_rate: 90, total_patients: 310 },
+            { first_name: 'Rachel', last_name: 'Brown', specialty: 'Surgery', patient_satisfaction: 3.9, success_rate: 88, total_patients: 250 },
+            { first_name: 'Steven', last_name: 'Wilson', specialty: 'Surgery', patient_satisfaction: 4.4, success_rate: 93, total_patients: 320 },
+            // Emergency (5 doctors)
+            { first_name: 'David', last_name: 'Thompson', specialty: 'Emergency', patient_satisfaction: 4.1, success_rate: 90, total_patients: 580 },
             { first_name: 'Christopher', last_name: 'Brown', specialty: 'Emergency', patient_satisfaction: 3.8, success_rate: 87, total_patients: 540 },
+            { first_name: 'Jessica', last_name: 'Miller', specialty: 'Emergency', patient_satisfaction: 3.6, success_rate: 85, total_patients: 580 },
+            { first_name: 'Brian', last_name: 'Garcia', specialty: 'Emergency', patient_satisfaction: 3.9, success_rate: 88, total_patients: 550 },
+            { first_name: 'Nicole', last_name: 'Anderson', specialty: 'Emergency', patient_satisfaction: 3.7, success_rate: 86, total_patients: 570 },
+            // Pediatrics (5 doctors)
+            { first_name: 'Emily', last_name: 'Rodriguez', specialty: 'Pediatrics', patient_satisfaction: 4.5, success_rate: 93, total_patients: 290 },
             { first_name: 'Amanda', last_name: 'Wilson', specialty: 'Pediatrics', patient_satisfaction: 4.3, success_rate: 91, total_patients: 280 },
-            { first_name: 'Kevin', last_name: 'Taylor', specialty: 'Oncology', patient_satisfaction: 4.0, success_rate: 89, total_patients: 210 }
+            { first_name: 'Daniel', last_name: 'Taylor', specialty: 'Pediatrics', patient_satisfaction: 4.1, success_rate: 89, total_patients: 270 },
+            { first_name: 'Michelle', last_name: 'Lee', specialty: 'Pediatrics', patient_satisfaction: 4.2, success_rate: 90, total_patients: 280 },
+            { first_name: 'Jason', last_name: 'White', specialty: 'Pediatrics', patient_satisfaction: 4.0, success_rate: 88, total_patients: 260 },
+            // Oncology (5 doctors)
+            { first_name: 'Lisa', last_name: 'Park', specialty: 'Oncology', patient_satisfaction: 4.2, success_rate: 91, total_patients: 240 },
+            { first_name: 'Kevin', last_name: 'Taylor', specialty: 'Oncology', patient_satisfaction: 4.0, success_rate: 89, total_patients: 210 },
+            { first_name: 'Sandra', last_name: 'Johnson', specialty: 'Oncology', patient_satisfaction: 4.3, success_rate: 92, total_patients: 230 },
+            { first_name: 'Paul', last_name: 'Davis', specialty: 'Oncology', patient_satisfaction: 3.8, success_rate: 87, total_patients: 200 },
+            { first_name: 'Karen', last_name: 'Martinez', specialty: 'Oncology', patient_satisfaction: 4.1, success_rate: 90, total_patients: 220 },
+            // Orthopedics (5 doctors)
+            { first_name: 'James', last_name: 'Miller', specialty: 'Orthopedics', patient_satisfaction: 3.9, success_rate: 88, total_patients: 270 },
+            { first_name: 'Susan', last_name: 'Thompson', specialty: 'Orthopedics', patient_satisfaction: 3.7, success_rate: 86, total_patients: 250 },
+            { first_name: 'Richard', last_name: 'Brown', specialty: 'Orthopedics', patient_satisfaction: 4.0, success_rate: 89, total_patients: 260 },
+            { first_name: 'Linda', last_name: 'Wilson', specialty: 'Orthopedics', patient_satisfaction: 3.6, success_rate: 84, total_patients: 230 },
+            { first_name: 'Thomas', last_name: 'Garcia', specialty: 'Orthopedics', patient_satisfaction: 3.8, success_rate: 87, total_patients: 240 },
+            // Neurology (5 doctors)
+            { first_name: 'Maria', last_name: 'Garcia', specialty: 'Neurology', patient_satisfaction: 4.1, success_rate: 90, total_patients: 230 },
+            { first_name: 'John', last_name: 'Anderson', specialty: 'Neurology', patient_satisfaction: 3.9, success_rate: 88, total_patients: 210 },
+            { first_name: 'Patricia', last_name: 'Martinez', specialty: 'Neurology', patient_satisfaction: 3.7, success_rate: 86, total_patients: 200 },
+            { first_name: 'William', last_name: 'Taylor', specialty: 'Neurology', patient_satisfaction: 4.0, success_rate: 89, total_patients: 220 },
+            { first_name: 'Barbara', last_name: 'Lee', specialty: 'Neurology', patient_satisfaction: 3.5, success_rate: 83, total_patients: 190 }
         ],
         qualityMetrics: {
-            patientSafety: 88,
-            clinicalExcellence: 85,
-            patientExperience: 82,
-            efficiency: 83,
-            outcomes: 86,
-            innovation: 79
+            // Department-based quality scores for 2022 (baseline year)
+            departments: {
+                'Cardiology': { safety: 88, efficiency: 85, satisfaction: 82, outcomes: 86, innovation: 79 },
+                'Surgery': { safety: 90, efficiency: 83, satisfaction: 85, outcomes: 89, innovation: 81 },
+                'Emergency': { safety: 81, efficiency: 78, satisfaction: 70, outcomes: 79, innovation: 76 }, // Historical challenges
+                'Pediatrics': { safety: 89, efficiency: 87, satisfaction: 90, outcomes: 88, innovation: 82 },
+                'Oncology': { safety: 87, efficiency: 82, satisfaction: 83, outcomes: 85, innovation: 86 },
+                'Orthopedics': { safety: 85, efficiency: 81, satisfaction: 79, outcomes: 83, innovation: 78 },
+                'Neurology': { safety: 86, efficiency: 83, satisfaction: 81, outcomes: 84, innovation: 80 }
+            },
+            // Hospital-wide metrics for 2022
+            hospital: {
+                overall: { safety: 86, efficiency: 82, satisfaction: 81, outcomes: 85, innovation: 80 },
+                'Main Campus': { safety: 87, efficiency: 83, satisfaction: 82, outcomes: 86, innovation: 81 },
+                'Emergency Wing': { safety: 83, efficiency: 79, satisfaction: 76, outcomes: 81, innovation: 78 },
+                'Surgical Center': { safety: 89, efficiency: 85, satisfaction: 84, outcomes: 88, innovation: 82 }
+            }
         }
     }
 };
@@ -317,7 +440,7 @@ function loadHospitalDashboard() {
         setTimeout(() => {
             createDepartmentChart(currentTrendsYear);
             createTrendsChart(currentTrendsYear);
-            createQualityChart(currentTrendsYear);
+            createQualityChart(currentTrendsYear, 'departments');
             createHospitalChart();
         }, 50); // Reduced timeout for better responsiveness
     });
@@ -930,7 +1053,7 @@ function destroyAllCharts() {
 /**
  * Create Enhanced Quality Indicators Chart
  */
-function createQualityChart(selectedYear = 2024) {
+function createQualityChart(selectedYear = 2024, filterType = 'departments') {
     const ctx = document.getElementById('qualityChart');
     if (!ctx) return;
     
@@ -938,52 +1061,178 @@ function createQualityChart(selectedYear = 2024) {
     const yearData = healthcareDataByYear[selectedYear] || healthcareDataByYear[2024];
     const qualityMetrics = yearData.qualityMetrics;
     
+    let chartData, labels;
+    
+    if (filterType === 'departments') {
+        // Department-based quality metrics
+        const deptMetrics = qualityMetrics.departments;
+        labels = Object.keys(deptMetrics);
+        
+        chartData = {
+            labels: labels,
+            datasets: [{
+                label: `${selectedYear} Safety Score`,
+                data: labels.map(dept => deptMetrics[dept].safety),
+                backgroundColor: 'rgba(239, 68, 68, 0.7)',
+                borderColor: 'rgba(239, 68, 68, 1)',
+                borderWidth: 2
+            }, {
+                label: `${selectedYear} Efficiency Score`,
+                data: labels.map(dept => deptMetrics[dept].efficiency),
+                backgroundColor: 'rgba(59, 130, 246, 0.7)',
+                borderColor: 'rgba(59, 130, 246, 1)',
+                borderWidth: 2
+            }, {
+                label: `${selectedYear} Satisfaction Score`,
+                data: labels.map(dept => deptMetrics[dept].satisfaction),
+                backgroundColor: 'rgba(16, 185, 129, 0.7)',
+                borderColor: 'rgba(16, 185, 129, 1)',
+                borderWidth: 2
+            }, {
+                label: `${selectedYear} Outcomes Score`,
+                data: labels.map(dept => deptMetrics[dept].outcomes),
+                backgroundColor: 'rgba(139, 92, 246, 0.7)',
+                borderColor: 'rgba(139, 92, 246, 1)',
+                borderWidth: 2
+            }, {
+                label: `${selectedYear} Innovation Score`,
+                data: labels.map(dept => deptMetrics[dept].innovation),
+                backgroundColor: 'rgba(245, 158, 11, 0.7)',
+                borderColor: 'rgba(245, 158, 11, 1)',
+                borderWidth: 2
+            }]
+        };
+    } else {
+        // Hospital-based quality metrics
+        const hospitalMetrics = qualityMetrics.hospital;
+        labels = Object.keys(hospitalMetrics);
+        
+        chartData = {
+            labels: labels,
+            datasets: [{
+                label: `${selectedYear} Safety Score`,
+                data: labels.map(unit => hospitalMetrics[unit].safety),
+                backgroundColor: 'rgba(239, 68, 68, 0.7)',
+                borderColor: 'rgba(239, 68, 68, 1)',
+                borderWidth: 2
+            }, {
+                label: `${selectedYear} Efficiency Score`,
+                data: labels.map(unit => hospitalMetrics[unit].efficiency),
+                backgroundColor: 'rgba(59, 130, 246, 0.7)',
+                borderColor: 'rgba(59, 130, 246, 1)',
+                borderWidth: 2
+            }, {
+                label: `${selectedYear} Satisfaction Score`,
+                data: labels.map(unit => hospitalMetrics[unit].satisfaction),
+                backgroundColor: 'rgba(16, 185, 129, 0.7)',
+                borderColor: 'rgba(16, 185, 129, 1)',
+                borderWidth: 2
+            }, {
+                label: `${selectedYear} Outcomes Score`,
+                data: labels.map(unit => hospitalMetrics[unit].outcomes),
+                backgroundColor: 'rgba(139, 92, 246, 0.7)',
+                borderColor: 'rgba(139, 92, 246, 1)',
+                borderWidth: 2
+            }, {
+                label: `${selectedYear} Innovation Score`,
+                data: labels.map(unit => hospitalMetrics[unit].innovation),
+                backgroundColor: 'rgba(245, 158, 11, 0.7)',
+                borderColor: 'rgba(245, 158, 11, 1)',
+                borderWidth: 2
+            }]
+        };
+    }
+    
     destroyChart('qualityChart');
     chartInstances.qualityChart = new Chart(ctx, {
         type: 'radar',
-        data: {
-            labels: [
-                'Patient Safety',
-                'Clinical Excellence', 
-                'Patient Experience',
-                'Efficiency',
-                'Patient Outcomes',
-                'Innovation'
-            ],
-            datasets: [{
-                label: `${selectedYear} Performance Score`,
-                data: [
-                    qualityMetrics.patientSafety,
-                    qualityMetrics.clinicalExcellence,
-                    qualityMetrics.patientExperience,
-                    qualityMetrics.efficiency,
-                    qualityMetrics.outcomes,
-                    qualityMetrics.innovation
-                ],
-                backgroundColor: 'rgba(34, 197, 94, 0.2)',
-                borderColor: 'rgba(34, 197, 94, 1)',
-                borderWidth: 4,
-                pointBackgroundColor: 'rgba(34, 197, 94, 1)',
-                pointBorderColor: '#ffffff',
-                pointBorderWidth: 3,
-                pointRadius: 8,
-                pointHoverRadius: 10,
-                pointHoverBackgroundColor: 'rgba(34, 197, 94, 1)',
-                pointHoverBorderColor: '#ffffff',
-                pointHoverBorderWidth: 4
-            }, {
-                label: 'Industry Benchmark',
-                data: [85, 83, 80, 82, 84, 78], // Industry standard benchmarks
-                backgroundColor: 'rgba(156, 163, 175, 0.1)',
-                borderColor: 'rgba(156, 163, 175, 1)',
-                borderWidth: 2,
-                borderDash: [5, 5],
-                pointBackgroundColor: 'rgba(156, 163, 175, 1)',
-                pointBorderColor: '#ffffff',
-                pointBorderWidth: 2,
-                pointRadius: 6,
-                pointHoverRadius: 8
-            }]
+        data: chartData,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: {
+                duration: 1500,
+                easing: 'easeOutQuart'
+            },
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                        font: { size: 12, weight: '600', family: 'Inter' },
+                        color: '#1a202c',
+                        padding: 15,
+                        usePointStyle: true,
+                        pointStyle: 'circle',
+                        boxWidth: 10
+                    }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(26, 32, 44, 0.95)',
+                    titleColor: '#ffffff',
+                    bodyColor: '#e2e8f0',
+                    borderColor: 'rgba(139, 92, 246, 0.8)',
+                    borderWidth: 2,
+                    cornerRadius: 12,
+                    titleFont: { size: 14, weight: '700', family: 'Inter' },
+                    bodyFont: { size: 12, family: 'Inter' },
+                    padding: 12,
+                    displayColors: true,
+                    usePointStyle: true,
+                    callbacks: {
+                        title: function(context) {
+                            return `${context[0].label} - ${selectedYear} Quality Metrics`;
+                        },
+                        label: function(context) {
+                            const score = context.parsed.r;
+                            let performance = 'Excellent';
+                            if (score < 70) performance = 'Needs Improvement';
+                            else if (score < 80) performance = 'Fair';
+                            else if (score < 90) performance = 'Good';
+                            
+                            return [
+                                `${context.dataset.label}: ${score}/100`,
+                                `Performance: ${performance} 📊`
+                            ];
+                        },
+                        afterBody: function(context) {
+                            const score = context[0].parsed.r;
+                            if (score < 75) {
+                                return ['', '⚠️ Improvement opportunities identified'];
+                            } else if (score >= 90) {
+                                return ['', '✨ Outstanding performance!'];
+                            }
+                            return [];
+                        }
+                    }
+                }
+            },
+            scales: {
+                r: {
+                    beginAtZero: true,
+                    min: 60,
+                    max: 100,
+                    grid: {
+                        color: 'rgba(203, 213, 224, 0.3)'
+                    },
+                    angleLines: {
+                        color: 'rgba(203, 213, 224, 0.4)'
+                    },
+                    ticks: {
+                        color: '#6b7280',
+                        font: { size: 10, weight: '500' },
+                        stepSize: 10,
+                        callback: function(value) {
+                            return value + '/100';
+                        }
+                    },
+                    pointLabels: {
+                        color: '#374151',
+                        font: { size: 11, weight: '600', family: 'Inter' }
+                    }
+                }
+            }
+        }
+    });
         },
         options: {
             responsive: true,
@@ -2304,9 +2553,10 @@ function changeTrendsYear(year) {
     // Update all synchronized charts with smooth transitions
     setTimeout(() => {
         const selectedSpecialty = document.getElementById('physicianSpecialty')?.value || 'all';
+        const qualityFilter = document.getElementById('qualityMetricFilter')?.value || 'departments';
         createTrendsChart(year);
         createDepartmentChart(year);
-        createQualityChart(year);
+        createQualityChart(year, qualityFilter);
         createTopPhysiciansChart(year, selectedSpecialty);
     }, 100);
     
@@ -2346,3 +2596,15 @@ function updateTopPhysiciansChart() {
 
 // Make function globally available
 window.updateTopPhysiciansChart = updateTopPhysiciansChart;
+
+/**
+ * Update Quality Chart based on filter selection
+ */
+function updateQualityChart() {
+    const filterType = document.getElementById('qualityMetricFilter')?.value || 'departments';
+    createQualityChart(currentTrendsYear, filterType);
+    console.log(`📊 Quality chart updated for ${filterType} view in ${currentTrendsYear}`);
+}
+
+// Make function globally available
+window.updateQualityChart = updateQualityChart;
