@@ -1,12 +1,53 @@
-# Healthcare Analytics Database
+# Healthcare Analytics - Database & Website Platform
 
-A comprehensive SQLite database for healthcare analytics with sample data and analysis capabilities.
+A comprehensive healthcare analytics platform featuring both backend database systems and a modern web application for healthcare cost estimation and physician discovery.
+
+## 🌐 Live Healthcare Website
+
+**🔗 [Visit the Healthcare Website](https://abdullah-binmadhi.github.io/Cursor_Healthcare/healthcare-website/)**
+
+Experience our interactive healthcare platform featuring:
+- **💰 Healthcare Cost Estimator** - Get transparent pricing for medical procedures
+- **👨‍⚕️ Doctor Finder & Ratings** - Search qualified physicians with performance metrics
+- **📱 Mobile-Responsive Design** - Works seamlessly on all devices
+- **📊 Real-Time Data** - Interactive filtering and cost calculations
+
+### Website Features
+- **Cost Estimation**: Input age, insurance type, department, and procedure for instant cost breakdowns
+- **Physician Directory**: Search 50+ doctors across 7 specialties with ratings and availability
+- **Transparent Pricing**: Clear breakdown of total costs, insurance coverage, and patient costs
+- **Performance Metrics**: Doctor success rates, patient satisfaction scores, and wait times
 
 ## Overview
 
-This project creates a healthcare analytics database using SQLite and loads it with sample healthcare data. The database is designed for analytics and reporting on patient admissions, diagnoses, procedures, and financial data.
+This project combines powerful healthcare analytics databases with user-friendly web applications. The platform includes:
+
+### 🖥️ **Web Application**
+- Modern healthcare website with cost estimator and doctor finder
+- Interactive forms and real-time data filtering
+- Professional healthcare-themed design
+- Mobile-first responsive interface
+
+### 🗄️ **Database Systems**
+- Comprehensive SQLite database for healthcare analytics
+- PostgreSQL enterprise version for production environments
+- Sample data with 10,000+ healthcare records
+- Advanced analytics queries and database views
+
+The databases are designed for analytics and reporting on patient admissions, diagnoses, procedures, and financial data, while the website provides public-facing tools for healthcare transparency.
 
 ## Files
+
+### 🌐 Healthcare Website
+- **`healthcare-website/`** - Complete web application directory
+  - `index.html` - Main website with cost estimator and doctor finder
+  - `style.css` - Modern healthcare-themed styling
+  - `script.js` - Interactive functionality and data processing
+  - `data/` - CSV files with healthcare data (physicians, costs, metrics)
+  - `README.md` - Website documentation and setup guide
+- **`generate_website_data.py`** - Script to generate sample healthcare data for website
+
+### 🗄️ Database Systems
 
 ### SQLite Version (Default)
 - `create_healthcare_database.py` - Main script to create and populate SQLite database
@@ -42,7 +83,27 @@ The database contains 8 main tables:
 7. **quality_metrics** - Patient outcomes and satisfaction scores (empty in sample data)
 8. **vital_signs** - Clinical measurements (empty in sample data)
 
-## Installation and Setup
+## 🚀 Quick Start
+
+### Use the Live Website (Recommended)
+1. **Visit the website**: [https://abdullah-binmadhi.github.io/Cursor_Healthcare/healthcare-website/](https://abdullah-binmadhi.github.io/Cursor_Healthcare/healthcare-website/)
+2. **Try the Cost Estimator**: Input patient information to get cost estimates
+3. **Search for Doctors**: Filter physicians by specialty, ratings, and availability
+4. **Explore Features**: Interactive forms, real-time calculations, and responsive design
+
+### Run Website Locally
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/abdullah-binmadhi/Cursor_Healthcare.git
+   cd Cursor_Healthcare/healthcare-website
+   ```
+2. **Start a local server**:
+   ```bash
+   python -m http.server 8080
+   ```
+3. **Open browser**: Visit `http://localhost:8080`
+
+### Database Analytics
 
 ### SQLite Version (Quick Start)
 1. **Install dependencies:**
