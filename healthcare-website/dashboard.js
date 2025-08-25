@@ -14,6 +14,21 @@ let dashboardData = {
 };
 
 let chartInstances = {};
+let isInitialized = false;
+let currentDashboard = null;
+
+// Performance optimization: Debounce function
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
 
 // Initialize dashboard
 document.addEventListener('DOMContentLoaded', function() {
@@ -112,9 +127,16 @@ function setupDashboardListeners() {
 }
 
 /**
- * Show specific dashboard
+ * Show specific dashboard with performance optimization
  */
 function showDashboard(type) {
+    // Prevent unnecessary re-renders
+    if (currentDashboard === type && isInitialized) {
+        return;
+    }
+    
+    currentDashboard = type;
+    
     // Update active tab
     document.querySelectorAll('.dashboard-tab').forEach(tab => {
         tab.classList.remove('active');
@@ -127,13 +149,18 @@ function showDashboard(type) {
     });
     document.getElementById(`${type}-dashboard`).classList.add('active');
     
-    // Load dashboard data
-    switch(type) {
-        case 'hospital': loadHospitalDashboard(); break;
-        case 'financial': loadFinancialDashboard(); break;
-        case 'patient': loadPatientDashboard(); break;
-        case 'physician': loadPhysicianDashboard(); break;
-    }
+    // Lazy load dashboard data with debouncing
+    const debouncedLoad = debounce(() => {
+        switch(type) {
+            case 'hospital': loadHospitalDashboard(); break;
+            case 'financial': loadFinancialDashboard(); break;
+            case 'patient': loadPatientDashboard(); break;
+            case 'physician': loadPhysicianDashboard(); break;
+        }
+        isInitialized = true;
+    }, 150); // 150ms debounce
+    
+    debouncedLoad();
 }
 
 /**
@@ -175,13 +202,15 @@ function loadHospitalDashboard() {
     dashboardData.calculatedFinancial = financial;
     dashboardData.calculatedDepartments = departments;
     
-    // Create charts with available data
-    setTimeout(() => {
-        createDepartmentChart();
-        createTrendsChart();
-        createQualityChart();
-        createHospitalChart();
-    }, 100);
+    // Create charts with available data - Performance optimized
+    requestAnimationFrame(() => {
+        setTimeout(() => {
+            createDepartmentChart();
+            createTrendsChart();
+            createQualityChart();
+            createHospitalChart();
+        }, 50); // Reduced timeout for better responsiveness
+    });
 }
 
 /**
@@ -316,7 +345,7 @@ function createDepartmentChart() {
                 'rgba(245, 101, 101, 0.9)',  // Low satisfaction - Red
                 'rgba(72, 187, 120, 0.9)',   // High satisfaction - Green
                 'rgba(66, 153, 225, 0.9)',   // Medium satisfaction - Blue
-                'rgba(237, 137, 54, 0.9)',   // Medium satisfaction - Orange
+                'rgba(139, 92, 246, 0.9)',   // Medium satisfaction - Purple
                 'rgba(72, 187, 120, 0.9)',   // High satisfaction - Green
                 'rgba(66, 153, 225, 0.9)'    // Medium satisfaction - Blue
             ];
@@ -331,7 +360,7 @@ function createDepartmentChart() {
                 const revenue = data[i];
                 if (revenue > 10) return 'rgba(34, 197, 94, 0.9)';  // High revenue - Green
                 if (revenue > 5) return 'rgba(59, 130, 246, 0.9)';   // Medium revenue - Blue
-                return 'rgba(251, 146, 60, 0.9)';                     // Lower revenue - Orange
+                return 'rgba(139, 92, 246, 0.9)';                     // Lower revenue - Purple
             });
             maxValue = Math.max(...data) * 1.1;
             formatter = (value) => '$' + value.toFixed(1) + 'M';
@@ -520,10 +549,10 @@ function createTrendsChart() {
             }, {
                 label: 'Patient Volume',
                 data: patientVolumeData,
-                borderColor: 'rgba(251, 146, 60, 1)',
-                backgroundColor: 'rgba(251, 146, 60, 0.1)',
+                borderColor: 'rgba(139, 92, 246, 1)',
+                backgroundColor: 'rgba(139, 92, 246, 0.1)',
                 borderWidth: 4,
-                pointBackgroundColor: 'rgba(251, 146, 60, 1)',
+                pointBackgroundColor: 'rgba(139, 92, 246, 1)',
                 pointBorderColor: '#ffffff',
                 pointBorderWidth: 3,
                 pointRadius: 8,
@@ -689,33 +718,56 @@ function updateElement(id, value) {
 }
 
 function formatCurrency(amount) {
-    if (amount >= 1000000) {
+    if (amount >= 1000000000) {
+        // Billions
         return new Intl.NumberFormat('en-US', {
             style: 'currency',
             currency: 'USD',
             minimumFractionDigits: 1,
             maximumFractionDigits: 1
-        }).format(amount / 1000000) + 'M';
+        }).format(amount / 1000000000) + 'B';
+    } else if (amount >= 1000000) {
+        // Millions - More compact formatting
+        const millions = amount / 1000000;
+        if (millions >= 100) {
+            return `$${Math.round(millions)}M`;
+        } else {
+            return `$${millions.toFixed(1)}M`;
+        }
     } else if (amount >= 1000) {
+        // Thousands - More compact formatting
+        const thousands = amount / 1000;
+        if (thousands >= 100) {
+            return `$${Math.round(thousands)}K`;
+        } else {
+            return `$${thousands.toFixed(0)}K`;
+        }
+    } else {
         return new Intl.NumberFormat('en-US', {
             style: 'currency',
             currency: 'USD',
             minimumFractionDigits: 0,
             maximumFractionDigits: 0
-        }).format(amount / 1000) + 'K';
-    } else {
-        return new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD'
         }).format(amount);
     }
 }
 
 function destroyChart(chartId) {
     if (chartInstances[chartId]) {
-        chartInstances[chartId].destroy();
+        try {
+            chartInstances[chartId].destroy();
+        } catch (error) {
+            console.warn(`Error destroying chart ${chartId}:`, error);
+        }
         delete chartInstances[chartId];
     }
+}
+
+// Performance optimization: Destroy all charts when switching dashboards
+function destroyAllCharts() {
+    Object.keys(chartInstances).forEach(chartId => {
+        destroyChart(chartId);
+    });
 }
 
 // Additional chart functions would continue here...
@@ -987,9 +1039,9 @@ function createRevenueByDeptChart() {
             hover: 'rgba(59, 130, 246, 0.95)'
         };
         if (dept.revenue > 4) return {
-            bg: 'rgba(251, 146, 60, 0.9)',   // Medium revenue - Orange
-            border: 'rgba(251, 146, 60, 1)',
-            hover: 'rgba(251, 146, 60, 0.95)'
+            bg: 'rgba(139, 92, 246, 0.9)',   // Medium revenue - Purple
+            border: 'rgba(139, 92, 246, 1)',
+            hover: 'rgba(139, 92, 246, 0.95)'
         };
         return {
             bg: 'rgba(239, 68, 68, 0.9)',     // Lower revenue - Red

@@ -208,12 +208,16 @@
 }
 
 .kpi-value {
-    font-size: 2.5rem;
+    font-size: clamp(1.8rem, 4vw, 2.2rem);
     font-weight: 800;
     color: #1a202c;
     margin-bottom: 0.75rem;
     line-height: 1.1;
     text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    word-break: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    display: block;
 }
 
 .kpi-trend {
@@ -263,6 +267,10 @@
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    /* Performance optimizations */
+    transform: translateZ(0);
+    will-change: transform, box-shadow;
+    backface-visibility: hidden;
 }
 
 .chart-card::before {
@@ -426,6 +434,10 @@ canvas {
         0 4px 12px rgba(0, 0, 0, 0.05);
     border: 2px solid rgba(226, 232, 240, 0.8);
     transition: all 0.3s ease;
+    /* Performance optimizations */
+    transform: translateZ(0);
+    will-change: transform, box-shadow;
+    backface-visibility: hidden;
 }
 
 canvas:hover {
