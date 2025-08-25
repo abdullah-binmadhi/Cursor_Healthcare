@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthCare Analytics - Cost Estimator & Doctor Finder</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav-brand">
+                <i class="fas fa-heartbeat"></i>
+                <span>HealthCare Analytics</span>
+            </div>
+            <nav class="nav-menu">
+                <a href="#cost-estimator" class="nav-link">Cost Estimator</a>
+                <a href="#doctor-finder" class="nav-link">Find Doctors</a>
+                <a href="#about" class="nav-link">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Healthcare Made Transparent</h1>
+                <p>Get accurate cost estimates and find the best doctors for your healthcare needs</p>
+                <div class="hero-buttons">
+                    <button onclick="scrollToSection('cost-estimator')" class="btn btn-primary">
+                        <i class="fas fa-calculator"></i> Estimate Costs
+                    </button>
+                    <button onclick="scrollToSection('doctor-finder')" class="btn btn-secondary">
+                        <i class="fas fa-user-md"></i> Find Doctors
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Healthcare Cost Estimator -->
+    <section id="cost-estimator" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2><i class="fas fa-calculator"></i> Healthcare Cost Estimator</h2>
+                <p>Get transparent pricing for medical procedures and plan your healthcare budget</p>
+            </div>
+
+            <div class="cost-estimator-grid">
+                <div class="estimation-form">
+                    <div class="form-card">
+                        <h3>Patient Information</h3>
+                        <form id="costEstimatorForm">
+                            <div class="form-group">
+                                <label for="patientAge">Age</label>
+                                <input type="number" id="patientAge" min="1" max="120" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="insuranceType">Insurance Type</label>
+                                <select id="insuranceType" required>
+                                    <option value="">Select Insurance</option>
+                                    <option value="medicare">Medicare</option>
+                                    <option value="medicaid">Medicaid</option>
+                                    <option value="private">Private Insurance</option>
+                                    <option value="self-pay">Self-Pay</option>
+                                    <option value="commercial">Commercial</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="department">Department</label>
+                                <select id="department" required>
+                                    <option value="">Select Department</option>
+                                    <option value="Cardiology">Cardiology</option>
+                                    <option value="Emergency">Emergency</option>
+                                    <option value="Surgery">Surgery</option>
+                                    <option value="Orthopedics">Orthopedics</option>
+                                    <option value="Neurology">Neurology</option>
+                                    <option value="Pediatrics">Pediatrics</option>
+                                    <option value="Oncology">Oncology</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="procedure">Procedure Type</label>
+                                <select id="procedure" required>
+                                    <option value="">Select Procedure</option>
+                                    <option value="consultation">Consultation</option>
+                                    <option value="diagnostic">Diagnostic Test</option>
+                                    <option value="minor-surgery">Minor Surgery</option>
+                                    <option value="major-surgery">Major Surgery</option>
+                                    <option value="emergency-visit">Emergency Visit</option>
+                                    <option value="follow-up">Follow-up Visit</option>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-full">
+                                <i class="fas fa-calculator"></i> Calculate Estimate
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="estimation-results">
+                    <div class="results-card" id="costResults" style="display: none;">
+                        <h3>Cost Estimation Results</h3>
+                        <div class="cost-breakdown">
+                            <div class="cost-item">
+                                <span class="cost-label">Estimated Cost:</span>
+                                <span class="cost-value" id="estimatedCost">$0</span>
+                            </div>
+                            <div class="cost-item">
+                                <span class="cost-label">Insurance Coverage:</span>
+                                <span class="cost-value" id="insuranceCoverage">$0</span>
+                            </div>
+                            <div class="cost-item total">
+                                <span class="cost-label">Your Estimated Cost:</span>
+                                <span class="cost-value" id="patientCost">$0</span>
+                            </div>
+                            <div class="cost-item">
+                                <span class="cost-label">Estimated Length of Stay:</span>
+                                <span class="cost-value" id="lengthOfStay">-</span>
+                            </div>
+                        </div>
+                        <div class="cost-factors">
+                            <h4>Factors Affecting Cost:</h4>
+                            <ul id="costFactors"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Doctor Finder -->
+    <section id="doctor-finder" class="section bg-light">
+        <div class="container">
+            <div class="section-header">
+                <h2><i class="fas fa-user-md"></i> Doctor Finder & Ratings</h2>
+                <p>Find qualified physicians with performance metrics and patient satisfaction scores</p>
+            </div>
+
+            <div class="doctor-finder-grid">
+                <div class="search-filters">
+                    <div class="filter-card">
+                        <h3>Search Filters</h3>
+                        
+                        <div class="form-group">
+                            <label for="specialtyFilter">Specialty</label>
+                            <select id="specialtyFilter">
+                                <option value="">All Specialties</option>
+                                <option value="Cardiology">Cardiology</option>
+                                <option value="Emergency Medicine">Emergency Medicine</option>
+                                <option value="Surgery">Surgery</option>
+                                <option value="Orthopedics">Orthopedics</option>
+                                <option value="Neurology">Neurology</option>
+                                <option value="Pediatrics">Pediatrics</option>
+                                <option value="Oncology">Oncology</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="departmentFilter">Department</label>
+                            <select id="departmentFilter">
+                                <option value="">All Departments</option>
+                                <option value="Cardiology">Cardiology</option>
+                                <option value="Emergency">Emergency</option>
+                                <option value="Surgery">Surgery</option>
+                                <option value="Orthopedics">Orthopedics</option>
+                                <option value="Neurology">Neurology</option>
+                                <option value="Pediatrics">Pediatrics</option>
+                                <option value="Oncology">Oncology</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ratingFilter">Minimum Rating</label>
+                            <select id="ratingFilter">
+                                <option value="0">Any Rating</option>
+                                <option value="3">3+ Stars</option>
+                                <option value="4">4+ Stars</option>
+                                <option value="4.5">4.5+ Stars</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="availabilityFilter">Availability</label>
+                            <select id="availabilityFilter">
+                                <option value="">Any Availability</option>
+                                <option value="available">Available This Week</option>
+                                <option value="limited">Limited Availability</option>
+                            </select>
+                        </div>
+
+                        <button onclick="searchDoctors()" class="btn btn-primary btn-full">
+                            <i class="fas fa-search"></i> Search Doctors
+                        </button>
+                    </div>
+                </div>
+
+                <div class="doctor-results">
+                    <div class="results-header">
+                        <h3>Doctor Search Results</h3>
+                        <span id="doctorCount">0 doctors found</span>
+                    </div>
+                    <div id="doctorList" class="doctor-list">
+                        <!-- Doctor cards will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-content">
+                    <h2>About HealthCare Analytics</h2>
+                    <p>We provide transparent healthcare pricing and help patients make informed decisions about their medical care. Our platform combines real healthcare data with user-friendly tools to estimate costs and find qualified physicians.</p>
+                    
+                    <div class="features-grid">
+                        <div class="feature-item">
+                            <i class="fas fa-chart-line"></i>
+                            <h4>Data-Driven Insights</h4>
+                            <p>Real analytics from healthcare databases</p>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <h4>Transparent Pricing</h4>
+                            <p>Clear cost breakdowns with no hidden fees</p>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-users"></i>
+                            <h4>Verified Physicians</h4>
+                            <p>Performance metrics and patient satisfaction scores</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>HealthCare Analytics</h4>
+                    <p>Making healthcare transparent and accessible for everyone.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="#cost-estimator">Cost Estimator</a></li>
+                        <li><a href="#doctor-finder">Doctor Finder</a></li>
+                        <li><a href="#about">Analytics</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Built with healthcare data analytics</p>
+                    <p>© 2024 HealthCare Analytics</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

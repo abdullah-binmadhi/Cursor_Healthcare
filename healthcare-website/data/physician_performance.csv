@@ -1,0 +1,51 @@
+physician_id,first_name,last_name,specialty,department,years_experience,patient_satisfaction,complication_rate,average_wait_time,availability_status,total_patients,success_rate
+DOC001,Jane,Smith,Pediatrics,Pediatrics,28,3.9,1.5,109,Available,1885,95.4
+DOC002,Jane,Miller,Neurology,Neurology,6,3.5,1.48,79,Unavailable,554,92.9
+DOC003,Robert,Brown,Pediatrics,Pediatrics,19,4.4,4.14,15,Available,1929,90.9
+DOC004,Michael,Brown,Surgery,Surgery,29,4.0,0.92,27,Limited,1204,93.5
+DOC005,John,Davis,Oncology,Oncology,22,3.7,4.65,25,Unavailable,1100,96.6
+DOC006,Emily,Brown,Neurology,Neurology,27,3.6,3.48,113,Limited,663,97.0
+DOC007,Jane,Miller,Oncology,Oncology,13,4.2,4.25,35,Limited,1227,87.9
+DOC008,Jane,Williams,Surgery,Surgery,22,4.6,1.24,63,Limited,1810,94.6
+DOC009,Emily,Smith,Emergency Medicine,Emergency,12,4.7,4.12,66,Limited,635,88.0
+DOC010,Emily,Brown,Neurology,Neurology,25,4.2,4.48,97,Limited,792,88.7
+DOC011,David,Miller,Emergency Medicine,Emergency,23,4.1,1.49,32,Unavailable,1510,86.3
+DOC012,Jane,Williams,Cardiology,Cardiology,25,3.7,3.56,91,Available,1288,90.3
+DOC013,David,Smith,Orthopedics,Orthopedics,26,4.6,3.57,83,Limited,1812,89.8
+DOC014,Robert,Williams,Surgery,Surgery,19,3.5,3.75,107,Limited,1525,95.7
+DOC015,Jane,Jones,Neurology,Neurology,25,4.3,1.4,62,Available,1604,98.3
+DOC016,John,Garcia,Neurology,Neurology,20,3.5,4.68,118,Limited,990,85.8
+DOC017,Jane,Johnson,Neurology,Neurology,28,4.2,0.81,112,Unavailable,757,86.8
+DOC018,Michael,Jones,Orthopedics,Orthopedics,21,4.8,2.4,42,Unavailable,1994,94.7
+DOC019,David,Miller,Pediatrics,Pediatrics,26,4.5,2.47,81,Limited,747,88.5
+DOC020,Emily,Smith,Cardiology,Cardiology,23,4.3,3.15,15,Available,1949,93.8
+DOC021,Jane,Smith,Emergency Medicine,Emergency,15,3.6,1.57,100,Limited,938,92.5
+DOC022,Lisa,Brown,Pediatrics,Pediatrics,30,4.2,2.33,27,Available,1849,91.0
+DOC023,Robert,Davis,Orthopedics,Orthopedics,28,3.6,3.44,97,Available,624,90.6
+DOC024,Jane,Brown,Surgery,Surgery,11,3.8,2.52,69,Available,1070,91.5
+DOC025,Jane,Davis,Oncology,Oncology,30,4.8,2.98,21,Unavailable,1607,96.7
+DOC026,Sarah,Williams,Cardiology,Cardiology,18,4.2,1.46,66,Available,837,90.3
+DOC027,David,Davis,Orthopedics,Orthopedics,14,4.1,4.81,115,Unavailable,1855,95.1
+DOC028,Sarah,Jones,Emergency Medicine,Emergency,11,5.0,3.11,84,Available,1142,85.8
+DOC029,Lisa,Williams,Neurology,Neurology,6,4.9,0.86,38,Available,1718,86.0
+DOC030,Sarah,Miller,Oncology,Oncology,8,4.9,3.06,89,Unavailable,581,93.7
+DOC031,Emily,Jones,Orthopedics,Orthopedics,11,4.5,1.91,48,Limited,768,94.4
+DOC032,Lisa,Garcia,Surgery,Surgery,29,4.9,0.54,94,Unavailable,704,86.0
+DOC033,David,Williams,Emergency Medicine,Emergency,16,4.8,4.46,62,Limited,823,91.1
+DOC034,David,Smith,Neurology,Neurology,26,4.7,1.85,99,Available,775,88.7
+DOC035,Michael,Jones,Cardiology,Cardiology,14,4.4,3.73,41,Unavailable,1798,96.9
+DOC036,Lisa,Jones,Neurology,Neurology,6,3.6,2.41,50,Available,507,89.7
+DOC037,David,Williams,Emergency Medicine,Emergency,28,4.2,3.68,86,Available,729,86.1
+DOC038,Michael,Smith,Pediatrics,Pediatrics,16,4.4,1.17,31,Available,1131,90.1
+DOC039,John,Garcia,Oncology,Oncology,11,4.5,3.5,60,Unavailable,1332,98.6
+DOC040,Michael,Brown,Pediatrics,Pediatrics,10,5.0,4.15,67,Available,867,95.3
+DOC041,Robert,Brown,Surgery,Surgery,13,3.7,3.66,63,Available,1463,88.1
+DOC042,Lisa,Garcia,Oncology,Oncology,14,4.7,4.42,43,Available,1851,87.7
+DOC043,David,Johnson,Surgery,Surgery,29,3.9,3.39,66,Unavailable,1598,89.6
+DOC044,Jane,Jones,Cardiology,Cardiology,10,4.4,4.93,19,Available,1721,91.1
+DOC045,Emily,Miller,Pediatrics,Pediatrics,24,5.0,1.02,88,Available,1021,85.6
+DOC046,John,Brown,Orthopedics,Orthopedics,16,4.1,4.77,57,Unavailable,1142,94.3
+DOC047,David,Jones,Cardiology,Cardiology,26,4.1,2.31,52,Unavailable,760,87.7
+DOC048,Robert,Williams,Pediatrics,Pediatrics,24,4.4,2.33,15,Limited,1087,87.9
+DOC049,Emily,Davis,Oncology,Oncology,19,4.2,1.46,75,Unavailable,847,94.2
+DOC050,Emily,Johnson,Surgery,Surgery,29,3.9,1.9,118,Available,801,85.3

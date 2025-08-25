@@ -1,0 +1,43 @@
+department,metric_name,current_value,target_value,benchmark_value,trend,measurement_period,last_updated
+Cardiology,Infection Rate,15.89,4.28,9.78,Stable,Monthly,2025-08-25
+Cardiology,Readmission Rate,18.18,3.72,18.57,Declining,Monthly,2025-08-25
+Cardiology,Mortality Rate,19.7,7.46,10.64,Stable,Monthly,2025-08-25
+Cardiology,Patient Satisfaction,10.56,6.86,8.24,Improving,Monthly,2025-08-25
+Cardiology,Length of Stay,16.22,2.94,10.0,Declining,Monthly,2025-08-25
+Cardiology,Complication Rate,10.13,6.2,23.69,Declining,Monthly,2025-08-25
+Emergency,Infection Rate,17.07,12.92,10.7,Improving,Monthly,2025-08-25
+Emergency,Readmission Rate,6.18,13.67,7.95,Stable,Monthly,2025-08-25
+Emergency,Mortality Rate,2.74,13.75,21.33,Stable,Monthly,2025-08-25
+Emergency,Patient Satisfaction,18.68,6.81,12.93,Stable,Monthly,2025-08-25
+Emergency,Length of Stay,5.48,14.92,12.5,Improving,Monthly,2025-08-25
+Emergency,Complication Rate,7.06,2.39,19.29,Stable,Monthly,2025-08-25
+Surgery,Infection Rate,16.04,2.93,10.74,Stable,Monthly,2025-08-25
+Surgery,Readmission Rate,14.23,2.94,19.11,Stable,Monthly,2025-08-25
+Surgery,Mortality Rate,12.69,13.68,5.38,Improving,Monthly,2025-08-25
+Surgery,Patient Satisfaction,16.86,8.68,19.54,Declining,Monthly,2025-08-25
+Surgery,Length of Stay,9.04,11.87,9.75,Improving,Monthly,2025-08-25
+Surgery,Complication Rate,1.91,6.88,20.88,Stable,Monthly,2025-08-25
+Orthopedics,Infection Rate,2.19,12.71,15.0,Declining,Monthly,2025-08-25
+Orthopedics,Readmission Rate,1.31,8.22,9.84,Improving,Monthly,2025-08-25
+Orthopedics,Mortality Rate,6.53,1.02,12.06,Declining,Monthly,2025-08-25
+Orthopedics,Patient Satisfaction,8.91,10.3,6.71,Stable,Monthly,2025-08-25
+Orthopedics,Length of Stay,2.29,8.36,15.15,Declining,Monthly,2025-08-25
+Orthopedics,Complication Rate,11.53,6.47,14.4,Declining,Monthly,2025-08-25
+Neurology,Infection Rate,8.35,6.23,19.95,Stable,Monthly,2025-08-25
+Neurology,Readmission Rate,15.98,5.83,19.66,Declining,Monthly,2025-08-25
+Neurology,Mortality Rate,2.97,9.15,20.13,Improving,Monthly,2025-08-25
+Neurology,Patient Satisfaction,1.84,8.64,21.27,Improving,Monthly,2025-08-25
+Neurology,Length of Stay,16.78,10.59,24.62,Stable,Monthly,2025-08-25
+Neurology,Complication Rate,13.0,12.36,6.26,Stable,Monthly,2025-08-25
+Pediatrics,Infection Rate,1.7,3.82,20.82,Improving,Monthly,2025-08-25
+Pediatrics,Readmission Rate,7.0,5.34,12.96,Declining,Monthly,2025-08-25
+Pediatrics,Mortality Rate,9.99,1.51,17.94,Stable,Monthly,2025-08-25
+Pediatrics,Patient Satisfaction,7.78,11.93,22.32,Stable,Monthly,2025-08-25
+Pediatrics,Length of Stay,6.19,12.19,13.74,Stable,Monthly,2025-08-25
+Pediatrics,Complication Rate,15.12,13.52,12.73,Improving,Monthly,2025-08-25
+Oncology,Infection Rate,10.43,7.97,23.49,Declining,Monthly,2025-08-25
+Oncology,Readmission Rate,6.07,2.16,13.49,Stable,Monthly,2025-08-25
+Oncology,Mortality Rate,12.45,12.51,15.91,Stable,Monthly,2025-08-25
+Oncology,Patient Satisfaction,2.95,5.59,10.91,Stable,Monthly,2025-08-25
+Oncology,Length of Stay,12.45,6.97,18.8,Stable,Monthly,2025-08-25
+Oncology,Complication Rate,9.5,11.18,23.23,Declining,Monthly,2025-08-25

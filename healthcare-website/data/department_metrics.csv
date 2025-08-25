@@ -1,0 +1,8 @@
+department_name,total_patients,average_length_stay,readmission_rate,patient_satisfaction,average_cost,bed_capacity,current_occupancy,staff_count
+Cardiology,2002,8.4,11.11,4.6,9461,156,0.91,93
+Emergency,1796,6.8,8.84,4.3,4417,51,0.91,33
+Surgery,4188,5.1,6.76,4.8,10486,168,0.62,51
+Orthopedics,4757,7.6,9.56,4.6,12937,185,0.95,96
+Neurology,2299,8.2,13.91,4.5,13784,179,0.75,90
+Pediatrics,2826,7.9,12.44,4.4,6246,113,0.89,55
+Oncology,4136,7.2,9.85,4.2,9206,69,0.85,50
