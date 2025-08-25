@@ -1021,6 +1021,18 @@
                     <div class="chart-card">
                         <div class="chart-header">
                             <div class="chart-title">🏆 Top Performing Physicians</div>
+                            <div class="chart-controls">
+                                <select id="physicianSpecialty" onchange="updatePhysiciansChart()">
+                                    <option value="all">All Specialties</option>
+                                    <option value="Cardiology">Cardiology</option>
+                                    <option value="Surgery">Surgery</option>
+                                    <option value="Emergency">Emergency Medicine</option>
+                                    <option value="Pediatrics">Pediatrics</option>
+                                    <option value="Oncology">Oncology</option>
+                                    <option value="Orthopedics">Orthopedics</option>
+                                    <option value="Neurology">Neurology</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="chart-canvas">
                             <canvas id="physiciansChart"></canvas>
@@ -1132,7 +1144,14 @@
                     { first_name: 'Michael', last_name: 'Chen', specialty: 'Surgery', patient_satisfaction: 4.7 },
                     { first_name: 'Emily', last_name: 'Rodriguez', specialty: 'Pediatrics', patient_satisfaction: 4.9 },
                     { first_name: 'David', last_name: 'Thompson', specialty: 'Emergency', patient_satisfaction: 4.5 },
-                    { first_name: 'Lisa', last_name: 'Park', specialty: 'Oncology', patient_satisfaction: 4.6 }
+                    { first_name: 'Lisa', last_name: 'Park', specialty: 'Oncology', patient_satisfaction: 4.6 },
+                    { first_name: 'Robert', last_name: 'Williams', specialty: 'Cardiology', patient_satisfaction: 4.4 },
+                    { first_name: 'Jennifer', last_name: 'Davis', specialty: 'Surgery', patient_satisfaction: 4.6 },
+                    { first_name: 'James', last_name: 'Miller', specialty: 'Orthopedics', patient_satisfaction: 4.3 },
+                    { first_name: 'Maria', last_name: 'Garcia', specialty: 'Neurology', patient_satisfaction: 4.5 },
+                    { first_name: 'Christopher', last_name: 'Brown', specialty: 'Emergency', patient_satisfaction: 4.2 },
+                    { first_name: 'Amanda', last_name: 'Wilson', specialty: 'Pediatrics', patient_satisfaction: 4.7 },
+                    { first_name: 'Kevin', last_name: 'Taylor', specialty: 'Oncology', patient_satisfaction: 4.4 }
                 ]
             },
             2023: {
@@ -1149,7 +1168,14 @@
                     { first_name: 'Michael', last_name: 'Chen', specialty: 'Surgery', patient_satisfaction: 4.5 },
                     { first_name: 'Emily', last_name: 'Rodriguez', specialty: 'Pediatrics', patient_satisfaction: 4.7 },
                     { first_name: 'David', last_name: 'Thompson', specialty: 'Emergency', patient_satisfaction: 4.3 },
-                    { first_name: 'Lisa', last_name: 'Park', specialty: 'Oncology', patient_satisfaction: 4.4 }
+                    { first_name: 'Lisa', last_name: 'Park', specialty: 'Oncology', patient_satisfaction: 4.4 },
+                    { first_name: 'Robert', last_name: 'Williams', specialty: 'Cardiology', patient_satisfaction: 4.2 },
+                    { first_name: 'Jennifer', last_name: 'Davis', specialty: 'Surgery', patient_satisfaction: 4.4 },
+                    { first_name: 'James', last_name: 'Miller', specialty: 'Orthopedics', patient_satisfaction: 4.1 },
+                    { first_name: 'Maria', last_name: 'Garcia', specialty: 'Neurology', patient_satisfaction: 4.3 },
+                    { first_name: 'Christopher', last_name: 'Brown', specialty: 'Emergency', patient_satisfaction: 4.0 },
+                    { first_name: 'Amanda', last_name: 'Wilson', specialty: 'Pediatrics', patient_satisfaction: 4.5 },
+                    { first_name: 'Kevin', last_name: 'Taylor', specialty: 'Oncology', patient_satisfaction: 4.2 }
                 ]
             },
             2022: {
@@ -1166,7 +1192,14 @@
                     { first_name: 'Michael', last_name: 'Chen', specialty: 'Surgery', patient_satisfaction: 4.3 },
                     { first_name: 'Emily', last_name: 'Rodriguez', specialty: 'Pediatrics', patient_satisfaction: 4.5 },
                     { first_name: 'David', last_name: 'Thompson', specialty: 'Emergency', patient_satisfaction: 4.1 },
-                    { first_name: 'Lisa', last_name: 'Park', specialty: 'Oncology', patient_satisfaction: 4.2 }
+                    { first_name: 'Lisa', last_name: 'Park', specialty: 'Oncology', patient_satisfaction: 4.2 },
+                    { first_name: 'Robert', last_name: 'Williams', specialty: 'Cardiology', patient_satisfaction: 4.0 },
+                    { first_name: 'Jennifer', last_name: 'Davis', specialty: 'Surgery', patient_satisfaction: 4.2 },
+                    { first_name: 'James', last_name: 'Miller', specialty: 'Orthopedics', patient_satisfaction: 3.9 },
+                    { first_name: 'Maria', last_name: 'Garcia', specialty: 'Neurology', patient_satisfaction: 4.1 },
+                    { first_name: 'Christopher', last_name: 'Brown', specialty: 'Emergency', patient_satisfaction: 3.8 },
+                    { first_name: 'Amanda', last_name: 'Wilson', specialty: 'Pediatrics', patient_satisfaction: 4.3 },
+                    { first_name: 'Kevin', last_name: 'Taylor', specialty: 'Oncology', patient_satisfaction: 4.0 }
                 ]
             }
         };
@@ -1194,7 +1227,7 @@
                 createDepartmentChart(currentTrendsYear);
                 createTrendsChart(currentTrendsYear);
                 createQualityChart(currentTrendsYear);
-                createPhysiciansChart(currentTrendsYear);
+                createPhysiciansChart(currentTrendsYear, 'all');
             }, 500);
         }
 
@@ -1515,13 +1548,23 @@
             });
         }
 
-        function createPhysiciansChart(selectedYear = 2024) {
+        function createPhysiciansChart(selectedYear = 2024, selectedSpecialty = 'all') {
             const ctx = document.getElementById('physiciansChart');
             if (!ctx) return;
 
             // Use year-specific physician data
             const yearData = healthcareDataByYear[selectedYear] || healthcareDataByYear[2024];
-            const physicians = yearData.physicians;
+            let physicians = yearData.physicians;
+            
+            // Filter by specialty if not 'all'
+            if (selectedSpecialty && selectedSpecialty !== 'all') {
+                physicians = physicians.filter(p => p.specialty === selectedSpecialty);
+            }
+            
+            // Sort by satisfaction and take top performers
+            const topPhysicians = physicians
+                .sort((a, b) => (b.patient_satisfaction || 0) - (a.patient_satisfaction || 0))
+                .slice(0, 5); // Top 5 physicians
             
             if (chartInstances.physiciansChart) {
                 chartInstances.physiciansChart.destroy();
@@ -1530,11 +1573,12 @@
             chartInstances.physiciansChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: physicians.map(p => `Dr. ${p.first_name} ${p.last_name.charAt(0)}.`),
+                    labels: topPhysicians.map(p => `Dr. ${p.first_name} ${p.last_name.charAt(0)}.`),
                     datasets: [{
-                        label: `${selectedYear} Patient Satisfaction`,
-                        data: physicians.map(p => p.patient_satisfaction),
-                        backgroundColor: '#8b5cf6',
+                        label: `${selectedYear} Patient Satisfaction${selectedSpecialty !== 'all' ? ` (${selectedSpecialty})` : ''}`,
+                        data: topPhysicians.map(p => p.patient_satisfaction),
+                        backgroundColor: selectedSpecialty !== 'all' ? 
+                            getSpecialtyColor(selectedSpecialty) : '#8b5cf6',
                         borderRadius: 8
                     }]
                 },
@@ -1548,18 +1592,61 @@
                             callbacks: {
                                 title: function(context) {
                                     const index = context[0].dataIndex;
-                                    const physician = physicians[index];
+                                    const physician = topPhysicians[index];
                                     return `Dr. ${physician.first_name} ${physician.last_name} (${physician.specialty})`;
                                 },
                                 label: function(context) {
                                     return `${selectedYear} Satisfaction: ${context.parsed.x.toFixed(1)}/5.0`;
+                                },
+                                afterBody: function(context) {
+                                    const index = context[0].dataIndex;
+                                    const physician = topPhysicians[index];
+                                    const score = physician.patient_satisfaction;
+                                    let performance = 'Excellent';
+                                    if (score < 4.0) performance = 'Good';
+                                    else if (score < 4.5) performance = 'Very Good';
+                                    return [`Performance Level: ${performance} ⭐`];
                                 }
                             }
                         }
                     },
-                    scales: { x: { max: 5 } }
+                    scales: { 
+                        x: { 
+                            max: 5,
+                            title: {
+                                display: true,
+                                text: 'Patient Satisfaction Score'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: selectedSpecialty !== 'all' ? selectedSpecialty : 'All Specialties'
+                            }
+                        }
+                    }
                 }
             });
+        }
+        
+        // Helper function to get specialty-specific colors
+        function getSpecialtyColor(specialty) {
+            const colors = {
+                'Cardiology': '#ef4444',    // Red - heart
+                'Surgery': '#3b82f6',       // Blue - precision
+                'Emergency': '#f59e0b',     // Orange - urgency
+                'Pediatrics': '#10b981',    // Green - growth
+                'Oncology': '#8b5cf6',      // Purple - specialty
+                'Orthopedics': '#6366f1',   // Indigo - structure
+                'Neurology': '#ec4899'      // Pink - brain
+            };
+            return colors[specialty] || '#8b5cf6';
+        }
+        
+        // Function to update physicians chart when specialty changes
+        function updatePhysiciansChart() {
+            const selectedSpecialty = document.getElementById('physicianSpecialty').value;
+            createPhysiciansChart(currentTrendsYear, selectedSpecialty);
         }
 
         // Chart metric change handler
@@ -1604,10 +1691,11 @@
             
             // Update all synchronized charts
             setTimeout(() => {
+                const selectedSpecialty = document.getElementById('physicianSpecialty').value;
                 createTrendsChart(year);
                 createDepartmentChart(year);
                 createQualityChart(year);
-                createPhysiciansChart(year);
+                createPhysiciansChart(year, selectedSpecialty);
             }, 100);
             
             console.log(`📅 Dashboard synchronized to ${year} data`);
