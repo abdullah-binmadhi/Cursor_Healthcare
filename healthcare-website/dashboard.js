@@ -22,6 +22,7 @@ let dashboardData = {
 let chartInstances = {};
 let isInitialized = false;
 let currentDashboard = null;
+let currentTrendsYear = 2024; // Track current year for trends chart
 
 // Performance optimization: Debounce function
 function debounce(func, wait) {
@@ -535,21 +536,33 @@ function createDepartmentChart() {
     });
 }
 
-function createTrendsChart() {
+function createTrendsChart(selectedYear = 2024) {
     const ctx = document.getElementById('trendsChart');
     if (!ctx) return;
     
-    // Clear, realistic monthly healthcare trends with proper seasonal variation
+    // All 12 months for better visualization
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     
-    // Patient satisfaction with realistic healthcare patterns
-    const satisfactionData = [4.1, 4.2, 4.0, 4.3, 4.4, 4.5, 4.3, 4.4, 4.6, 4.5, 4.7, 4.6];
+    // Multi-year data with realistic healthcare patterns
+    const yearData = {
+        2024: {
+            satisfaction: [4.1, 4.2, 4.0, 4.3, 4.4, 4.5, 4.3, 4.4, 4.6, 4.5, 4.7, 4.6],
+            revenue: [8.2, 7.8, 8.5, 9.1, 9.8, 10.2, 9.9, 10.5, 11.2, 10.8, 11.5, 12.1],
+            volume: [2100, 1950, 2200, 2350, 2500, 2650, 2550, 2700, 2850, 2750, 2900, 3050]
+        },
+        2023: {
+            satisfaction: [3.9, 4.0, 3.8, 4.1, 4.2, 4.3, 4.1, 4.2, 4.4, 4.3, 4.5, 4.4],
+            revenue: [7.8, 7.4, 8.0, 8.6, 9.2, 9.6, 9.3, 9.9, 10.5, 10.2, 10.8, 11.4],
+            volume: [1950, 1800, 2050, 2200, 2350, 2500, 2400, 2550, 2700, 2600, 2750, 2900]
+        },
+        2022: {
+            satisfaction: [3.7, 3.8, 3.6, 3.9, 4.0, 4.1, 3.9, 4.0, 4.2, 4.1, 4.3, 4.2],
+            revenue: [7.2, 6.8, 7.4, 8.0, 8.6, 9.0, 8.7, 9.3, 9.9, 9.6, 10.2, 10.8],
+            volume: [1800, 1650, 1900, 2050, 2200, 2350, 2250, 2400, 2550, 2450, 2600, 2750]
+        }
+    };
     
-    // Revenue in millions with seasonal healthcare patterns (winter higher due to flu, etc.)
-    const revenueData = [8.2, 7.8, 8.5, 9.1, 9.8, 10.2, 9.9, 10.5, 11.2, 10.8, 11.5, 12.1];
-    
-    // Patient volume with seasonal variation
-    const patientVolumeData = [2100, 1950, 2200, 2350, 2500, 2650, 2550, 2700, 2850, 2750, 2900, 3050];
+    const currentData = yearData[selectedYear];
     
     destroyChart('trendsChart');
     chartInstances.trendsChart = new Chart(ctx, {
@@ -558,7 +571,7 @@ function createTrendsChart() {
             labels: months,
             datasets: [{
                 label: 'Patient Satisfaction',
-                data: satisfactionData,
+                data: currentData.satisfaction,
                 borderColor: 'rgba(34, 197, 94, 1)',
                 backgroundColor: 'rgba(34, 197, 94, 0.1)',
                 borderWidth: 4,
@@ -572,7 +585,7 @@ function createTrendsChart() {
                 fill: true
             }, {
                 label: 'Revenue ($M)',
-                data: revenueData,
+                data: currentData.revenue,
                 borderColor: 'rgba(59, 130, 246, 1)',
                 backgroundColor: 'rgba(59, 130, 246, 0.1)',
                 borderWidth: 4,
@@ -586,7 +599,7 @@ function createTrendsChart() {
                 fill: true
             }, {
                 label: 'Patient Volume',
-                data: patientVolumeData,
+                data: currentData.volume,
                 borderColor: 'rgba(139, 92, 246, 1)',
                 backgroundColor: 'rgba(139, 92, 246, 0.1)',
                 borderWidth: 4,
@@ -638,7 +651,7 @@ function createTrendsChart() {
                     usePointStyle: true,
                     callbacks: {
                         title: function(context) {
-                            return `${context[0].label} 2024 Performance`;
+                            return `${context[0].label} ${selectedYear} Performance`;
                         },
                         label: function(context) {
                             let value = context.parsed.y;
@@ -651,8 +664,9 @@ function createTrendsChart() {
                             }
                         },
                         afterBody: function(context) {
-                            if (context[0].dataIndex === context[0].dataset.data.length - 1) {
-                                return ['', '📈 Strong year-end performance!'];
+                            const monthIndex = context[0].dataIndex;
+                            if (monthIndex === 11) { // December
+                                return ['', '🎉 Year-end performance summary!'];
                             }
                             return [];
                         }
@@ -725,8 +739,14 @@ function createTrendsChart() {
                     type: 'linear', 
                     display: false, 
                     position: 'right',
-                    min: 1800,
+                    min: 1500,
                     max: 3200
+                }
+            },
+            elements: {
+                point: {
+                    hoverBackgroundColor: '#ffffff',
+                    hoverBorderWidth: 4
                 }
             }
         }
@@ -2125,3 +2145,26 @@ function showError(message) {
     
     document.body.appendChild(errorDiv);
 }
+
+/**
+ * Change Trends Chart Year
+ * Updates the performance trends chart to show data for the selected year
+ */
+function changeTrendsYear(year) {
+    // Update current year
+    currentTrendsYear = year;
+    
+    // Update active tab styling
+    document.querySelectorAll('.year-tab').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    document.querySelector(`[data-year="${year}"]`).classList.add('active');
+    
+    // Recreate the trends chart with new year data
+    createTrendsChart(year);
+    
+    console.log(`📅 Trends chart updated to show ${year} data`);
+}
+
+// Make function globally available
+window.changeTrendsYear = changeTrendsYear;
