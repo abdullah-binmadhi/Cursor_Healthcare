@@ -1,5 +1,7 @@
 /**
- * Healthcare Analytics Dashboard JavaScript
+ * Healthcare Analytics Dashboard JavaScript - Version 2.1
+ * Enhanced Charts with Smart Color Coding & Professional Design
+ * Last Updated: 2025-08-25
  * Handles interactive dashboards, charts, and KPI calculations
  */
 
@@ -15,6 +17,7 @@ let chartInstances = {};
 
 // Initialize dashboard
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('🎨 Healthcare Dashboard v2.1 - Enhanced Charts Loading...');
     initializeDashboard();
 });
 
