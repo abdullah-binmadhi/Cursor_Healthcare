@@ -24,6 +24,88 @@ let isInitialized = false;
 let currentDashboard = null;
 let currentTrendsYear = 2024; // Track current year for trends chart
 
+// Comprehensive year-based healthcare data for synchronized dashboard updates
+const healthcareDataByYear = {
+    2024: {
+        departments: [
+            { department_name: 'Cardiology', patient_satisfaction: 4.2, current_occupancy: 0.85, total_patients: 1250, average_cost: 8500, quality_score: 92 },
+            { department_name: 'Emergency', patient_satisfaction: 3.8, current_occupancy: 0.92, total_patients: 2100, average_cost: 3200, quality_score: 87 },
+            { department_name: 'Surgery', patient_satisfaction: 4.5, current_occupancy: 0.78, total_patients: 890, average_cost: 12500, quality_score: 95 },
+            { department_name: 'Orthopedics', patient_satisfaction: 4.3, current_occupancy: 0.72, total_patients: 680, average_cost: 9800, quality_score: 90 },
+            { department_name: 'Neurology', patient_satisfaction: 4.1, current_occupancy: 0.65, total_patients: 450, average_cost: 11200, quality_score: 88 },
+            { department_name: 'Pediatrics', patient_satisfaction: 4.6, current_occupancy: 0.58, total_patients: 720, average_cost: 4500, quality_score: 93 },
+            { department_name: 'Oncology', patient_satisfaction: 4.4, current_occupancy: 0.82, total_patients: 380, average_cost: 15800, quality_score: 91 }
+        ],
+        physicians: [
+            { first_name: 'Sarah', last_name: 'Johnson', specialty: 'Cardiology', patient_satisfaction: 4.8, success_rate: 96, total_patients: 420 },
+            { first_name: 'Michael', last_name: 'Chen', specialty: 'Surgery', patient_satisfaction: 4.7, success_rate: 98, total_patients: 380 },
+            { first_name: 'Emily', last_name: 'Rodriguez', specialty: 'Pediatrics', patient_satisfaction: 4.9, success_rate: 97, total_patients: 350 },
+            { first_name: 'David', last_name: 'Thompson', specialty: 'Emergency', patient_satisfaction: 4.5, success_rate: 94, total_patients: 650 },
+            { first_name: 'Lisa', last_name: 'Park', specialty: 'Oncology', patient_satisfaction: 4.6, success_rate: 95, total_patients: 280 }
+        ],
+        qualityMetrics: {
+            patientSafety: 94,
+            clinicalExcellence: 91,
+            patientExperience: 88,
+            efficiency: 89,
+            outcomes: 92,
+            innovation: 85
+        }
+    },
+    2023: {
+        departments: [
+            { department_name: 'Cardiology', patient_satisfaction: 4.0, current_occupancy: 0.82, total_patients: 1180, average_cost: 8200, quality_score: 89 },
+            { department_name: 'Emergency', patient_satisfaction: 3.6, current_occupancy: 0.89, total_patients: 1980, average_cost: 3100, quality_score: 84 },
+            { department_name: 'Surgery', patient_satisfaction: 4.3, current_occupancy: 0.75, total_patients: 820, average_cost: 12000, quality_score: 92 },
+            { department_name: 'Orthopedics', patient_satisfaction: 4.1, current_occupancy: 0.69, total_patients: 630, average_cost: 9500, quality_score: 87 },
+            { department_name: 'Neurology', patient_satisfaction: 3.9, current_occupancy: 0.62, total_patients: 410, average_cost: 10800, quality_score: 85 },
+            { department_name: 'Pediatrics', patient_satisfaction: 4.4, current_occupancy: 0.55, total_patients: 680, average_cost: 4300, quality_score: 90 },
+            { department_name: 'Oncology', patient_satisfaction: 4.2, current_occupancy: 0.79, total_patients: 350, average_cost: 15200, quality_score: 88 }
+        ],
+        physicians: [
+            { first_name: 'Sarah', last_name: 'Johnson', specialty: 'Cardiology', patient_satisfaction: 4.6, success_rate: 94, total_patients: 390 },
+            { first_name: 'Michael', last_name: 'Chen', specialty: 'Surgery', patient_satisfaction: 4.5, success_rate: 96, total_patients: 360 },
+            { first_name: 'Emily', last_name: 'Rodriguez', specialty: 'Pediatrics', patient_satisfaction: 4.7, success_rate: 95, total_patients: 320 },
+            { first_name: 'David', last_name: 'Thompson', specialty: 'Emergency', patient_satisfaction: 4.3, success_rate: 92, total_patients: 620 },
+            { first_name: 'Lisa', last_name: 'Park', specialty: 'Oncology', patient_satisfaction: 4.4, success_rate: 93, total_patients: 260 }
+        ],
+        qualityMetrics: {
+            patientSafety: 91,
+            clinicalExcellence: 88,
+            patientExperience: 85,
+            efficiency: 86,
+            outcomes: 89,
+            innovation: 82
+        }
+    },
+    2022: {
+        departments: [
+            { department_name: 'Cardiology', patient_satisfaction: 3.8, current_occupancy: 0.79, total_patients: 1120, average_cost: 7900, quality_score: 86 },
+            { department_name: 'Emergency', patient_satisfaction: 3.4, current_occupancy: 0.86, total_patients: 1850, average_cost: 2900, quality_score: 81 },
+            { department_name: 'Surgery', patient_satisfaction: 4.1, current_occupancy: 0.72, total_patients: 750, average_cost: 11500, quality_score: 89 },
+            { department_name: 'Orthopedics', patient_satisfaction: 3.9, current_occupancy: 0.66, total_patients: 580, average_cost: 9200, quality_score: 84 },
+            { department_name: 'Neurology', patient_satisfaction: 3.7, current_occupancy: 0.59, total_patients: 370, average_cost: 10400, quality_score: 82 },
+            { department_name: 'Pediatrics', patient_satisfaction: 4.2, current_occupancy: 0.52, total_patients: 640, average_cost: 4100, quality_score: 87 },
+            { department_name: 'Oncology', patient_satisfaction: 4.0, current_occupancy: 0.76, total_patients: 320, average_cost: 14800, quality_score: 85 }
+        ],
+        physicians: [
+            { first_name: 'Sarah', last_name: 'Johnson', specialty: 'Cardiology', patient_satisfaction: 4.4, success_rate: 92, total_patients: 360 },
+            { first_name: 'Michael', last_name: 'Chen', specialty: 'Surgery', patient_satisfaction: 4.3, success_rate: 94, total_patients: 340 },
+            { first_name: 'Emily', last_name: 'Rodriguez', specialty: 'Pediatrics', patient_satisfaction: 4.5, success_rate: 93, total_patients: 290 },
+            { first_name: 'David', last_name: 'Thompson', specialty: 'Emergency', patient_satisfaction: 4.1, success_rate: 90, total_patients: 580 },
+            { first_name: 'Lisa', last_name: 'Park', specialty: 'Oncology', patient_satisfaction: 4.2, success_rate: 91, total_patients: 240 }
+        ],
+        qualityMetrics: {
+            patientSafety: 88,
+            clinicalExcellence: 85,
+            patientExperience: 82,
+            efficiency: 83,
+            outcomes: 86,
+            innovation: 79
+        }
+    }
+};
+
 // Performance optimization: Debounce function
 function debounce(func, wait) {
     let timeout;
@@ -212,9 +294,9 @@ function loadHospitalDashboard() {
     // Create charts with available data - Performance optimized
     requestAnimationFrame(() => {
         setTimeout(() => {
-            createDepartmentChart();
-            createTrendsChart();
-            createQualityChart();
+            createDepartmentChart(currentTrendsYear);
+            createTrendsChart(currentTrendsYear);
+            createQualityChart(currentTrendsYear);
             createHospitalChart();
         }, 50); // Reduced timeout for better responsiveness
     });
@@ -313,7 +395,7 @@ function loadPhysicianDashboard() {
     
     // Create physician charts with delay to ensure DOM is ready
     setTimeout(() => {
-        createTopPhysiciansChart();
+        createTopPhysiciansChart(currentTrendsYear);
         createSpecialtyPerformanceChart();
         createWorkloadChart();
         createPhysicianQualityChart();
@@ -323,20 +405,12 @@ function loadPhysicianDashboard() {
 /**
  * Chart creation functions with enhanced design and clarity
  */
-function createDepartmentChart() {
+function createDepartmentChart(selectedYear = 2024) {
     const ctx = document.getElementById('departmentChart');
     if (!ctx) return;
     
-    // Use calculated department data with clear, realistic values and varied data
-    const departments = dashboardData.calculatedDepartments || [
-        { department_name: 'Cardiology', patient_satisfaction: 4.2, current_occupancy: 0.85, total_patients: 1250, average_cost: 8500 },
-        { department_name: 'Emergency', patient_satisfaction: 3.8, current_occupancy: 0.92, total_patients: 2100, average_cost: 3200 },
-        { department_name: 'Surgery', patient_satisfaction: 4.5, current_occupancy: 0.78, total_patients: 890, average_cost: 12500 },
-        { department_name: 'Orthopedics', patient_satisfaction: 4.3, current_occupancy: 0.72, total_patients: 680, average_cost: 9800 },
-        { department_name: 'Neurology', patient_satisfaction: 4.1, current_occupancy: 0.65, total_patients: 450, average_cost: 11200 },
-        { department_name: 'Pediatrics', patient_satisfaction: 4.6, current_occupancy: 0.58, total_patients: 720, average_cost: 4500 },
-        { department_name: 'Oncology', patient_satisfaction: 4.4, current_occupancy: 0.82, total_patients: 380, average_cost: 15800 }
-    ];
+    // Use year-specific department data
+    const departments = healthcareDataByYear[selectedYear]?.departments || healthcareDataByYear[2024].departments;
     
     // Get the selected metric from dropdown
     const metric = document.getElementById('performanceMetric')?.value || 'satisfaction';
@@ -758,7 +832,7 @@ function createTrendsChart(selectedYear = 2024) {
  */
 function updateDepartmentChart() {
     console.log('Updating department chart...');
-    createDepartmentChart();
+    createDepartmentChart(currentTrendsYear);
 }
 
 /**
@@ -834,39 +908,36 @@ function destroyAllCharts() {
 /**
  * Create Enhanced Quality Indicators Chart
  */
-function createQualityChart() {
+function createQualityChart(selectedYear = 2024) {
     const ctx = document.getElementById('qualityChart');
     if (!ctx) return;
     
-    // Calculate realistic quality metrics from hospital data
-    const departments = dashboardData.calculatedDepartments || [];
-    
-    // Calculate meaningful healthcare quality indicators
-    const avgSatisfaction = departments.length > 0 
-        ? (departments.reduce((sum, dept) => sum + dept.patient_satisfaction, 0) / departments.length) * 20
-        : 84; // Default to 84/100
-    
-    const safetyScore = 92;      // Hospital safety rating
-    const efficiencyScore = 87;  // Operational efficiency
-    const readmissionScore = 89; // Low readmission rate (inverted)
-    const qualityScore = 91;     // Overall quality indicators
-    const patientCareScore = 88; // Patient care excellence
+    // Use year-specific quality metrics
+    const yearData = healthcareDataByYear[selectedYear] || healthcareDataByYear[2024];
+    const qualityMetrics = yearData.qualityMetrics;
     
     destroyChart('qualityChart');
     chartInstances.qualityChart = new Chart(ctx, {
         type: 'radar',
         data: {
             labels: [
-                'Patient Satisfaction',
-                'Safety Standards', 
-                'Operational Efficiency',
-                'Care Quality',
+                'Patient Safety',
+                'Clinical Excellence', 
+                'Patient Experience',
+                'Efficiency',
                 'Patient Outcomes',
-                'Service Excellence'
+                'Innovation'
             ],
             datasets: [{
-                label: 'Hospital Performance Score',
-                data: [avgSatisfaction, safetyScore, efficiencyScore, qualityScore, readmissionScore, patientCareScore],
+                label: `${selectedYear} Performance Score`,
+                data: [
+                    qualityMetrics.patientSafety,
+                    qualityMetrics.clinicalExcellence,
+                    qualityMetrics.patientExperience,
+                    qualityMetrics.efficiency,
+                    qualityMetrics.outcomes,
+                    qualityMetrics.innovation
+                ],
                 backgroundColor: 'rgba(34, 197, 94, 0.2)',
                 borderColor: 'rgba(34, 197, 94, 1)',
                 borderWidth: 4,
@@ -880,7 +951,7 @@ function createQualityChart() {
                 pointHoverBorderWidth: 4
             }, {
                 label: 'Industry Benchmark',
-                data: [80, 85, 82, 86, 84, 83], // Industry standard benchmarks
+                data: [85, 83, 80, 82, 84, 78], // Industry standard benchmarks
                 backgroundColor: 'rgba(156, 163, 175, 0.1)',
                 borderColor: 'rgba(156, 163, 175, 1)',
                 borderWidth: 2,
@@ -1770,18 +1841,23 @@ function createRiskAssessmentChart() {
 /**
  * Create Top Physicians Chart
  */
-function createTopPhysiciansChart() {
+function createTopPhysiciansChart(selectedYear = 2024) {
     const ctx = document.getElementById('topPhysiciansChart');
     if (!ctx) return;
     
-    const topPhysicians = dashboardData.physicians
+    // Use year-specific physician data
+    const yearData = healthcareDataByYear[selectedYear] || healthcareDataByYear[2024];
+    const physicians = yearData.physicians;
+    
+    const topPhysicians = physicians
         .sort((a, b) => (b.patient_satisfaction || 0) - (a.patient_satisfaction || 0))
-        .slice(0, 8) // Reduced to 8 for better display
+        .slice(0, 5) // Top 5 physicians
         .map(p => ({
             // Use first name + last initial for compact display
             name: `${p.first_name} ${p.last_name.charAt(0)}.`,
             fullName: `Dr. ${p.first_name} ${p.last_name}`,
-            satisfaction: p.patient_satisfaction || 0
+            satisfaction: p.patient_satisfaction || 0,
+            specialty: p.specialty || 'General'
         }));
     
     destroyChart('topPhysiciansChart');
@@ -1830,7 +1906,8 @@ function createTopPhysiciansChart() {
                     callbacks: {
                         title: function(context) {
                             const index = context[0].dataIndex;
-                            return topPhysicians[index].fullName;
+                            const physician = topPhysicians[index];
+                            return `${physician.fullName} (${physician.specialty})`;
                         },
                         label: function(context) {
                             const score = context.parsed.x;
@@ -1840,7 +1917,7 @@ function createTopPhysiciansChart() {
                             else if (score < 4.5) performance = 'Very Good';
                             
                             return [
-                                `Satisfaction Score: ${score.toFixed(1)}/5.0`,
+                                `${selectedYear} Satisfaction: ${score.toFixed(1)}/5.0`,
                                 `Performance: ${performance} ⭐`
                             ];
                         }
@@ -2148,7 +2225,7 @@ function showError(message) {
 
 /**
  * Change Trends Chart Year
- * Updates the performance trends chart to show data for the selected year
+ * Updates all dashboard charts and KPIs to show data for the selected year
  */
 function changeTrendsYear(year) {
     // Update current year
@@ -2160,10 +2237,40 @@ function changeTrendsYear(year) {
     });
     document.querySelector(`[data-year="${year}"]`).classList.add('active');
     
-    // Recreate the trends chart with new year data
-    createTrendsChart(year);
+    // Get year-specific data
+    const yearData = healthcareDataByYear[year] || healthcareDataByYear[2024];
     
-    console.log(`📅 Trends chart updated to show ${year} data`);
+    // Update KPIs with year-specific data
+    updateKPIsForYear(year, yearData);
+    
+    // Update all synchronized charts with smooth transitions
+    setTimeout(() => {
+        createTrendsChart(year);
+        createDepartmentChart(year);
+        createQualityChart(year);
+        createTopPhysiciansChart(year);
+    }, 100);
+    
+    console.log(`📅 Dashboard synchronized to ${year} data`);
+}
+
+/**
+ * Update KPIs for selected year
+ */
+function updateKPIsForYear(year, yearData) {
+    const departments = yearData.departments;
+    
+    // Calculate year-specific KPIs
+    const totalRevenue = departments.reduce((sum, dept) => sum + (dept.total_patients * dept.average_cost), 0);
+    const avgSatisfaction = departments.reduce((sum, dept) => sum + dept.patient_satisfaction, 0) / departments.length;
+    const avgOccupancy = departments.reduce((sum, dept) => sum + dept.current_occupancy, 0) / departments.length;
+    const qualityScore = departments.reduce((sum, dept) => sum + dept.quality_score, 0) / departments.length;
+    
+    // Update KPI displays with year-specific data
+    updateElement('totalRevenue', formatCurrency(totalRevenue));
+    updateElement('avgSatisfaction', avgSatisfaction.toFixed(1) + '/5.0');
+    updateElement('occupancyRate', (avgOccupancy * 100).toFixed(1) + '%');
+    updateElement('qualityScore', qualityScore.toFixed(1) + '/100');
 }
 
 // Make function globally available
