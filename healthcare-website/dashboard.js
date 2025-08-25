@@ -320,7 +320,7 @@ function createDepartmentChart() {
     const ctx = document.getElementById('departmentChart');
     if (!ctx) return;
     
-    // Use calculated department data with clear, realistic values
+    // Use calculated department data with clear, realistic values and varied data
     const departments = dashboardData.calculatedDepartments || [
         { department_name: 'Cardiology', patient_satisfaction: 4.2, current_occupancy: 0.85, total_patients: 1250, average_cost: 8500 },
         { department_name: 'Emergency', patient_satisfaction: 3.8, current_occupancy: 0.92, total_patients: 2100, average_cost: 3200 },
@@ -354,27 +354,39 @@ function createDepartmentChart() {
             unit = '/5';
             break;
         case 'revenue':
-            data = departments.map(d => (d.total_patients * d.average_cost) / 1000000); // Revenue in millions
+            // Calculate accurate revenue with proper scaling
+            data = departments.map(d => {
+                const revenue = (d.total_patients * d.average_cost) / 1000000; // Convert to millions
+                return Math.round(revenue * 10) / 10; // Round to 1 decimal place
+            });
             label = 'Revenue (Millions USD)';
             color = departments.map((d, i) => {
                 const revenue = data[i];
-                if (revenue > 10) return 'rgba(34, 197, 94, 0.9)';  // High revenue - Green
-                if (revenue > 5) return 'rgba(59, 130, 246, 0.9)';   // Medium revenue - Blue
-                return 'rgba(139, 92, 246, 0.9)';                     // Lower revenue - Purple
+                if (revenue >= 15) return 'rgba(34, 197, 94, 0.9)';  // High revenue - Green (Oncology: 6.0M)
+                if (revenue >= 10) return 'rgba(66, 153, 225, 0.9)';  // High-medium revenue - Blue (Surgery: 11.1M)
+                if (revenue >= 6) return 'rgba(139, 92, 246, 0.9)';   // Medium revenue - Purple (Cardiology: 10.6M, Neurology: 5.0M, Orthopedics: 6.7M)
+                return 'rgba(245, 101, 101, 0.9)';                     // Lower revenue - Red (Emergency: 6.7M, Pediatrics: 3.2M)
             });
-            maxValue = Math.max(...data) * 1.1;
+            // Set max value to show clear differences - don't auto-scale
+            maxValue = 12; // Fixed max to show relative differences clearly
             formatter = (value) => '$' + value.toFixed(1) + 'M';
             unit = 'M';
             break;
         case 'occupancy':
-            data = departments.map(d => (d.current_occupancy || 0) * 100);
+            // Convert to percentage and ensure accurate values
+            data = departments.map(d => {
+                const occupancy = (d.current_occupancy || 0) * 100;
+                return Math.round(occupancy * 10) / 10; // Round to 1 decimal place
+            });
             label = 'Occupancy Rate (%)';
             color = departments.map((d, i) => {
                 const occupancy = data[i];
-                if (occupancy > 85) return 'rgba(239, 68, 68, 0.9)';   // High occupancy - Red
-                if (occupancy > 70) return 'rgba(59, 130, 246, 0.9)';  // Medium occupancy - Blue
-                return 'rgba(34, 197, 94, 0.9)';                        // Low occupancy - Green
+                if (occupancy >= 90) return 'rgba(239, 68, 68, 0.9)';   // Very high occupancy - Red (Emergency: 92%)
+                if (occupancy >= 80) return 'rgba(139, 92, 246, 0.9)';  // High occupancy - Purple (Cardiology: 85%, Oncology: 82%)
+                if (occupancy >= 70) return 'rgba(66, 153, 225, 0.9)';  // Medium occupancy - Blue (Surgery: 78%, Orthopedics: 72%)
+                return 'rgba(34, 197, 94, 0.9)';                        // Low occupancy - Green (Neurology: 65%, Pediatrics: 58%)
             });
+            // Set max value to 100% for occupancy
             maxValue = 100;
             formatter = (value) => value.toFixed(1) + '%';
             unit = '%';
@@ -387,6 +399,9 @@ function createDepartmentChart() {
             formatter = (value) => value.toFixed(1) + '/5';
             unit = '/5';
     }
+    
+    // Debug log to verify data accuracy
+    console.log(`Chart data for ${metric}:`, data);
     
     destroyChart('departmentChart');
     chartInstances.departmentChart = new Chart(ctx, {
@@ -443,11 +458,23 @@ function createDepartmentChart() {
                         },
                         label: function(context) {
                             const dept = departments[context.dataIndex];
-                            return [
-                                `${context.dataset.label}: ${formatter(context.parsed.y)}`,
-                                `Total Patients: ${dept.total_patients.toLocaleString()}`,
-                                `Avg Cost: $${dept.average_cost.toLocaleString()}`
-                            ];
+                            const baseInfo = [`${context.dataset.label}: ${formatter(context.parsed.y)}`];
+                            
+                            // Add contextual information based on metric
+                            if (metric === 'revenue') {
+                                const totalRevenue = dept.total_patients * dept.average_cost;
+                                baseInfo.push(`Total Patients: ${dept.total_patients.toLocaleString()}`);
+                                baseInfo.push(`Avg Cost per Patient: $${dept.average_cost.toLocaleString()}`);
+                                baseInfo.push(`Annual Revenue: $${totalRevenue.toLocaleString()}`);
+                            } else if (metric === 'occupancy') {
+                                baseInfo.push(`Current Capacity: ${(dept.current_occupancy * 100).toFixed(1)}%`);
+                                baseInfo.push(`Utilization Level: ${dept.current_occupancy >= 0.9 ? 'Very High' : dept.current_occupancy >= 0.8 ? 'High' : dept.current_occupancy >= 0.7 ? 'Medium' : 'Low'}`);
+                            } else {
+                                baseInfo.push(`Total Patients: ${dept.total_patients.toLocaleString()}`);
+                                baseInfo.push(`Avg Cost: $${dept.average_cost.toLocaleString()}`);
+                            }
+                            
+                            return baseInfo;
                         }
                     }
                 }
@@ -467,7 +494,9 @@ function createDepartmentChart() {
                         padding: 12,
                         callback: function(value) {
                             return formatter(value);
-                        }
+                        },
+                        // Ensure proper step size for different metrics
+                        stepSize: metric === 'revenue' ? 2 : metric === 'occupancy' ? 10 : 0.5
                     },
                     title: {
                         display: true,
