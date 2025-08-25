@@ -1,7 +1,8 @@
 /**
- * Healthcare Analytics Dashboard JavaScript - Version 2.1
+ * Healthcare Analytics Dashboard JavaScript - Version 2.2
  * Enhanced Charts with Smart Color Coding & Professional Design
- * Last Updated: 2025-08-25
+ * CHART FIXES: Accurate Revenue & Occupancy Data Display
+ * Last Updated: 2025-08-25 15:30 - Department Chart Data Fixed
  * Handles interactive dashboards, charts, and KPI calculations
  */
 
