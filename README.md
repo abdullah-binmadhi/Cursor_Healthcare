@@ -45,11 +45,6 @@ Then visit `http://localhost:8080`
 - **Design**: Modern glassmorphism with responsive layout
 - **Deployment**: GitHub Pages
 
-## 📧 Contact
-
-**Email**: support@healthcareanalytics.com  
-**Phone**: (555) 123-4567
-
 ---
 
 *Making healthcare transparent, accessible, and data-driven.*
