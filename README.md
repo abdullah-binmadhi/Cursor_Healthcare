@@ -14,9 +14,10 @@ Experience our interactive healthcare platform featuring:
 
 ### Website Features
 - **Cost Estimation**: Input age, insurance type, department, and procedure for instant cost breakdowns
-- **Physician Directory**: Search 50+ doctors across 7 specialties with ratings and availability
+- **Physician Directory**: Search 150+ doctors across 7 specialties and 8 hospitals with ratings and availability
 - **Transparent Pricing**: Clear breakdown of total costs, insurance coverage, and patient costs
 - **Performance Metrics**: Doctor success rates, patient satisfaction scores, and wait times
+- **Hospital Network**: Filter physicians by hospital affiliation across 8 medical centers
 
 ## Overview
 
