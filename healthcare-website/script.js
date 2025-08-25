@@ -141,7 +141,7 @@ function setupEventListeners() {
     }
     
     // Doctor search filters
-    const filters = ['specialtyFilter', 'departmentFilter', 'ratingFilter', 'availabilityFilter'];
+    const filters = ['specialtyFilter', 'hospitalFilter', 'ratingFilter', 'availabilityFilter'];
     filters.forEach(filterId => {
         const element = document.getElementById(filterId);
         if (element) {
@@ -276,7 +276,7 @@ function displayCostResults(estimate) {
  */
 function searchDoctors() {
     const specialty = document.getElementById('specialtyFilter').value;
-    const department = document.getElementById('departmentFilter').value;
+    const hospital = document.getElementById('hospitalFilter').value;
     const minRating = parseFloat(document.getElementById('ratingFilter').value) || 0;
     const availability = document.getElementById('availabilityFilter').value;
     
@@ -285,8 +285,8 @@ function searchDoctors() {
         // Specialty filter
         if (specialty && doctor.specialty !== specialty) return false;
         
-        // Department filter
-        if (department && doctor.department !== department) return false;
+        // Hospital filter
+        if (hospital && doctor.hospital !== hospital) return false;
         
         // Rating filter
         if (doctor.patient_satisfaction < minRating) return false;
@@ -355,7 +355,7 @@ function createDoctorCard(doctor) {
             <div class="doctor-info">
                 <h4>Dr. ${doctor.first_name} ${doctor.last_name}</h4>
                 <div class="doctor-specialty">${doctor.specialty}</div>
-                <div class="doctor-department">${doctor.department} Department</div>
+                <div class="doctor-hospital">${doctor.hospital}</div>
             </div>
             <div class="doctor-rating">
                 <div class="rating-stars">${stars}</div>

@@ -1,51 +1,51 @@
 age_group,gender,insurance_type,patient_count,avg_annual_cost,common_conditions,readmission_rate,satisfaction_score
-0-18,Male,Medicare,208,7567,Heart Disease,5.1,4.6
-0-18,Male,Medicaid,339,8566,Diabetes,7.1,4.3
-0-18,Male,Private Insurance,65,3503,Injury,8.2,4.0
-0-18,Male,Self-Pay,224,4578,Heart Disease,9.7,3.9
-0-18,Male,Commercial,340,11768,Diabetes,18.3,3.7
-0-18,Female,Medicare,436,2815,Diabetes,9.1,4.4
-0-18,Female,Medicaid,298,11946,Cancer,11.2,3.8
-0-18,Female,Private Insurance,312,3864,Heart Disease,11.4,3.9
-0-18,Female,Self-Pay,397,11717,Cancer,12.9,3.9
-0-18,Female,Commercial,162,8475,Injury,5.8,3.8
-19-30,Male,Medicare,158,4248,Heart Disease,9.3,3.7
-19-30,Male,Medicaid,304,9055,Hypertension,6.9,4.2
-19-30,Male,Private Insurance,167,10196,Injury,17.5,4.5
-19-30,Male,Self-Pay,86,8505,Diabetes,11.5,4.1
-19-30,Male,Commercial,89,7129,Injury,11.4,4.0
-19-30,Female,Medicare,377,8843,Heart Disease,6.7,3.5
-19-30,Female,Medicaid,216,4815,Injury,11.9,4.4
-19-30,Female,Private Insurance,235,3443,Cancer,17.7,3.8
-19-30,Female,Self-Pay,351,8560,Injury,6.2,4.6
-19-30,Female,Commercial,431,7562,Hypertension,10.0,3.7
-31-50,Male,Medicare,311,3868,Injury,12.6,4.7
-31-50,Male,Medicaid,228,7752,Hypertension,8.5,3.7
-31-50,Male,Private Insurance,151,4842,Injury,7.3,4.5
-31-50,Male,Self-Pay,88,4902,Cancer,12.0,4.2
-31-50,Male,Commercial,346,9354,Injury,14.6,4.8
-31-50,Female,Medicare,215,7179,Hypertension,11.6,4.1
-31-50,Female,Medicaid,373,6961,Heart Disease,13.9,4.0
-31-50,Female,Private Insurance,87,7085,Cancer,11.8,3.6
-31-50,Female,Self-Pay,475,6703,Diabetes,14.7,4.8
-31-50,Female,Commercial,96,11733,Injury,10.8,4.3
-51-65,Male,Medicare,455,2672,Cancer,18.6,4.2
-51-65,Male,Medicaid,146,7267,Injury,12.1,3.7
-51-65,Male,Private Insurance,81,9381,Diabetes,17.2,4.6
-51-65,Male,Self-Pay,415,3381,Injury,14.7,3.6
-51-65,Male,Commercial,412,9172,Cancer,12.9,4.3
-51-65,Female,Medicare,236,8108,Heart Disease,10.8,4.5
-51-65,Female,Medicaid,397,11795,Diabetes,16.8,4.3
-51-65,Female,Private Insurance,83,7401,Diabetes,13.4,4.0
-51-65,Female,Self-Pay,179,11874,Hypertension,10.0,4.3
-51-65,Female,Commercial,122,7731,Heart Disease,19.5,4.4
-65+,Male,Medicare,250,4112,Injury,15.6,3.6
-65+,Male,Medicaid,336,8171,Heart Disease,17.2,4.4
-65+,Male,Private Insurance,474,10624,Diabetes,14.7,4.1
-65+,Male,Self-Pay,235,2298,Heart Disease,9.6,4.7
-65+,Male,Commercial,224,9967,Hypertension,8.4,3.7
-65+,Female,Medicare,89,6846,Diabetes,12.6,4.2
-65+,Female,Medicaid,428,10626,Diabetes,14.9,4.6
-65+,Female,Private Insurance,366,4147,Injury,10.7,3.7
-65+,Female,Self-Pay,475,4712,Cancer,5.7,4.0
-65+,Female,Commercial,418,5891,Cancer,14.2,4.5
+0-18,Male,Medicare,175,10180,Injury,14.8,4.4
+0-18,Male,Medicaid,181,10005,Cancer,11.9,4.5
+0-18,Male,Private Insurance,230,4773,Hypertension,15.8,4.1
+0-18,Male,Self-Pay,327,2962,Injury,5.5,4.6
+0-18,Male,Commercial,468,2794,Diabetes,11.2,4.6
+0-18,Female,Medicare,168,3113,Hypertension,5.1,4.2
+0-18,Female,Medicaid,241,2990,Injury,14.6,4.7
+0-18,Female,Private Insurance,297,9993,Diabetes,5.1,4.2
+0-18,Female,Self-Pay,56,2274,Injury,15.8,4.2
+0-18,Female,Commercial,196,2280,Injury,17.2,4.4
+19-30,Male,Medicare,462,4937,Diabetes,18.8,4.2
+19-30,Male,Medicaid,173,5144,Injury,12.9,4.6
+19-30,Male,Private Insurance,186,8502,Diabetes,10.6,4.0
+19-30,Male,Self-Pay,339,5984,Hypertension,9.5,4.6
+19-30,Male,Commercial,91,2519,Diabetes,11.1,4.0
+19-30,Female,Medicare,293,2919,Diabetes,15.5,3.6
+19-30,Female,Medicaid,482,9109,Heart Disease,13.5,4.6
+19-30,Female,Private Insurance,98,10653,Diabetes,8.4,4.7
+19-30,Female,Self-Pay,404,11286,Cancer,9.1,4.7
+19-30,Female,Commercial,400,6593,Injury,13.5,3.5
+31-50,Male,Medicare,485,7152,Diabetes,19.4,4.3
+31-50,Male,Medicaid,435,8525,Diabetes,9.5,4.2
+31-50,Male,Private Insurance,340,8375,Injury,10.0,4.5
+31-50,Male,Self-Pay,121,3284,Injury,16.2,3.9
+31-50,Male,Commercial,100,9161,Hypertension,17.6,3.9
+31-50,Female,Medicare,443,11758,Cancer,19.5,3.9
+31-50,Female,Medicaid,374,6478,Cancer,12.4,4.0
+31-50,Female,Private Insurance,242,9075,Hypertension,15.2,4.4
+31-50,Female,Self-Pay,93,6839,Hypertension,15.7,3.6
+31-50,Female,Commercial,128,8225,Hypertension,16.1,3.9
+51-65,Male,Medicare,104,3499,Diabetes,19.1,4.1
+51-65,Male,Medicaid,439,6419,Diabetes,7.0,3.7
+51-65,Male,Private Insurance,279,11125,Injury,12.7,3.6
+51-65,Male,Self-Pay,95,7798,Injury,6.4,4.3
+51-65,Male,Commercial,216,8311,Diabetes,9.4,4.0
+51-65,Female,Medicare,93,11167,Hypertension,13.6,3.7
+51-65,Female,Medicaid,244,4777,Hypertension,9.0,3.8
+51-65,Female,Private Insurance,124,3036,Hypertension,11.5,4.0
+51-65,Female,Self-Pay,297,3260,Heart Disease,8.8,3.8
+51-65,Female,Commercial,370,10123,Injury,14.3,4.1
+65+,Male,Medicare,119,6991,Diabetes,19.2,3.9
+65+,Male,Medicaid,367,8224,Heart Disease,11.6,4.1
+65+,Male,Private Insurance,471,11738,Hypertension,9.5,4.3
+65+,Male,Self-Pay,405,5290,Cancer,9.7,4.8
+65+,Male,Commercial,213,6775,Cancer,19.5,4.5
+65+,Female,Medicare,216,8161,Heart Disease,17.2,4.0
+65+,Female,Medicaid,108,11238,Hypertension,13.9,4.2
+65+,Female,Private Insurance,399,11012,Diabetes,19.3,4.1
+65+,Female,Self-Pay,412,5434,Cancer,17.0,4.6
+65+,Female,Commercial,85,8703,Cancer,7.1,3.9

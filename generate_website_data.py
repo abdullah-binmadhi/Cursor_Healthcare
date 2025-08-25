@@ -24,6 +24,11 @@ def generate_sample_data():
     departments = ['Cardiology', 'Emergency', 'Surgery', 'Orthopedics', 
                   'Neurology', 'Pediatrics', 'Oncology']
     
+    hospitals = ['City General Hospital', 'St. Mary\'s Medical Center', 
+                'University Health System', 'Memorial Hospital', 
+                'Regional Medical Center', 'Community Health Hospital',
+                'Metropolitan Medical Center', 'Riverside Hospital']
+    
     insurance_types = ['Medicare', 'Medicaid', 'Private Insurance', 'Self-Pay', 'Commercial']
     
     procedures = ['Consultation', 'Diagnostic Test', 'Minor Surgery', 
@@ -31,7 +36,7 @@ def generate_sample_data():
     
     # Generate physician data
     physician_data = []
-    for i in range(50):
+    for i in range(150):
         specialty = random.choice(specialties)
         department = specialty if specialty != 'Emergency Medicine' else 'Emergency'
         
@@ -41,6 +46,7 @@ def generate_sample_data():
             'last_name': random.choice(['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis']),
             'specialty': specialty,
             'department': department,
+            'hospital': random.choice(hospitals),
             'years_experience': random.randint(5, 30),
             'patient_satisfaction': round(random.uniform(3.5, 5.0), 1),
             'complication_rate': round(random.uniform(0.5, 5.0), 2),
@@ -176,7 +182,7 @@ def main():
     
     print("✅ All CSV files created successfully!")
     print("\nFiles created:")
-    print("- physician_performance.csv: Doctor profiles with ratings and metrics")
+    print("- physician_performance.csv: Doctor profiles with ratings and metrics (150 doctors)")
     print("- department_metrics.csv: Department performance and capacity data")
     print("- financial_performance.csv: Cost estimates by department, insurance, and procedure")
     print("- patient_demographics.csv: Patient population statistics")

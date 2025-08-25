@@ -12,11 +12,11 @@ A comprehensive healthcare cost estimation and doctor finder platform built with
 - **Cost Factors**: Clear explanation of factors affecting final costs
 
 ### 2. Doctor Finder & Rating System
-- **Searchable Physician Directory**: Filter by specialty, department, and availability
+- **Searchable Physician Directory**: Filter by specialty, hospital, and availability
 - **Performance Metrics**: Patient satisfaction scores, success rates, and experience years
 - **Availability Tracking**: Real-time appointment availability status
 - **Specialty Recommendations**: Find doctors based on medical needs
-- **Comprehensive Profiles**: Detailed doctor information with patient feedback
+- **Comprehensive Profiles**: Detailed doctor information with patient feedback across 8 hospitals
 
 ## 🛠 Technology Stack
 
@@ -96,22 +96,24 @@ healthcare-website/
 1. **Navigate** to the "Find Doctors" section
 2. **Use filters** to narrow your search:
    - Specialty (Cardiology, Surgery, etc.)
-   - Department
+   - Hospital (8 different hospital locations)
    - Minimum rating (3+, 4+, 4.5+ stars)
    - Availability status
 3. **Browse results** showing:
    - Doctor names and credentials
    - Patient satisfaction ratings
    - Success rates and experience
+   - Hospital affiliation
    - Current availability status
 
 ## 📊 Data Sources
 
 The website uses realistic sample data including:
 
-- **50 physician profiles** with performance metrics
+- **150 physician profiles** with performance metrics across 8 hospitals
 - **210 cost combinations** across departments, insurance types, and procedures
 - **7 department categories** with capacity and quality metrics
+- **8 hospital locations** for comprehensive physician search
 - **Patient demographics** across age groups and insurance types
 - **Quality indicators** for healthcare performance tracking
 

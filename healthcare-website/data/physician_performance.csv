@@ -1,51 +1,151 @@
-physician_id,first_name,last_name,specialty,department,years_experience,patient_satisfaction,complication_rate,average_wait_time,availability_status,total_patients,success_rate
-DOC001,Jane,Smith,Pediatrics,Pediatrics,28,3.9,1.5,109,Available,1885,95.4
-DOC002,Jane,Miller,Neurology,Neurology,6,3.5,1.48,79,Unavailable,554,92.9
-DOC003,Robert,Brown,Pediatrics,Pediatrics,19,4.4,4.14,15,Available,1929,90.9
-DOC004,Michael,Brown,Surgery,Surgery,29,4.0,0.92,27,Limited,1204,93.5
-DOC005,John,Davis,Oncology,Oncology,22,3.7,4.65,25,Unavailable,1100,96.6
-DOC006,Emily,Brown,Neurology,Neurology,27,3.6,3.48,113,Limited,663,97.0
-DOC007,Jane,Miller,Oncology,Oncology,13,4.2,4.25,35,Limited,1227,87.9
-DOC008,Jane,Williams,Surgery,Surgery,22,4.6,1.24,63,Limited,1810,94.6
-DOC009,Emily,Smith,Emergency Medicine,Emergency,12,4.7,4.12,66,Limited,635,88.0
-DOC010,Emily,Brown,Neurology,Neurology,25,4.2,4.48,97,Limited,792,88.7
-DOC011,David,Miller,Emergency Medicine,Emergency,23,4.1,1.49,32,Unavailable,1510,86.3
-DOC012,Jane,Williams,Cardiology,Cardiology,25,3.7,3.56,91,Available,1288,90.3
-DOC013,David,Smith,Orthopedics,Orthopedics,26,4.6,3.57,83,Limited,1812,89.8
-DOC014,Robert,Williams,Surgery,Surgery,19,3.5,3.75,107,Limited,1525,95.7
-DOC015,Jane,Jones,Neurology,Neurology,25,4.3,1.4,62,Available,1604,98.3
-DOC016,John,Garcia,Neurology,Neurology,20,3.5,4.68,118,Limited,990,85.8
-DOC017,Jane,Johnson,Neurology,Neurology,28,4.2,0.81,112,Unavailable,757,86.8
-DOC018,Michael,Jones,Orthopedics,Orthopedics,21,4.8,2.4,42,Unavailable,1994,94.7
-DOC019,David,Miller,Pediatrics,Pediatrics,26,4.5,2.47,81,Limited,747,88.5
-DOC020,Emily,Smith,Cardiology,Cardiology,23,4.3,3.15,15,Available,1949,93.8
-DOC021,Jane,Smith,Emergency Medicine,Emergency,15,3.6,1.57,100,Limited,938,92.5
-DOC022,Lisa,Brown,Pediatrics,Pediatrics,30,4.2,2.33,27,Available,1849,91.0
-DOC023,Robert,Davis,Orthopedics,Orthopedics,28,3.6,3.44,97,Available,624,90.6
-DOC024,Jane,Brown,Surgery,Surgery,11,3.8,2.52,69,Available,1070,91.5
-DOC025,Jane,Davis,Oncology,Oncology,30,4.8,2.98,21,Unavailable,1607,96.7
-DOC026,Sarah,Williams,Cardiology,Cardiology,18,4.2,1.46,66,Available,837,90.3
-DOC027,David,Davis,Orthopedics,Orthopedics,14,4.1,4.81,115,Unavailable,1855,95.1
-DOC028,Sarah,Jones,Emergency Medicine,Emergency,11,5.0,3.11,84,Available,1142,85.8
-DOC029,Lisa,Williams,Neurology,Neurology,6,4.9,0.86,38,Available,1718,86.0
-DOC030,Sarah,Miller,Oncology,Oncology,8,4.9,3.06,89,Unavailable,581,93.7
-DOC031,Emily,Jones,Orthopedics,Orthopedics,11,4.5,1.91,48,Limited,768,94.4
-DOC032,Lisa,Garcia,Surgery,Surgery,29,4.9,0.54,94,Unavailable,704,86.0
-DOC033,David,Williams,Emergency Medicine,Emergency,16,4.8,4.46,62,Limited,823,91.1
-DOC034,David,Smith,Neurology,Neurology,26,4.7,1.85,99,Available,775,88.7
-DOC035,Michael,Jones,Cardiology,Cardiology,14,4.4,3.73,41,Unavailable,1798,96.9
-DOC036,Lisa,Jones,Neurology,Neurology,6,3.6,2.41,50,Available,507,89.7
-DOC037,David,Williams,Emergency Medicine,Emergency,28,4.2,3.68,86,Available,729,86.1
-DOC038,Michael,Smith,Pediatrics,Pediatrics,16,4.4,1.17,31,Available,1131,90.1
-DOC039,John,Garcia,Oncology,Oncology,11,4.5,3.5,60,Unavailable,1332,98.6
-DOC040,Michael,Brown,Pediatrics,Pediatrics,10,5.0,4.15,67,Available,867,95.3
-DOC041,Robert,Brown,Surgery,Surgery,13,3.7,3.66,63,Available,1463,88.1
-DOC042,Lisa,Garcia,Oncology,Oncology,14,4.7,4.42,43,Available,1851,87.7
-DOC043,David,Johnson,Surgery,Surgery,29,3.9,3.39,66,Unavailable,1598,89.6
-DOC044,Jane,Jones,Cardiology,Cardiology,10,4.4,4.93,19,Available,1721,91.1
-DOC045,Emily,Miller,Pediatrics,Pediatrics,24,5.0,1.02,88,Available,1021,85.6
-DOC046,John,Brown,Orthopedics,Orthopedics,16,4.1,4.77,57,Unavailable,1142,94.3
-DOC047,David,Jones,Cardiology,Cardiology,26,4.1,2.31,52,Unavailable,760,87.7
-DOC048,Robert,Williams,Pediatrics,Pediatrics,24,4.4,2.33,15,Limited,1087,87.9
-DOC049,Emily,Davis,Oncology,Oncology,19,4.2,1.46,75,Unavailable,847,94.2
-DOC050,Emily,Johnson,Surgery,Surgery,29,3.9,1.9,118,Available,801,85.3
+physician_id,first_name,last_name,specialty,department,hospital,years_experience,patient_satisfaction,complication_rate,average_wait_time,availability_status,total_patients,success_rate
+DOC001,Jane,Smith,Pediatrics,Pediatrics,Regional Medical Center,12,3.8,3.81,101,Unavailable,1616,86.2
+DOC002,John,Smith,Orthopedics,Orthopedics,St. Mary's Medical Center,11,3.8,3.21,86,Available,1966,94.1
+DOC003,Robert,Brown,Neurology,Neurology,Riverside Hospital,23,3.9,4.41,112,Available,1929,90.9
+DOC004,Michael,Brown,Surgery,Surgery,Community Health Hospital,8,3.6,0.94,59,Unavailable,1041,96.3
+DOC005,Lisa,Johnson,Pediatrics,Pediatrics,Metropolitan Medical Center,7,4.3,4.23,94,Limited,1682,87.7
+DOC006,John,Brown,Cardiology,Cardiology,Regional Medical Center,7,4.8,4.4,63,Limited,1428,93.9
+DOC007,Michael,Garcia,Surgery,Surgery,Community Health Hospital,11,4.5,3.66,102,Unavailable,646,93.5
+DOC008,Sarah,Williams,Emergency Medicine,Emergency,Riverside Hospital,17,3.9,4.66,103,Unavailable,949,94.6
+DOC009,John,Brown,Oncology,Oncology,City General Hospital,30,4.0,1.7,42,Unavailable,1970,89.4
+DOC010,Lisa,Miller,Pediatrics,Pediatrics,Riverside Hospital,9,3.9,1.61,86,Unavailable,1038,95.5
+DOC011,Robert,Garcia,Orthopedics,Orthopedics,Memorial Hospital,9,4.3,0.91,21,Available,813,93.8
+DOC012,Robert,Johnson,Oncology,Oncology,Metropolitan Medical Center,17,4.4,2.61,47,Unavailable,523,94.5
+DOC013,David,Garcia,Cardiology,Cardiology,St. Mary's Medical Center,14,4.2,2.54,107,Unavailable,1039,98.6
+DOC014,Michael,Johnson,Oncology,Oncology,Regional Medical Center,25,4.3,1.4,62,Available,1604,98.3
+DOC015,John,Garcia,Neurology,Neurology,Riverside Hospital,5,3.7,2.13,118,Limited,990,85.8
+DOC016,Jane,Johnson,Neurology,Neurology,Riverside Hospital,7,5.0,2.9,31,Available,1851,91.7
+DOC017,Michael,Jones,Neurology,Neurology,Metropolitan Medical Center,11,4.9,3.9,103,Available,1960,89.4
+DOC018,Emily,Davis,Pediatrics,Pediatrics,Riverside Hospital,8,3.9,0.79,17,Unavailable,1634,88.2
+DOC019,John,Johnson,Emergency Medicine,Emergency,City General Hospital,12,3.6,0.64,57,Available,1552,88.3
+DOC020,Lisa,Brown,Pediatrics,Pediatrics,University Health System,28,4.9,3.07,75,Available,1468,96.3
+DOC021,Jane,Johnson,Emergency Medicine,Emergency,Metropolitan Medical Center,16,4.1,2.6,108,Available,1879,94.1
+DOC022,Jane,Smith,Pediatrics,Pediatrics,Metropolitan Medical Center,28,4.0,4.38,46,Available,889,92.5
+DOC023,Robert,Williams,Emergency Medicine,Emergency,Regional Medical Center,19,3.9,4.65,71,Unavailable,700,85.7
+DOC024,John,Johnson,Neurology,Neurology,Memorial Hospital,10,4.1,2.67,66,Available,837,90.3
+DOC025,David,Davis,Orthopedics,Orthopedics,Regional Medical Center,18,4.5,3.79,115,Unavailable,1855,95.1
+DOC026,Sarah,Jones,Emergency Medicine,Emergency,Memorial Hospital,6,4.4,2.94,110,Limited,617,85.7
+DOC027,Michael,Smith,Orthopedics,Orthopedics,St. Mary's Medical Center,10,3.6,0.81,45,Limited,745,98.2
+DOC028,Sarah,Smith,Neurology,Neurology,St. Mary's Medical Center,18,4.5,3.04,55,Limited,918,94.4
+DOC029,Sarah,Jones,Surgery,Surgery,Metropolitan Medical Center,9,4.5,1.85,55,Available,519,91.4
+DOC030,Jane,Johnson,Neurology,Neurology,Memorial Hospital,21,3.9,4.7,23,Available,1256,89.0
+DOC031,David,Smith,Orthopedics,Orthopedics,Regional Medical Center,26,3.7,4.45,48,Available,719,95.4
+DOC032,David,Jones,Emergency Medicine,Emergency,Memorial Hospital,27,4.0,3.59,48,Unavailable,1500,88.5
+DOC033,John,Johnson,Oncology,Oncology,Metropolitan Medical Center,13,3.6,2.0,31,Unavailable,1036,87.3
+DOC034,Robert,Smith,Orthopedics,Orthopedics,St. Mary's Medical Center,7,4.9,3.61,34,Unavailable,573,96.7
+DOC035,Michael,Miller,Neurology,Neurology,University Health System,6,4.0,4.55,116,Available,1232,87.9
+DOC036,Jane,Garcia,Emergency Medicine,Emergency,Metropolitan Medical Center,24,4.6,4.67,45,Available,862,97.3
+DOC037,Michael,Garcia,Cardiology,Cardiology,Metropolitan Medical Center,30,4.5,3.81,46,Limited,826,96.0
+DOC038,Robert,Smith,Cardiology,Cardiology,Riverside Hospital,12,3.8,4.63,59,Limited,966,88.1
+DOC039,Sarah,Miller,Pediatrics,Pediatrics,Community Health Hospital,13,4.8,4.85,50,Limited,1813,92.1
+DOC040,Emily,Smith,Pediatrics,Pediatrics,St. Mary's Medical Center,13,3.8,4.83,48,Available,722,93.4
+DOC041,Emily,Miller,Surgery,Surgery,St. Mary's Medical Center,17,4.8,1.36,20,Unavailable,1393,85.0
+DOC042,Sarah,Garcia,Oncology,Oncology,Metropolitan Medical Center,7,4.9,4.64,94,Limited,1858,96.9
+DOC043,David,Jones,Pediatrics,Pediatrics,Metropolitan Medical Center,15,4.1,1.83,31,Available,1361,94.3
+DOC044,Michael,Jones,Orthopedics,Orthopedics,Metropolitan Medical Center,22,4.8,1.87,41,Limited,1687,93.5
+DOC045,Lisa,Davis,Surgery,Surgery,Riverside Hospital,26,3.8,2.63,116,Unavailable,847,94.2
+DOC046,Emily,Johnson,Surgery,Surgery,Memorial Hospital,26,4.0,4.13,33,Available,594,88.4
+DOC047,Jane,Davis,Orthopedics,Orthopedics,Metropolitan Medical Center,25,4.4,3.73,64,Limited,1318,88.4
+DOC048,John,Johnson,Pediatrics,Pediatrics,Metropolitan Medical Center,12,3.8,4.81,81,Limited,602,92.8
+DOC049,Jane,Davis,Oncology,Oncology,University Health System,30,4.2,2.89,86,Unavailable,1149,98.3
+DOC050,Robert,Davis,Orthopedics,Orthopedics,University Health System,28,4.8,2.53,111,Available,1805,88.9
+DOC051,Lisa,Brown,Oncology,Oncology,Regional Medical Center,19,3.6,1.79,49,Limited,1154,97.5
+DOC052,Michael,Williams,Cardiology,Cardiology,Memorial Hospital,17,4.5,3.68,23,Limited,1334,89.6
+DOC053,Robert,Smith,Orthopedics,Orthopedics,Memorial Hospital,18,4.1,3.96,104,Available,1679,90.3
+DOC054,Emily,Jones,Cardiology,Cardiology,Metropolitan Medical Center,18,4.3,3.81,117,Unavailable,951,91.8
+DOC055,Robert,Davis,Surgery,Surgery,City General Hospital,17,4.0,3.56,66,Unavailable,838,96.8
+DOC056,John,Miller,Emergency Medicine,Emergency,City General Hospital,7,4.5,1.11,74,Available,602,88.6
+DOC057,Sarah,Davis,Surgery,Surgery,Community Health Hospital,15,4.6,2.21,111,Limited,1016,96.7
+DOC058,John,Smith,Orthopedics,Orthopedics,Community Health Hospital,12,4.5,4.02,98,Available,563,98.3
+DOC059,John,Williams,Emergency Medicine,Emergency,Memorial Hospital,9,4.2,1.01,42,Limited,1932,88.6
+DOC060,Michael,Johnson,Surgery,Surgery,University Health System,14,3.7,0.62,54,Unavailable,1887,97.7
+DOC061,Robert,Brown,Orthopedics,Orthopedics,St. Mary's Medical Center,23,4.5,3.32,28,Unavailable,1117,96.9
+DOC062,Jane,Smith,Neurology,Neurology,Community Health Hospital,22,4.1,2.17,79,Unavailable,1198,85.2
+DOC063,Lisa,Johnson,Orthopedics,Orthopedics,Metropolitan Medical Center,16,4.5,4.23,105,Available,1391,87.5
+DOC064,David,Davis,Neurology,Neurology,Riverside Hospital,18,4.7,3.17,56,Available,677,88.9
+DOC065,Sarah,Davis,Orthopedics,Orthopedics,Metropolitan Medical Center,15,3.5,4.33,38,Limited,934,90.0
+DOC066,Emily,Jones,Surgery,Surgery,Regional Medical Center,22,3.5,4.77,25,Available,1974,90.7
+DOC067,Sarah,Davis,Neurology,Neurology,Riverside Hospital,19,4.7,0.92,43,Limited,1916,88.4
+DOC068,Emily,Davis,Pediatrics,Pediatrics,Community Health Hospital,18,5.0,2.98,60,Unavailable,1429,88.8
+DOC069,Sarah,Johnson,Surgery,Surgery,Memorial Hospital,15,3.7,2.91,112,Unavailable,879,87.7
+DOC070,Lisa,Jones,Pediatrics,Pediatrics,Regional Medical Center,8,4.7,1.83,61,Available,1119,85.2
+DOC071,Michael,Jones,Neurology,Neurology,City General Hospital,6,4.3,3.64,31,Unavailable,1505,86.4
+DOC072,David,Davis,Cardiology,Cardiology,Riverside Hospital,19,4.0,4.84,47,Limited,733,96.5
+DOC073,Lisa,Johnson,Orthopedics,Orthopedics,City General Hospital,9,3.7,3.03,53,Available,1008,86.7
+DOC074,Robert,Brown,Oncology,Oncology,Metropolitan Medical Center,19,4.9,1.84,90,Limited,1125,93.0
+DOC075,Jane,Brown,Cardiology,Cardiology,Memorial Hospital,13,4.5,1.21,37,Unavailable,653,87.2
+DOC076,Lisa,Davis,Orthopedics,Orthopedics,Regional Medical Center,6,3.8,3.68,104,Limited,645,94.6
+DOC077,Sarah,Miller,Surgery,Surgery,St. Mary's Medical Center,22,3.8,1.17,49,Available,646,85.8
+DOC078,David,Jones,Oncology,Oncology,Riverside Hospital,8,4.2,1.87,66,Limited,1524,92.6
+DOC079,Jane,Smith,Orthopedics,Orthopedics,Metropolitan Medical Center,28,4.0,1.63,26,Available,1880,96.7
+DOC080,John,Jones,Neurology,Neurology,City General Hospital,29,4.6,2.62,98,Limited,1069,87.5
+DOC081,Robert,Davis,Neurology,Neurology,St. Mary's Medical Center,20,4.0,2.0,100,Available,829,89.6
+DOC082,Lisa,Jones,Pediatrics,Pediatrics,Metropolitan Medical Center,29,4.3,2.55,55,Limited,1162,86.6
+DOC083,Robert,Smith,Oncology,Oncology,Riverside Hospital,18,3.6,2.83,94,Limited,1780,91.2
+DOC084,Sarah,Jones,Cardiology,Cardiology,University Health System,14,4.2,3.64,30,Available,1790,93.5
+DOC085,Michael,Jones,Emergency Medicine,Emergency,City General Hospital,22,4.1,1.51,29,Limited,740,94.1
+DOC086,Lisa,Jones,Emergency Medicine,Emergency,Regional Medical Center,18,4.8,4.91,46,Limited,1628,87.0
+DOC087,Michael,Johnson,Emergency Medicine,Emergency,Regional Medical Center,29,4.7,2.37,115,Unavailable,1047,96.5
+DOC088,David,Davis,Surgery,Surgery,University Health System,19,4.3,2.05,85,Unavailable,1272,91.4
+DOC089,Sarah,Brown,Surgery,Surgery,Metropolitan Medical Center,12,4.8,2.35,55,Unavailable,1468,94.9
+DOC090,Robert,Miller,Oncology,Oncology,University Health System,20,4.9,1.07,90,Limited,705,97.2
+DOC091,Jane,Davis,Orthopedics,Orthopedics,City General Hospital,28,3.7,4.42,34,Available,1461,95.9
+DOC092,Emily,Miller,Surgery,Surgery,St. Mary's Medical Center,15,4.8,4.37,63,Limited,1783,95.1
+DOC093,Lisa,Smith,Oncology,Oncology,St. Mary's Medical Center,12,4.4,4.64,44,Unavailable,685,91.1
+DOC094,Jane,Davis,Cardiology,Cardiology,University Health System,27,3.9,0.63,56,Available,1100,90.0
+DOC095,Michael,Brown,Orthopedics,Orthopedics,Metropolitan Medical Center,23,4.5,1.31,37,Available,1748,97.2
+DOC096,Sarah,Davis,Neurology,Neurology,University Health System,12,4.2,1.64,47,Unavailable,519,97.6
+DOC097,David,Williams,Orthopedics,Orthopedics,St. Mary's Medical Center,19,4.9,4.94,53,Unavailable,1368,94.7
+DOC098,David,Brown,Orthopedics,Orthopedics,Metropolitan Medical Center,20,3.7,2.22,60,Unavailable,1105,98.9
+DOC099,John,Miller,Surgery,Surgery,Regional Medical Center,5,4.3,3.59,110,Available,1741,95.4
+DOC100,David,Brown,Oncology,Oncology,Community Health Hospital,12,4.5,3.29,101,Unavailable,1850,94.5
+DOC101,Jane,Smith,Emergency Medicine,Emergency,Regional Medical Center,30,4.2,3.11,108,Available,684,97.7
+DOC102,Robert,Williams,Surgery,Surgery,Memorial Hospital,9,4.7,4.44,61,Unavailable,1527,97.8
+DOC103,Michael,Jones,Oncology,Oncology,Riverside Hospital,30,3.9,4.42,117,Available,1459,98.5
+DOC104,Sarah,Miller,Emergency Medicine,Emergency,Community Health Hospital,7,4.7,0.56,83,Available,1431,90.2
+DOC105,David,Miller,Pediatrics,Pediatrics,Community Health Hospital,8,4.5,2.62,94,Unavailable,1171,97.8
+DOC106,Jane,Davis,Emergency Medicine,Emergency,Regional Medical Center,25,4.1,1.13,19,Limited,1508,86.6
+DOC107,Michael,Miller,Emergency Medicine,Emergency,Riverside Hospital,16,4.5,3.84,84,Limited,1702,95.4
+DOC108,Robert,Johnson,Emergency Medicine,Emergency,Riverside Hospital,24,4.1,4.78,19,Unavailable,1258,88.0
+DOC109,Sarah,Garcia,Orthopedics,Orthopedics,St. Mary's Medical Center,26,4.1,4.56,97,Limited,624,90.6
+DOC110,Jane,Davis,Emergency Medicine,Emergency,St. Mary's Medical Center,26,3.8,3.38,17,Available,1183,88.4
+DOC111,Sarah,Johnson,Emergency Medicine,Emergency,Memorial Hospital,23,3.8,4.41,57,Available,1720,85.0
+DOC112,Michael,Williams,Oncology,Oncology,Regional Medical Center,30,3.8,3.47,18,Available,530,90.0
+DOC113,Sarah,Garcia,Oncology,Oncology,City General Hospital,10,3.9,1.07,68,Unavailable,732,95.4
+DOC114,Lisa,Garcia,Orthopedics,Orthopedics,St. Mary's Medical Center,19,4.3,4.75,20,Unavailable,1849,92.3
+DOC115,John,Smith,Orthopedics,Orthopedics,Riverside Hospital,17,4.1,0.99,106,Limited,650,97.6
+DOC116,Michael,Johnson,Surgery,Surgery,University Health System,13,4.4,3.13,106,Limited,1280,98.9
+DOC117,David,Davis,Neurology,Neurology,Metropolitan Medical Center,8,4.7,1.01,98,Unavailable,1629,95.1
+DOC118,Robert,Davis,Emergency Medicine,Emergency,Memorial Hospital,18,4.0,2.54,68,Unavailable,694,89.4
+DOC119,David,Garcia,Surgery,Surgery,University Health System,26,4.9,0.8,25,Available,1384,86.4
+DOC120,Emily,Williams,Pediatrics,Pediatrics,City General Hospital,23,4.9,3.03,100,Available,1341,90.0
+DOC121,Robert,Smith,Pediatrics,Pediatrics,Regional Medical Center,24,4.0,0.97,79,Available,816,94.2
+DOC122,Jane,Garcia,Emergency Medicine,Emergency,Community Health Hospital,8,4.6,3.08,118,Limited,1648,98.6
+DOC123,John,Jones,Oncology,Oncology,City General Hospital,10,3.9,3.93,58,Limited,512,87.5
+DOC124,Robert,Johnson,Emergency Medicine,Emergency,University Health System,28,4.4,0.64,110,Unavailable,940,90.3
+DOC125,Emily,Williams,Orthopedics,Orthopedics,Community Health Hospital,14,4.6,4.0,87,Unavailable,673,97.4
+DOC126,Michael,Smith,Emergency Medicine,Emergency,St. Mary's Medical Center,13,4.2,2.41,92,Limited,1348,88.8
+DOC127,Jane,Garcia,Oncology,Oncology,Metropolitan Medical Center,8,3.9,3.55,77,Unavailable,1866,89.3
+DOC128,Robert,Smith,Emergency Medicine,Emergency,City General Hospital,11,4.0,1.45,32,Limited,1092,89.6
+DOC129,Lisa,Miller,Cardiology,Cardiology,University Health System,9,4.1,3.67,79,Unavailable,1868,96.3
+DOC130,Robert,Smith,Cardiology,Cardiology,Metropolitan Medical Center,5,4.2,0.85,55,Unavailable,1379,93.0
+DOC131,Robert,Jones,Pediatrics,Pediatrics,St. Mary's Medical Center,17,3.5,1.96,117,Unavailable,1442,96.6
+DOC132,Jane,Miller,Surgery,Surgery,St. Mary's Medical Center,12,4.2,2.3,25,Limited,1135,95.4
+DOC133,Emily,Williams,Emergency Medicine,Emergency,St. Mary's Medical Center,21,4.4,2.89,39,Limited,1219,95.2
+DOC134,Michael,Brown,Oncology,Oncology,St. Mary's Medical Center,9,3.9,1.28,34,Unavailable,654,87.5
+DOC135,Lisa,Davis,Oncology,Oncology,Riverside Hospital,26,4.9,3.04,96,Unavailable,1161,97.1
+DOC136,Emily,Williams,Pediatrics,Pediatrics,Riverside Hospital,7,4.2,3.34,116,Limited,1711,85.8
+DOC137,Jane,Jones,Neurology,Neurology,Riverside Hospital,19,3.6,2.16,51,Available,1820,97.1
+DOC138,Jane,Miller,Oncology,Oncology,Riverside Hospital,23,4.3,4.06,20,Limited,1670,94.1
+DOC139,Lisa,Williams,Surgery,Surgery,City General Hospital,19,3.7,4.55,58,Unavailable,672,92.1
+DOC140,John,Brown,Emergency Medicine,Emergency,Riverside Hospital,19,4.3,3.24,61,Limited,1079,90.4
+DOC141,Emily,Smith,Oncology,Oncology,Community Health Hospital,7,4.0,3.01,64,Limited,1016,95.1
+DOC142,Michael,Garcia,Pediatrics,Pediatrics,St. Mary's Medical Center,23,4.5,4.63,54,Unavailable,1930,94.3
+DOC143,Jane,Jones,Emergency Medicine,Emergency,Metropolitan Medical Center,25,4.7,4.16,100,Unavailable,1903,97.8
+DOC144,Robert,Garcia,Cardiology,Cardiology,City General Hospital,16,4.0,4.78,58,Limited,893,88.2
+DOC145,Michael,Johnson,Emergency Medicine,Emergency,Regional Medical Center,30,3.7,3.97,109,Unavailable,577,94.3
+DOC146,Michael,Miller,Oncology,Oncology,University Health System,10,3.8,3.62,94,Available,1976,91.1
+DOC147,Emily,Brown,Orthopedics,Orthopedics,Riverside Hospital,24,3.9,3.87,72,Available,1593,88.3
+DOC148,Lisa,Brown,Oncology,Oncology,Community Health Hospital,26,4.9,4.93,74,Limited,1282,92.0
+DOC149,Michael,Brown,Orthopedics,Orthopedics,University Health System,13,3.6,2.66,62,Unavailable,710,95.0
+DOC150,Jane,Jones,Neurology,Neurology,St. Mary's Medical Center,29,3.7,2.52,80,Available,1395,86.3
