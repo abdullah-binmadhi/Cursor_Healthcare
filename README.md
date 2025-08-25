@@ -6,9 +6,7 @@ A comprehensive healthcare analytics platform featuring both backend database sy
 
 **🔗 [Visit the Healthcare Platform](https://abdullah-binmadhi.github.io/Cursor_Healthcare/healthcare-website/)** - Main Website
 
-**📊 [Modern Analytics Dashboard](https://abdullah-binmadhi.github.io/Cursor_Healthcare/healthcare-website/modern-dashboard.html)** ⭐ **PROFESSIONAL DESIGN & FIXED CHARTS**
-
-**📊 [Analytics Dashboard v3.0](https://abdullah-binmadhi.github.io/Cursor_Healthcare/healthcare-website/analytics-dashboard.html)** - Legacy Version
+**📊 [Healthcare Analytics Dashboard](https://abdullah-binmadhi.github.io/Cursor_Healthcare/healthcare-website/analytics.html)** ⭐ **PROFESSIONAL DESIGN & ADVANCED CHARTS**
 
 Experience our interactive healthcare platform featuring:
 - **💰 Healthcare Cost Estimator** - Get transparent pricing for medical procedures
