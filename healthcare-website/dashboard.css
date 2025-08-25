@@ -1,0 +1,497 @@
+/* Dashboard-specific CSS */
+
+/* Dashboard Navigation */
+.dashboard-nav {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 1rem 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.dashboard-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.dashboard-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255,255,255,0.1);
+    color: white;
+    border: none;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    min-width: 120px;
+}
+
+.dashboard-tab:hover {
+    background: rgba(255,255,255,0.2);
+    transform: translateY(-2px);
+}
+
+.dashboard-tab.active {
+    background: rgba(255,255,255,0.3);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.dashboard-tab i {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.dashboard-tab span {
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+/* Dashboard Sections */
+.dashboard-section {
+    padding: 3rem 0;
+    display: none;
+}
+
+.dashboard-section.active {
+    display: block;
+}
+
+.dashboard-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.dashboard-header h2 {
+    color: #2d3748;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.dashboard-header i {
+    color: #4299e1;
+}
+
+/* KPI Cards Grid */
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.kpi-card {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    border: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.kpi-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+}
+
+.kpi-icon {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.kpi-card.revenue .kpi-icon {
+    background: linear-gradient(135deg, #48bb78, #38a169);
+}
+
+.kpi-card.satisfaction .kpi-icon {
+    background: linear-gradient(135deg, #ed8936, #dd6b20);
+}
+
+.kpi-card.occupancy .kpi-icon {
+    background: linear-gradient(135deg, #4299e1, #3182ce);
+}
+
+.kpi-card.quality .kpi-icon {
+    background: linear-gradient(135deg, #9f7aea, #805ad5);
+}
+
+.kpi-content {
+    flex: 1;
+}
+
+.kpi-content h3 {
+    font-size: 0.9rem;
+    color: #718096;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.kpi-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1a202c;
+    margin-bottom: 0.5rem;
+}
+
+.kpi-trend {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+}
+
+.kpi-trend.positive {
+    color: #48bb78;
+}
+
+.kpi-trend.negative {
+    color: #f56565;
+}
+
+.kpi-trend.neutral {
+    color: #718096;
+}
+
+.kpi-trend i {
+    font-size: 0.8rem;
+}
+
+/* Charts Grid */
+.charts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+}
+
+.chart-card {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    border: 1px solid #e2e8f0;
+}
+
+.chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #edf2f7;
+}
+
+.chart-header h3 {
+    color: #2d3748;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.chart-controls select {
+    padding: 0.5rem 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    background: white;
+    color: #4a5568;
+}
+
+.chart-controls select:focus {
+    outline: none;
+    border-color: #4299e1;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+}
+
+/* Chart Canvas */
+canvas {
+    max-width: 100%;
+    height: 300px !important;
+}
+
+/* Loading States */
+.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+    color: #718096;
+    font-size: 1.1rem;
+}
+
+.loading::before {
+    content: "";
+    width: 20px;
+    height: 20px;
+    border: 3px solid #e2e8f0;
+    border-top: 3px solid #4299e1;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-right: 0.5rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Data Tables */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.data-table th,
+.data-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.data-table th {
+    background: #f7fafc;
+    font-weight: 600;
+    color: #4a5568;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+.data-table tr:hover {
+    background: #f7fafc;
+}
+
+/* Performance Indicators */
+.performance-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.performance-indicator.excellent {
+    background: #c6f6d5;
+    color: #22543d;
+}
+
+.performance-indicator.good {
+    background: #bee3f8;
+    color: #1a365d;
+}
+
+.performance-indicator.average {
+    background: #fef5e7;
+    color: #744210;
+}
+
+.performance-indicator.poor {
+    background: #fed7d7;
+    color: #742a2a;
+}
+
+/* Metric Cards */
+.metric-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.metric-card {
+    background: #f7fafc;
+    padding: 1.5rem;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid #e2e8f0;
+}
+
+.metric-card h4 {
+    color: #4a5568;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
+
+.metric-card .value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #1a202c;
+    margin-bottom: 0.25rem;
+}
+
+.metric-card .change {
+    font-size: 0.8rem;
+    color: #718096;
+}
+
+/* Status Badges */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.status-badge.online {
+    background: #c6f6d5;
+    color: #22543d;
+}
+
+.status-badge.warning {
+    background: #fef5e7;
+    color: #744210;
+}
+
+.status-badge.offline {
+    background: #fed7d7;
+    color: #742a2a;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .dashboard-tabs {
+        justify-content: stretch;
+    }
+    
+    .dashboard-tab {
+        flex: 1;
+        min-width: auto;
+        padding: 0.75rem;
+    }
+    
+    .dashboard-tab span {
+        font-size: 0.8rem;
+    }
+    
+    .kpi-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .kpi-card {
+        padding: 1.5rem;
+    }
+    
+    .kpi-value {
+        font-size: 1.5rem;
+    }
+    
+    .charts-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .chart-card {
+        padding: 1rem;
+    }
+    
+    .chart-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    canvas {
+        height: 250px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .dashboard-section {
+        padding: 2rem 0;
+    }
+    
+    .kpi-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+    
+    .kpi-icon {
+        margin: 0 auto;
+    }
+    
+    .dashboard-tab i {
+        font-size: 1.25rem;
+    }
+    
+    .dashboard-tab span {
+        font-size: 0.75rem;
+    }
+}
+
+/* Animation Classes */
+.fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.slide-in-right {
+    animation: slideInRight 0.5s ease-out;
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Dark mode support (for future enhancement) */
+@media (prefers-color-scheme: dark) {
+    .kpi-card,
+    .chart-card {
+        background: #2d3748;
+        border-color: #4a5568;
+        color: white;
+    }
+    
+    .kpi-content h3 {
+        color: #a0aec0;
+    }
+    
+    .kpi-value {
+        color: white;
+    }
+    
+    .chart-header h3 {
+        color: white;
+    }
+}

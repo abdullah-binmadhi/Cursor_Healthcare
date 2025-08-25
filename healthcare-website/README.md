@@ -18,6 +18,12 @@ A comprehensive healthcare cost estimation and doctor finder platform built with
 - **Specialty Recommendations**: Find doctors based on medical needs
 - **Comprehensive Profiles**: Detailed doctor information with patient feedback across 8 hospitals
 
+### 3. Healthcare Analytics Dashboards
+- **Hospital Performance Dashboard**: Real-time KPIs, department comparisons, quality indicators
+- **Financial Analytics Dashboard**: Revenue streams, cost analysis, profitability metrics
+- **Patient Insights Dashboard**: Demographics, journey analytics, satisfaction analysis
+- **Physician Performance Dashboard**: Doctor rankings, performance trends, workload analysis
+
 ## 🛠 Technology Stack
 
 - **Frontend**: HTML5, CSS3, JavaScript (ES6+)
@@ -105,6 +111,20 @@ healthcare-website/
    - Success rates and experience
    - Hospital affiliation
    - Current availability status
+
+### Analytics Dashboards
+
+1. **Access Dashboards**: Click "Analytics" in the navigation or visit `/dashboards.html`
+2. **Switch Between Dashboards**:
+   - **Hospital Performance**: Real-time KPIs, department comparisons, trending metrics
+   - **Financial Analytics**: Revenue streams, cost analysis, profitability metrics
+   - **Patient Insights**: Demographics, journey analytics, satisfaction analysis
+   - **Physician Performance**: Doctor rankings, performance trends, quality metrics
+3. **Interactive Features**:
+   - Real-time KPI monitoring with trend indicators
+   - Interactive charts with filtering capabilities
+   - Department and hospital performance comparisons
+   - Quality indicators and safety metrics
 
 ## 📊 Data Sources
 
