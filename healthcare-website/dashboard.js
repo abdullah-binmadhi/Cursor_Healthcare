@@ -969,7 +969,7 @@ function createHospitalChart() {
                 backgroundColor: [
                     'rgba(72, 187, 120, 0.8)',
                     'rgba(102, 126, 234, 0.8)',
-                    'rgba(237, 137, 54, 0.8)',
+                    'rgba(139, 92, 246, 0.8)',
                     'rgba(159, 122, 234, 0.8)',
                     'rgba(66, 153, 225, 0.8)',
                     'rgba(245, 101, 101, 0.8)',
@@ -1177,7 +1177,7 @@ function createRevenueByInsuranceChart() {
     const colors = [
         'rgba(72, 187, 120, 0.9)',
         'rgba(66, 153, 225, 0.9)',
-        'rgba(237, 137, 54, 0.9)',
+        'rgba(139, 92, 246, 0.9)',
         'rgba(159, 122, 234, 0.9)',
         'rgba(245, 101, 101, 0.9)'
     ];
@@ -1260,7 +1260,7 @@ function createProfitabilityChart() {
                 backgroundColor: profitData.map(d => {
                     if (d.margin > 15) return 'rgba(72, 187, 120, 0.9)';
                     if (d.margin > 10) return 'rgba(66, 153, 225, 0.9)';
-                    return 'rgba(237, 137, 54, 0.9)';
+                    return 'rgba(139, 92, 246, 0.9)';
                 }),
                 borderWidth: 2,
                 borderRadius: 8,
@@ -1332,7 +1332,7 @@ function createCostBreakdownChart() {
     const costData = [
         { category: 'Personnel', amount: 35.2, color: 'rgba(72, 187, 120, 0.9)' },
         { category: 'Medical Supplies', amount: 18.5, color: 'rgba(66, 153, 225, 0.9)' },
-        { category: 'Pharmaceuticals', amount: 15.3, color: 'rgba(237, 137, 54, 0.9)' },
+        { category: 'Pharmaceuticals', amount: 15.3, color: 'rgba(139, 92, 246, 0.9)' },
         { category: 'Equipment', amount: 12.8, color: 'rgba(159, 122, 234, 0.9)' },
         { category: 'Facility Costs', amount: 8.9, color: 'rgba(245, 101, 101, 0.9)' },
         { category: 'Administrative', amount: 6.1, color: 'rgba(129, 140, 248, 0.9)' },
@@ -1449,7 +1449,7 @@ function createRevenueByInsuranceChart() {
                 backgroundColor: [
                     'rgba(102, 126, 234, 0.8)',
                     'rgba(72, 187, 120, 0.8)',
-                    'rgba(237, 137, 54, 0.8)',
+                    'rgba(139, 92, 246, 0.8)',
                     'rgba(159, 122, 234, 0.8)',
                     'rgba(245, 101, 101, 0.8)'
                 ]
@@ -1532,7 +1532,7 @@ function createCostBreakdownChart() {
                 backgroundColor: [
                     'rgba(102, 126, 234, 0.8)',
                     'rgba(72, 187, 120, 0.8)',
-                    'rgba(237, 137, 54, 0.8)',
+                    'rgba(139, 92, 246, 0.8)',
                     'rgba(159, 122, 234, 0.8)',
                     'rgba(66, 153, 225, 0.8)'
                 ]
@@ -1609,7 +1609,7 @@ function createInsuranceDistChart() {
                 data: Object.values(insuranceDist),
                 backgroundColor: [
                     'rgba(72, 187, 120, 0.8)',
-                    'rgba(237, 137, 54, 0.8)',
+                    'rgba(139, 92, 246, 0.8)',
                     'rgba(66, 153, 225, 0.8)',
                     'rgba(159, 122, 234, 0.8)',
                     'rgba(245, 101, 101, 0.8)'
@@ -1694,7 +1694,7 @@ function createRiskAssessmentChart() {
                 data: Object.values(riskCategories),
                 backgroundColor: [
                     'rgba(72, 187, 120, 0.8)',
-                    'rgba(237, 137, 54, 0.8)',
+                    'rgba(139, 92, 246, 0.8)',
                     'rgba(245, 101, 101, 0.8)'
                 ]
             }]
@@ -1718,9 +1718,11 @@ function createTopPhysiciansChart() {
     
     const topPhysicians = dashboardData.physicians
         .sort((a, b) => (b.patient_satisfaction || 0) - (a.patient_satisfaction || 0))
-        .slice(0, 10)
+        .slice(0, 8) // Reduced to 8 for better display
         .map(p => ({
-            name: `Dr. ${p.first_name} ${p.last_name}`,
+            // Use first name + last initial for compact display
+            name: `${p.first_name} ${p.last_name.charAt(0)}.`,
+            fullName: `Dr. ${p.first_name} ${p.last_name}`,
             satisfaction: p.patient_satisfaction || 0
         }));
     
@@ -1734,18 +1736,100 @@ function createTopPhysiciansChart() {
                 data: topPhysicians.map(p => p.satisfaction),
                 backgroundColor: 'rgba(72, 187, 120, 0.8)',
                 borderColor: 'rgba(72, 187, 120, 1)',
-                borderWidth: 2
+                borderWidth: 2,
+                borderRadius: 8,
+                borderSkipped: false
             }]
         },
         options: {
             indexAxis: 'y',
             responsive: true,
             maintainAspectRatio: false,
+            animation: {
+                duration: 1000,
+                easing: 'easeOutQuart'
+            },
             plugins: {
-                legend: { display: false }
+                legend: { 
+                    display: true,
+                    position: 'top',
+                    labels: {
+                        font: { size: 14, weight: '700', family: 'Inter' },
+                        color: '#1a202c',
+                        padding: 15
+                    }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(26, 32, 44, 0.95)',
+                    titleColor: '#ffffff',
+                    bodyColor: '#e2e8f0',
+                    borderColor: 'rgba(72, 187, 120, 0.8)',
+                    borderWidth: 2,
+                    cornerRadius: 12,
+                    titleFont: { size: 15, weight: '700', family: 'Inter' },
+                    bodyFont: { size: 13, family: 'Inter' },
+                    padding: 16,
+                    callbacks: {
+                        title: function(context) {
+                            const index = context[0].dataIndex;
+                            return topPhysicians[index].fullName;
+                        },
+                        label: function(context) {
+                            const score = context.parsed.x;
+                            let performance = 'Excellent';
+                            if (score < 3.5) performance = 'Needs Improvement';
+                            else if (score < 4.0) performance = 'Good';
+                            else if (score < 4.5) performance = 'Very Good';
+                            
+                            return [
+                                `Satisfaction Score: ${score.toFixed(1)}/5.0`,
+                                `Performance: ${performance} ⭐`
+                            ];
+                        }
+                    }
+                }
             },
             scales: {
-                x: { beginAtZero: true, max: 5 }
+                x: { 
+                    beginAtZero: true, 
+                    max: 5,
+                    grid: {
+                        color: 'rgba(203, 213, 224, 0.4)'
+                    },
+                    ticks: {
+                        color: '#6b7280',
+                        font: { size: 12, weight: '600', family: 'Inter' },
+                        callback: function(value) {
+                            return value.toFixed(1);
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Patient Satisfaction Score',
+                        color: '#374151',
+                        font: { size: 13, weight: '700', family: 'Inter' },
+                        padding: 15
+                    }
+                },
+                y: {
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        color: '#374151',
+                        font: { size: 12, weight: '600', family: 'Inter' },
+                        maxRotation: 0, // Keep labels horizontal
+                        minRotation: 0
+                    }
+                }
+            },
+            layout: {
+                padding: {
+                    left: 10,
+                    right: 20,
+                    top: 10,
+                    bottom: 10
+                }
             }
         }
     });
@@ -1830,8 +1914,8 @@ function createWorkloadChart() {
             datasets: [{
                 label: 'Patient Load vs Wait Time',
                 data: workloadData.map(d => ({ x: d.patients, y: d.waitTime })),
-                backgroundColor: 'rgba(237, 137, 54, 0.6)',
-                borderColor: 'rgba(237, 137, 54, 1)',
+                backgroundColor: 'rgba(139, 92, 246, 0.6)',
+                borderColor: 'rgba(139, 92, 246, 1)',
                 pointRadius: 6
             }]
         },
