@@ -4,9 +4,7 @@ A comprehensive healthcare analytics platform featuring both backend database sy
 
 ## 🌐 Live Healthcare Website
 
-**🔗 [Visit the Healthcare Website](https://abdullah-binmadhi.github.io/Cursor_Healthcare/healthcare-website/)**
-
-**📊 [Analytics Dashboard](https://abdullah-binmadhi.github.io/Cursor_Healthcare/healthcare-website/dashboards.html)** ⭐ **NEW**
+**🔗 [Visit the Healthcare Platform](https://abdullah-binmadhi.github.io/Cursor_Healthcare/healthcare-website/)** - Includes Analytics Dashboard ⭐
 
 Experience our interactive healthcare platform featuring:
 - **💰 Healthcare Cost Estimator** - Get transparent pricing for medical procedures
@@ -92,11 +90,10 @@ The database contains 8 main tables:
 
 ### Use the Live Website (Recommended)
 1. **Visit the website**: [https://abdullah-binmadhi.github.io/Cursor_Healthcare/healthcare-website/](https://abdullah-binmadhi.github.io/Cursor_Healthcare/healthcare-website/)
-2. **Analytics Dashboard**: [https://abdullah-binmadhi.github.io/Cursor_Healthcare/healthcare-website/dashboards.html](https://abdullah-binmadhi.github.io/Cursor_Healthcare/healthcare-website/dashboards.html)
-3. **Try the Cost Estimator**: Input patient information to get cost estimates
-4. **Search for Doctors**: Filter physicians by specialty, ratings, and availability
-5. **Explore Dashboards**: Hospital performance, financial analytics, patient insights, physician performance
-6. **Interactive Features**: Real-time calculations, responsive design, and data visualization
+2. **Try the Cost Estimator**: Input patient information to get cost estimates
+3. **Search for Doctors**: Filter physicians by specialty, ratings, and availability
+4. **Explore Analytics Dashboards**: Access 4 comprehensive dashboards from the main navigation
+5. **Interactive Features**: Real-time calculations, responsive design, and data visualization
 
 ### Run Website Locally
 1. **Clone the repository**:
