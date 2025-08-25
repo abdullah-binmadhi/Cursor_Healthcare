@@ -1,10 +1,15 @@
 /**
- * Healthcare Analytics Dashboard JavaScript - Version 2.2
+ * Healthcare Analytics Dashboard JavaScript - Version 2.3-FINAL
  * Enhanced Charts with Smart Color Coding & Professional Design
  * CHART FIXES: Accurate Revenue & Occupancy Data Display
- * Last Updated: 2025-08-25 15:30 - Department Chart Data Fixed
+ * DEPLOYMENT: 2025-08-25 16:45 UTC - CACHE BUST FORCED
+ * Last Updated: 2025-08-25 16:45 - Department Chart Data Fixed
  * Handles interactive dashboards, charts, and KPI calculations
  */
+
+// CACHE BUSTER - Force fresh load
+console.log('🚀 DASHBOARD LOADING - Version 2.3-FINAL - Chart Fixes Active!');
+console.log('⚡ Cache timestamp:', new Date().toISOString());
 
 // Global variables
 let dashboardData = {
@@ -402,7 +407,10 @@ function createDepartmentChart() {
     }
     
     // Debug log to verify data accuracy
-    console.log(`Chart data for ${metric}:`, data);
+    console.log(`📈 Chart data for ${metric}:`, data);
+    console.log('🔧 Revenue values should be: Surgery~11.1, Cardiology~10.6, Emergency~6.7');
+    console.log('🔧 Occupancy values should be: Emergency~92, Cardiology~85, Surgery~78');
+    console.log('🎯 maxValue set to:', maxValue);
     
     destroyChart('departmentChart');
     chartInstances.departmentChart = new Chart(ctx, {
