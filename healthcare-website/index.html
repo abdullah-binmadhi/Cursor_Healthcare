@@ -1002,6 +1002,19 @@
                                     <button class="year-tab" data-year="2023" onclick="changeTrendsYear(2023)">2023</button>
                                     <button class="year-tab" data-year="2022" onclick="changeTrendsYear(2022)">2022</button>
                                 </div>
+                                <div class="chart-controls">
+                                    <select id="hospitalSelector" onchange="updateAllChartsForHospital()">
+                                        <option value="all">All Hospitals</option>
+                                        <option value="City General Hospital">City General Hospital</option>
+                                        <option value="St. Mary's Medical Center">St. Mary's Medical Center</option>
+                                        <option value="University Health System">University Health System</option>
+                                        <option value="Memorial Hospital">Memorial Hospital</option>
+                                        <option value="Regional Medical Center">Regional Medical Center</option>
+                                        <option value="Community Health Hospital">Community Health Hospital</option>
+                                        <option value="Metropolitan Medical Center">Metropolitan Medical Center</option>
+                                        <option value="Riverside Hospital">Riverside Hospital</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <div class="chart-canvas">
@@ -1133,61 +1146,189 @@
         let chartInstances = {};
         let dashboardData = {};
         let currentTrendsYear = 2024; // Track current year for trends chart
+        let currentHospital = 'all'; // Track current hospital filter
         
-        // Year-based healthcare data for synchronized charts
+        // Comprehensive hospital-based healthcare data for synchronized charts
         const healthcareDataByYear = {
             2024: {
-                departments: [
-                    { department_name: 'Surgery', patient_satisfaction: 4.5, current_occupancy: 0.78, total_patients: 890, average_cost: 12500, quality_score: 95 },
-                    { department_name: 'Cardiology', patient_satisfaction: 4.2, current_occupancy: 0.85, total_patients: 1250, average_cost: 8500, quality_score: 92 },
-                    { department_name: 'Emergency', patient_satisfaction: 3.8, current_occupancy: 0.92, total_patients: 2100, average_cost: 3200, quality_score: 87 },
-                    { department_name: 'Oncology', patient_satisfaction: 4.4, current_occupancy: 0.82, total_patients: 380, average_cost: 15800, quality_score: 91 },
-                    { department_name: 'Pediatrics', patient_satisfaction: 4.6, current_occupancy: 0.58, total_patients: 720, average_cost: 4500, quality_score: 93 },
-                    { department_name: 'Orthopedics', patient_satisfaction: 4.3, current_occupancy: 0.72, total_patients: 680, average_cost: 9800, quality_score: 90 }
-                ],
+                // Hospital-specific department metrics
+                departments: {
+                    'all': [
+                        { department_name: 'Surgery', patient_satisfaction: 4.5, current_occupancy: 0.78, total_patients: 890, average_cost: 12500, quality_score: 95 },
+                        { department_name: 'Cardiology', patient_satisfaction: 4.2, current_occupancy: 0.85, total_patients: 1250, average_cost: 8500, quality_score: 92 },
+                        { department_name: 'Emergency', patient_satisfaction: 3.8, current_occupancy: 0.92, total_patients: 2100, average_cost: 3200, quality_score: 87 },
+                        { department_name: 'Oncology', patient_satisfaction: 4.4, current_occupancy: 0.82, total_patients: 380, average_cost: 15800, quality_score: 91 },
+                        { department_name: 'Pediatrics', patient_satisfaction: 4.6, current_occupancy: 0.58, total_patients: 720, average_cost: 4500, quality_score: 93 },
+                        { department_name: 'Orthopedics', patient_satisfaction: 4.3, current_occupancy: 0.72, total_patients: 680, average_cost: 9800, quality_score: 90 },
+                        { department_name: 'Neurology', patient_satisfaction: 4.1, current_occupancy: 0.65, total_patients: 450, average_cost: 11200, quality_score: 88 }
+                    ],
+                    'City General Hospital': [
+                        { department_name: 'Surgery', patient_satisfaction: 4.6, current_occupancy: 0.82, total_patients: 120, average_cost: 13000, quality_score: 96 },
+                        { department_name: 'Cardiology', patient_satisfaction: 4.3, current_occupancy: 0.88, total_patients: 180, average_cost: 8800, quality_score: 93 },
+                        { department_name: 'Emergency', patient_satisfaction: 3.9, current_occupancy: 0.95, total_patients: 280, average_cost: 3300, quality_score: 88 },
+                        { department_name: 'Oncology', patient_satisfaction: 4.5, current_occupancy: 0.85, total_patients: 55, average_cost: 16200, quality_score: 92 },
+                        { department_name: 'Pediatrics', patient_satisfaction: 4.7, current_occupancy: 0.62, total_patients: 95, average_cost: 4700, quality_score: 94 },
+                        { department_name: 'Orthopedics', patient_satisfaction: 4.4, current_occupancy: 0.75, total_patients: 85, average_cost: 10200, quality_score: 91 },
+                        { department_name: 'Neurology', patient_satisfaction: 4.2, current_occupancy: 0.68, total_patients: 60, average_cost: 11500, quality_score: 89 }
+                    ],
+                    'St. Mary\'s Medical Center': [
+                        { department_name: 'Surgery', patient_satisfaction: 4.4, current_occupancy: 0.75, total_patients: 110, average_cost: 12200, quality_score: 94 },
+                        { department_name: 'Cardiology', patient_satisfaction: 4.1, current_occupancy: 0.83, total_patients: 160, average_cost: 8300, quality_score: 91 },
+                        { department_name: 'Emergency', patient_satisfaction: 3.7, current_occupancy: 0.90, total_patients: 260, average_cost: 3100, quality_score: 86 },
+                        { department_name: 'Oncology', patient_satisfaction: 4.3, current_occupancy: 0.80, total_patients: 48, average_cost: 15600, quality_score: 90 },
+                        { department_name: 'Pediatrics', patient_satisfaction: 4.5, current_occupancy: 0.55, total_patients: 90, average_cost: 4400, quality_score: 92 },
+                        { department_name: 'Orthopedics', patient_satisfaction: 4.2, current_occupancy: 0.70, total_patients: 82, average_cost: 9600, quality_score: 89 },
+                        { department_name: 'Neurology', patient_satisfaction: 4.0, current_occupancy: 0.62, total_patients: 55, average_cost: 11000, quality_score: 87 }
+                    ],
+                    'University Health System': [
+                        { department_name: 'Surgery', patient_satisfaction: 4.7, current_occupancy: 0.80, total_patients: 115, average_cost: 13500, quality_score: 97 },
+                        { department_name: 'Cardiology', patient_satisfaction: 4.4, current_occupancy: 0.87, total_patients: 170, average_cost: 9000, quality_score: 94 },
+                        { department_name: 'Emergency', patient_satisfaction: 4.0, current_occupancy: 0.93, total_patients: 270, average_cost: 3400, quality_score: 89 },
+                        { department_name: 'Oncology', patient_satisfaction: 4.6, current_occupancy: 0.88, total_patients: 52, average_cost: 16800, quality_score: 93 },
+                        { department_name: 'Pediatrics', patient_satisfaction: 4.8, current_occupancy: 0.60, total_patients: 98, average_cost: 4800, quality_score: 95 },
+                        { department_name: 'Orthopedics', patient_satisfaction: 4.5, current_occupancy: 0.78, total_patients: 88, average_cost: 10500, quality_score: 92 },
+                        { department_name: 'Neurology', patient_satisfaction: 4.3, current_occupancy: 0.72, total_patients: 65, average_cost: 11800, quality_score: 90 }
+                    ],
+                    'Memorial Hospital': [
+                        { department_name: 'Surgery', patient_satisfaction: 4.3, current_occupancy: 0.73, total_patients: 105, average_cost: 11800, quality_score: 93 },
+                        { department_name: 'Cardiology', patient_satisfaction: 4.0, current_occupancy: 0.81, total_patients: 155, average_cost: 8100, quality_score: 90 },
+                        { department_name: 'Emergency', patient_satisfaction: 3.6, current_occupancy: 0.88, total_patients: 250, average_cost: 2900, quality_score: 85 },
+                        { department_name: 'Oncology', patient_satisfaction: 4.2, current_occupancy: 0.75, total_patients: 45, average_cost: 15200, quality_score: 89 },
+                        { department_name: 'Pediatrics', patient_satisfaction: 4.4, current_occupancy: 0.52, total_patients: 85, average_cost: 4200, quality_score: 91 },
+                        { department_name: 'Orthopedics', patient_satisfaction: 4.1, current_occupancy: 0.68, total_patients: 78, average_cost: 9400, quality_score: 88 },
+                        { department_name: 'Neurology', patient_satisfaction: 3.9, current_occupancy: 0.58, total_patients: 50, average_cost: 10600, quality_score: 86 }
+                    ],
+                    'Regional Medical Center': [
+                        { department_name: 'Surgery', patient_satisfaction: 4.5, current_occupancy: 0.77, total_patients: 112, average_cost: 12800, quality_score: 95 },
+                        { department_name: 'Cardiology', patient_satisfaction: 4.2, current_occupancy: 0.84, total_patients: 165, average_cost: 8600, quality_score: 92 },
+                        { department_name: 'Emergency', patient_satisfaction: 3.8, current_occupancy: 0.91, total_patients: 265, average_cost: 3200, quality_score: 87 },
+                        { department_name: 'Oncology', patient_satisfaction: 4.4, current_occupancy: 0.82, total_patients: 50, average_cost: 15900, quality_score: 91 },
+                        { department_name: 'Pediatrics', patient_satisfaction: 4.6, current_occupancy: 0.57, total_patients: 92, average_cost: 4500, quality_score: 93 },
+                        { department_name: 'Orthopedics', patient_satisfaction: 4.3, current_occupancy: 0.71, total_patients: 83, average_cost: 9900, quality_score: 90 },
+                        { department_name: 'Neurology', patient_satisfaction: 4.1, current_occupancy: 0.64, total_patients: 58, average_cost: 11300, quality_score: 88 }
+                    ],
+                    'Community Health Hospital': [
+                        { department_name: 'Surgery', patient_satisfaction: 4.2, current_occupancy: 0.71, total_patients: 98, average_cost: 11500, quality_score: 92 },
+                        { department_name: 'Cardiology', patient_satisfaction: 3.9, current_occupancy: 0.79, total_patients: 145, average_cost: 7900, quality_score: 89 },
+                        { department_name: 'Emergency', patient_satisfaction: 3.5, current_occupancy: 0.86, total_patients: 240, average_cost: 2800, quality_score: 84 },
+                        { department_name: 'Oncology', patient_satisfaction: 4.1, current_occupancy: 0.72, total_patients: 42, average_cost: 14800, quality_score: 88 },
+                        { department_name: 'Pediatrics', patient_satisfaction: 4.3, current_occupancy: 0.50, total_patients: 80, average_cost: 4100, quality_score: 90 },
+                        { department_name: 'Orthopedics', patient_satisfaction: 4.0, current_occupancy: 0.65, total_patients: 75, average_cost: 9200, quality_score: 87 },
+                        { department_name: 'Neurology', patient_satisfaction: 3.8, current_occupancy: 0.55, total_patients: 48, average_cost: 10400, quality_score: 85 }
+                    ],
+                    'Metropolitan Medical Center': [
+                        { department_name: 'Surgery', patient_satisfaction: 4.6, current_occupancy: 0.79, total_patients: 118, average_cost: 13200, quality_score: 96 },
+                        { department_name: 'Cardiology', patient_satisfaction: 4.3, current_occupancy: 0.86, total_patients: 175, average_cost: 8700, quality_score: 93 },
+                        { department_name: 'Emergency', patient_satisfaction: 3.9, current_occupancy: 0.94, total_patients: 275, average_cost: 3300, quality_score: 88 },
+                        { department_name: 'Oncology', patient_satisfaction: 4.5, current_occupancy: 0.84, total_patients: 53, average_cost: 16100, quality_score: 92 },
+                        { department_name: 'Pediatrics', patient_satisfaction: 4.7, current_occupancy: 0.59, total_patients: 96, average_cost: 4600, quality_score: 94 },
+                        { department_name: 'Orthopedics', patient_satisfaction: 4.4, current_occupancy: 0.74, total_patients: 86, average_cost: 10100, quality_score: 91 },
+                        { department_name: 'Neurology', patient_satisfaction: 4.2, current_occupancy: 0.67, total_patients: 62, average_cost: 11600, quality_score: 89 }
+                    ],
+                    'Riverside Hospital': [
+                        { department_name: 'Surgery', patient_satisfaction: 4.4, current_occupancy: 0.76, total_patients: 108, average_cost: 12000, quality_score: 94 },
+                        { department_name: 'Cardiology', patient_satisfaction: 4.1, current_occupancy: 0.82, total_patients: 158, average_cost: 8200, quality_score: 91 },
+                        { department_name: 'Emergency', patient_satisfaction: 3.7, current_occupancy: 0.89, total_patients: 255, average_cost: 3000, quality_score: 86 },
+                        { department_name: 'Oncology', patient_satisfaction: 4.3, current_occupancy: 0.78, total_patients: 47, average_cost: 15400, quality_score: 90 },
+                        { department_name: 'Pediatrics', patient_satisfaction: 4.5, current_occupancy: 0.54, total_patients: 88, average_cost: 4300, quality_score: 92 },
+                        { department_name: 'Orthopedics', patient_satisfaction: 4.2, current_occupancy: 0.69, total_patients: 80, average_cost: 9700, quality_score: 89 },
+                        { department_name: 'Neurology', patient_satisfaction: 4.0, current_occupancy: 0.61, total_patients: 54, average_cost: 11100, quality_score: 87 }
+                    ]
+                },
                 physicians: [
-                    // Cardiology (5 doctors)
-                    { first_name: 'Sarah', last_name: 'Johnson', specialty: 'Cardiology', patient_satisfaction: 4.8 },
-                    { first_name: 'Robert', last_name: 'Williams', specialty: 'Cardiology', patient_satisfaction: 4.4 },
-                    { first_name: 'Lisa', last_name: 'Chen', specialty: 'Cardiology', patient_satisfaction: 4.6 },
-                    { first_name: 'Mark', last_name: 'Thompson', specialty: 'Cardiology', patient_satisfaction: 4.2 },
-                    { first_name: 'Anna', last_name: 'Rodriguez', specialty: 'Cardiology', patient_satisfaction: 4.7 },
-                    // Surgery (5 doctors)
-                    { first_name: 'Michael', last_name: 'Chen', specialty: 'Surgery', patient_satisfaction: 4.7 },
-                    { first_name: 'Jennifer', last_name: 'Davis', specialty: 'Surgery', patient_satisfaction: 4.6 },
-                    { first_name: 'David', last_name: 'Martinez', specialty: 'Surgery', patient_satisfaction: 4.5 },
-                    { first_name: 'Rachel', last_name: 'Brown', specialty: 'Surgery', patient_satisfaction: 4.3 },
-                    { first_name: 'Steven', last_name: 'Wilson', specialty: 'Surgery', patient_satisfaction: 4.8 },
-                    // Emergency (5 doctors)
-                    { first_name: 'David', last_name: 'Thompson', specialty: 'Emergency', patient_satisfaction: 4.5 },
-                    { first_name: 'Christopher', last_name: 'Brown', specialty: 'Emergency', patient_satisfaction: 4.2 },
-                    { first_name: 'Jessica', last_name: 'Miller', specialty: 'Emergency', patient_satisfaction: 4.0 },
-                    { first_name: 'Brian', last_name: 'Garcia', specialty: 'Emergency', patient_satisfaction: 4.3 },
-                    { first_name: 'Nicole', last_name: 'Anderson', specialty: 'Emergency', patient_satisfaction: 4.1 },
-                    // Pediatrics (5 doctors)
-                    { first_name: 'Emily', last_name: 'Rodriguez', specialty: 'Pediatrics', patient_satisfaction: 4.9 },
-                    { first_name: 'Amanda', last_name: 'Wilson', specialty: 'Pediatrics', patient_satisfaction: 4.7 },
-                    { first_name: 'Daniel', last_name: 'Taylor', specialty: 'Pediatrics', patient_satisfaction: 4.5 },
-                    { first_name: 'Michelle', last_name: 'Lee', specialty: 'Pediatrics', patient_satisfaction: 4.6 },
-                    { first_name: 'Jason', last_name: 'White', specialty: 'Pediatrics', patient_satisfaction: 4.4 },
-                    // Oncology (5 doctors)
-                    { first_name: 'Lisa', last_name: 'Park', specialty: 'Oncology', patient_satisfaction: 4.6 },
-                    { first_name: 'Kevin', last_name: 'Taylor', specialty: 'Oncology', patient_satisfaction: 4.4 },
-                    { first_name: 'Sandra', last_name: 'Johnson', specialty: 'Oncology', patient_satisfaction: 4.7 },
-                    { first_name: 'Paul', last_name: 'Davis', specialty: 'Oncology', patient_satisfaction: 4.2 },
-                    { first_name: 'Karen', last_name: 'Martinez', specialty: 'Oncology', patient_satisfaction: 4.5 },
-                    // Orthopedics (5 doctors)
-                    { first_name: 'James', last_name: 'Miller', specialty: 'Orthopedics', patient_satisfaction: 4.3 },
-                    { first_name: 'Susan', last_name: 'Thompson', specialty: 'Orthopedics', patient_satisfaction: 4.1 },
-                    { first_name: 'Richard', last_name: 'Brown', specialty: 'Orthopedics', patient_satisfaction: 4.4 },
-                    { first_name: 'Linda', last_name: 'Wilson', specialty: 'Orthopedics', patient_satisfaction: 4.0 },
-                    { first_name: 'Thomas', last_name: 'Garcia', specialty: 'Orthopedics', patient_satisfaction: 4.2 },
-                    // Neurology (5 doctors)
-                    { first_name: 'Maria', last_name: 'Garcia', specialty: 'Neurology', patient_satisfaction: 4.5 },
-                    { first_name: 'John', last_name: 'Anderson', specialty: 'Neurology', patient_satisfaction: 4.3 },
-                    { first_name: 'Patricia', last_name: 'Martinez', specialty: 'Neurology', patient_satisfaction: 4.1 },
-                    { first_name: 'William', last_name: 'Taylor', specialty: 'Neurology', patient_satisfaction: 4.4 },
-                    { first_name: 'Barbara', last_name: 'Lee', specialty: 'Neurology', patient_satisfaction: 3.9 }
+                    // City General Hospital
+                    { first_name: 'Sarah', last_name: 'Johnson', specialty: 'Cardiology', hospital: 'City General Hospital', patient_satisfaction: 4.8 },
+                    { first_name: 'Robert', last_name: 'Williams', specialty: 'Cardiology', hospital: 'City General Hospital', patient_satisfaction: 4.4 },
+                    { first_name: 'Lisa', last_name: 'Chen', specialty: 'Cardiology', hospital: 'City General Hospital', patient_satisfaction: 4.6 },
+                    { first_name: 'Michael', last_name: 'Chen', specialty: 'Surgery', hospital: 'City General Hospital', patient_satisfaction: 4.7 },
+                    { first_name: 'Jennifer', last_name: 'Davis', specialty: 'Surgery', hospital: 'City General Hospital', patient_satisfaction: 4.6 },
+                    { first_name: 'David', last_name: 'Martinez', specialty: 'Surgery', hospital: 'City General Hospital', patient_satisfaction: 4.5 },
+                    { first_name: 'Rachel', last_name: 'Brown', specialty: 'Surgery', hospital: 'City General Hospital', patient_satisfaction: 4.3 },
+                    { first_name: 'David', last_name: 'Thompson', specialty: 'Emergency', hospital: 'City General Hospital', patient_satisfaction: 4.5 },
+                    { first_name: 'Christopher', last_name: 'Brown', specialty: 'Emergency', hospital: 'City General Hospital', patient_satisfaction: 4.2 },
+                    { first_name: 'Jessica', last_name: 'Miller', specialty: 'Emergency', hospital: 'City General Hospital', patient_satisfaction: 4.0 },
+                    { first_name: 'Emily', last_name: 'Rodriguez', specialty: 'Pediatrics', hospital: 'City General Hospital', patient_satisfaction: 4.9 },
+                    { first_name: 'Amanda', last_name: 'Wilson', specialty: 'Pediatrics', hospital: 'City General Hospital', patient_satisfaction: 4.7 },
+                    { first_name: 'Daniel', last_name: 'Taylor', specialty: 'Pediatrics', hospital: 'City General Hospital', patient_satisfaction: 4.5 },
+                    { first_name: 'Lisa', last_name: 'Park', specialty: 'Oncology', hospital: 'City General Hospital', patient_satisfaction: 4.6 },
+                    { first_name: 'Kevin', last_name: 'Taylor', specialty: 'Oncology', hospital: 'City General Hospital', patient_satisfaction: 4.4 },
+                    { first_name: 'Sandra', last_name: 'Johnson', specialty: 'Oncology', hospital: 'City General Hospital', patient_satisfaction: 4.7 },
+                    { first_name: 'James', last_name: 'Miller', specialty: 'Orthopedics', hospital: 'City General Hospital', patient_satisfaction: 4.3 },
+                    { first_name: 'Susan', last_name: 'Thompson', specialty: 'Orthopedics', hospital: 'City General Hospital', patient_satisfaction: 4.1 },
+                    { first_name: 'Richard', last_name: 'Brown', specialty: 'Orthopedics', hospital: 'City General Hospital', patient_satisfaction: 4.4 },
+                    { first_name: 'Maria', last_name: 'Garcia', specialty: 'Neurology', hospital: 'City General Hospital', patient_satisfaction: 4.5 },
+                    { first_name: 'John', last_name: 'Anderson', specialty: 'Neurology', hospital: 'City General Hospital', patient_satisfaction: 4.3 },
+                    
+                    // St. Mary's Medical Center  
+                    { first_name: 'Mark', last_name: 'Thompson', specialty: 'Cardiology', hospital: 'St. Mary\'s Medical Center', patient_satisfaction: 4.2 },
+                    { first_name: 'Anna', last_name: 'Rodriguez', specialty: 'Cardiology', hospital: 'St. Mary\'s Medical Center', patient_satisfaction: 4.7 },
+                    { first_name: 'Thomas', last_name: 'Lee', specialty: 'Cardiology', hospital: 'St. Mary\'s Medical Center', patient_satisfaction: 4.5 },
+                    { first_name: 'Steven', last_name: 'Wilson', specialty: 'Surgery', hospital: 'St. Mary\'s Medical Center', patient_satisfaction: 4.8 },
+                    { first_name: 'Amy', last_name: 'Clark', specialty: 'Surgery', hospital: 'St. Mary\'s Medical Center', patient_satisfaction: 4.4 },
+                    { first_name: 'Brian', last_name: 'Garcia', specialty: 'Emergency', hospital: 'St. Mary\'s Medical Center', patient_satisfaction: 4.3 },
+                    { first_name: 'Nicole', last_name: 'Anderson', specialty: 'Emergency', hospital: 'St. Mary\'s Medical Center', patient_satisfaction: 4.1 },
+                    { first_name: 'Michelle', last_name: 'Lee', specialty: 'Pediatrics', hospital: 'St. Mary\'s Medical Center', patient_satisfaction: 4.6 },
+                    { first_name: 'Jason', last_name: 'White', specialty: 'Pediatrics', hospital: 'St. Mary\'s Medical Center', patient_satisfaction: 4.4 },
+                    { first_name: 'Paul', last_name: 'Davis', specialty: 'Oncology', hospital: 'St. Mary\'s Medical Center', patient_satisfaction: 4.2 },
+                    { first_name: 'Karen', last_name: 'Martinez', specialty: 'Oncology', hospital: 'St. Mary\'s Medical Center', patient_satisfaction: 4.5 },
+                    { first_name: 'Linda', last_name: 'Wilson', specialty: 'Orthopedics', hospital: 'St. Mary\'s Medical Center', patient_satisfaction: 4.0 },
+                    { first_name: 'Thomas', last_name: 'Garcia', specialty: 'Orthopedics', hospital: 'St. Mary\'s Medical Center', patient_satisfaction: 4.2 },
+                    { first_name: 'Patricia', last_name: 'Martinez', specialty: 'Neurology', hospital: 'St. Mary\'s Medical Center', patient_satisfaction: 4.1 },
+                    { first_name: 'William', last_name: 'Taylor', specialty: 'Neurology', hospital: 'St. Mary\'s Medical Center', patient_satisfaction: 4.4 },
+                    
+                    // University Health System (continue with more hospitals...)
+                    { first_name: 'Barbara', last_name: 'Lee', specialty: 'Neurology', hospital: 'University Health System', patient_satisfaction: 3.9 },
+                    { first_name: 'Charles', last_name: 'Kim', specialty: 'Cardiology', hospital: 'University Health System', patient_satisfaction: 4.6 },
+                    { first_name: 'Helen', last_name: 'Chang', specialty: 'Surgery', hospital: 'University Health System', patient_satisfaction: 4.5 },
+                    { first_name: 'Robert', last_name: 'Jackson', specialty: 'Emergency', hospital: 'University Health System', patient_satisfaction: 4.2 },
+                    { first_name: 'Sarah', last_name: 'Moore', specialty: 'Pediatrics', hospital: 'University Health System', patient_satisfaction: 4.8 },
+                    { first_name: 'Peter', last_name: 'Singh', specialty: 'Oncology', hospital: 'University Health System', patient_satisfaction: 4.4 },
+                    { first_name: 'Nancy', last_name: 'Wright', specialty: 'Orthopedics', hospital: 'University Health System', patient_satisfaction: 4.3 },
+                    
+                    // Memorial Hospital
+                    { first_name: 'George', last_name: 'Adams', specialty: 'Cardiology', hospital: 'Memorial Hospital', patient_satisfaction: 4.1 },
+                    { first_name: 'Betty', last_name: 'Hall', specialty: 'Surgery', hospital: 'Memorial Hospital', patient_satisfaction: 4.3 },
+                    { first_name: 'Donald', last_name: 'Allen', specialty: 'Emergency', hospital: 'Memorial Hospital', patient_satisfaction: 3.8 },
+                    { first_name: 'Carol', last_name: 'Young', specialty: 'Pediatrics', hospital: 'Memorial Hospital', patient_satisfaction: 4.5 },
+                    { first_name: 'Kenneth', last_name: 'King', specialty: 'Oncology', hospital: 'Memorial Hospital', patient_satisfaction: 4.2 },
+                    { first_name: 'Dorothy', last_name: 'Scott', specialty: 'Orthopedics', hospital: 'Memorial Hospital', patient_satisfaction: 4.0 },
+                    { first_name: 'Edward', last_name: 'Green', specialty: 'Neurology', hospital: 'Memorial Hospital', patient_satisfaction: 3.9 },
+                    
+                    // Regional Medical Center
+                    { first_name: 'Frank', last_name: 'Baker', specialty: 'Cardiology', hospital: 'Regional Medical Center', patient_satisfaction: 4.4 },
+                    { first_name: 'Ruth', last_name: 'Nelson', specialty: 'Surgery', hospital: 'Regional Medical Center', patient_satisfaction: 4.6 },
+                    { first_name: 'Raymond', last_name: 'Carter', specialty: 'Emergency', hospital: 'Regional Medical Center', patient_satisfaction: 4.0 },
+                    { first_name: 'Sharon', last_name: 'Mitchell', specialty: 'Pediatrics', hospital: 'Regional Medical Center', patient_satisfaction: 4.7 },
+                    { first_name: 'Gregory', last_name: 'Perez', specialty: 'Oncology', hospital: 'Regional Medical Center', patient_satisfaction: 4.3 },
+                    { first_name: 'Lisa', last_name: 'Roberts', specialty: 'Orthopedics', hospital: 'Regional Medical Center', patient_satisfaction: 4.2 },
+                    { first_name: 'Kevin', last_name: 'Turner', specialty: 'Neurology', hospital: 'Regional Medical Center', patient_satisfaction: 4.1 },
+                    
+                    // Community Health Hospital
+                    { first_name: 'Gary', last_name: 'Phillips', specialty: 'Cardiology', hospital: 'Community Health Hospital', patient_satisfaction: 3.8 },
+                    { first_name: 'Cynthia', last_name: 'Campbell', specialty: 'Surgery', hospital: 'Community Health Hospital', patient_satisfaction: 4.1 },
+                    { first_name: 'Larry', last_name: 'Parker', specialty: 'Emergency', hospital: 'Community Health Hospital', patient_satisfaction: 3.6 },
+                    { first_name: 'Diane', last_name: 'Evans', specialty: 'Pediatrics', hospital: 'Community Health Hospital', patient_satisfaction: 4.3 },
+                    { first_name: 'Terry', last_name: 'Edwards', specialty: 'Oncology', hospital: 'Community Health Hospital', patient_satisfaction: 4.0 },
+                    { first_name: 'Joyce', last_name: 'Collins', specialty: 'Orthopedics', hospital: 'Community Health Hospital', patient_satisfaction: 3.9 },
+                    { first_name: 'Harold', last_name: 'Stewart', specialty: 'Neurology', hospital: 'Community Health Hospital', patient_satisfaction: 3.7 },
+                    
+                    // Metropolitan Medical Center
+                    { first_name: 'Wayne', last_name: 'Sanchez', specialty: 'Cardiology', hospital: 'Metropolitan Medical Center', patient_satisfaction: 4.5 },
+                    { first_name: 'Janice', last_name: 'Morris', specialty: 'Surgery', hospital: 'Metropolitan Medical Center', patient_satisfaction: 4.7 },
+                    { first_name: 'Arthur', last_name: 'Rogers', specialty: 'Emergency', hospital: 'Metropolitan Medical Center', patient_satisfaction: 4.1 },
+                    { first_name: 'Cheryl', last_name: 'Reed', specialty: 'Pediatrics', hospital: 'Metropolitan Medical Center', patient_satisfaction: 4.8 },
+                    { first_name: 'Ralph', last_name: 'Cook', specialty: 'Oncology', hospital: 'Metropolitan Medical Center', patient_satisfaction: 4.5 },
+                    { first_name: 'Martha', last_name: 'Bell', specialty: 'Orthopedics', hospital: 'Metropolitan Medical Center', patient_satisfaction: 4.3 },
+                    { first_name: 'Eugene', last_name: 'Murphy', specialty: 'Neurology', hospital: 'Metropolitan Medical Center', patient_satisfaction: 4.2 },
+                    
+                    // Riverside Hospital
+                    { first_name: 'Louis', last_name: 'Bailey', specialty: 'Cardiology', hospital: 'Riverside Hospital', patient_satisfaction: 4.3 },
+                    { first_name: 'Rose', last_name: 'Rivera', specialty: 'Surgery', hospital: 'Riverside Hospital', patient_satisfaction: 4.4 },
+                    { first_name: 'Carl', last_name: 'Cooper', specialty: 'Emergency', hospital: 'Riverside Hospital', patient_satisfaction: 3.9 },
+                    { first_name: 'Frances', last_name: 'Richardson', specialty: 'Pediatrics', hospital: 'Riverside Hospital', patient_satisfaction: 4.6 },
+                    { first_name: 'Roy', last_name: 'Cox', specialty: 'Oncology', hospital: 'Riverside Hospital', patient_satisfaction: 4.2 },
+                    { first_name: 'Katherine', last_name: 'Ward', specialty: 'Orthopedics', hospital: 'Riverside Hospital', patient_satisfaction: 4.1 },
+                    { first_name: 'Albert', last_name: 'Torres', specialty: 'Neurology', hospital: 'Riverside Hospital', patient_satisfaction: 4.0 }
                 ]
             },
             2023: {
@@ -1300,7 +1441,63 @@
             }
         };
 
-        function loadDashboardData() {
+        // Function to get filtered data based on current hospital selection
+        function getFilteredData(year, hospital = 'all') {
+            const yearData = healthcareDataByYear[year] || healthcareDataByYear[2024];
+            
+            if (hospital === 'all') {
+                return {
+                    departments: yearData.departments['all'],
+                    physicians: yearData.physicians
+                };
+            }
+            
+            return {
+                departments: yearData.departments[hospital] || yearData.departments['all'],
+                physicians: yearData.physicians.filter(p => p.hospital === hospital)
+            };
+        }
+        
+        // Function to update all charts when hospital changes
+        function updateAllChartsForHospital() {
+            currentHospital = document.getElementById('hospitalSelector').value;
+            
+            // Update all charts with current year and new hospital filter
+            setTimeout(() => {
+                const selectedSpecialty = document.getElementById('physicianSpecialty')?.value || 'all';
+                const qualityFilter = document.getElementById('qualityMetricFilter')?.value || 'departments';
+                
+                createDepartmentChart(currentTrendsYear, currentHospital);
+                createTrendsChart(currentTrendsYear, currentHospital);
+                createQualityChart(currentTrendsYear, qualityFilter, currentHospital);
+                createPhysiciansChart(currentTrendsYear, selectedSpecialty, currentHospital);
+                
+                // Update KPIs based on hospital filter
+                updateKPIsForHospital(currentTrendsYear, currentHospital);
+            }, 100);
+            
+            console.log(`🏥 All charts updated for hospital: ${currentHospital}`);
+        }
+        
+        // Function to update KPIs based on hospital filter
+        function updateKPIsForHospital(year, hospital) {
+            const filteredData = getFilteredData(year, hospital);
+            const departments = filteredData.departments;
+            
+            if (!departments || departments.length === 0) return;
+            
+            // Calculate hospital-specific KPIs
+            const totalRevenue = departments.reduce((sum, dept) => sum + (dept.total_patients * dept.average_cost), 0);
+            const avgSatisfaction = departments.reduce((sum, dept) => sum + dept.patient_satisfaction, 0) / departments.length;
+            const avgOccupancy = departments.reduce((sum, dept) => sum + dept.current_occupancy, 0) / departments.length;
+            const avgQuality = departments.reduce((sum, dept) => sum + (dept.quality_score || 90), 0) / departments.length;
+            
+            // Update KPI displays
+            document.getElementById('totalRevenue').textContent = formatCurrency(totalRevenue);
+            document.getElementById('avgSatisfaction').textContent = avgSatisfaction.toFixed(1) + '/5.0';
+            document.getElementById('occupancyRate').textContent = (avgOccupancy * 100).toFixed(1) + '%';
+            document.getElementById('qualityScore').textContent = avgQuality.toFixed(1) + '/100';
+        }
             // Use year-specific data
             const yearData = healthcareDataByYear[currentTrendsYear] || healthcareDataByYear[2024];
             const departments = yearData.departments;
@@ -1653,13 +1850,13 @@
             });
         }
 
-        function createPhysiciansChart(selectedYear = 2024, selectedSpecialty = 'all') {
+        function createPhysiciansChart(selectedYear = 2024, selectedSpecialty = 'all', selectedHospital = 'all') {
             const ctx = document.getElementById('physiciansChart');
             if (!ctx) return;
 
-            // Use year-specific physician data
-            const yearData = healthcareDataByYear[selectedYear] || healthcareDataByYear[2024];
-            let physicians = yearData.physicians;
+            // Get hospital-filtered physician data
+            const filteredData = getFilteredData(selectedYear, selectedHospital);
+            let physicians = filteredData.physicians;
             
             // Filter by specialty if not 'all'
             if (selectedSpecialty && selectedSpecialty !== 'all') {
@@ -1680,7 +1877,7 @@
                 data: {
                     labels: topPhysicians.map(p => `Dr. ${p.first_name} ${p.last_name.charAt(0)}.`),
                     datasets: [{
-                        label: `${selectedYear} Patient Satisfaction${selectedSpecialty !== 'all' ? ` (${selectedSpecialty})` : ''}`,
+                        label: `${selectedYear} Patient Satisfaction${selectedSpecialty !== 'all' ? ` (${selectedSpecialty})` : ''}${selectedHospital !== 'all' ? ` - ${selectedHospital}` : ''}`,
                         data: topPhysicians.map(p => p.patient_satisfaction),
                         backgroundColor: selectedSpecialty !== 'all' ? 
                             getSpecialtyColor(selectedSpecialty) : '#8b5cf6',
@@ -1698,7 +1895,7 @@
                                 title: function(context) {
                                     const index = context[0].dataIndex;
                                     const physician = topPhysicians[index];
-                                    return `Dr. ${physician.first_name} ${physician.last_name} (${physician.specialty})`;
+                                    return `Dr. ${physician.first_name} ${physician.last_name} (${physician.specialty}) - ${physician.hospital}`;
                                 },
                                 label: function(context) {
                                     return `${selectedYear} Satisfaction: ${context.parsed.x.toFixed(1)}/5.0`;
@@ -1710,7 +1907,7 @@
                                     let performance = 'Excellent';
                                     if (score < 4.0) performance = 'Good';
                                     else if (score < 4.5) performance = 'Very Good';
-                                    return [`Performance Level: ${performance} ⭐`];
+                                    return [`Performance Level: ${performance} ⭐`, `Hospital: ${physician.hospital}`];
                                 }
                             }
                         }
@@ -1726,7 +1923,7 @@
                         y: {
                             title: {
                                 display: true,
-                                text: selectedSpecialty !== 'all' ? selectedSpecialty : 'All Specialties'
+                                text: selectedHospital !== 'all' ? `${selectedHospital} - ${selectedSpecialty !== 'all' ? selectedSpecialty : 'All Specialties'}` : (selectedSpecialty !== 'all' ? selectedSpecialty : 'All Specialties')
                             }
                         }
                     }
@@ -1751,7 +1948,7 @@
         // Function to update physicians chart when specialty changes
         function updatePhysiciansChart() {
             const selectedSpecialty = document.getElementById('physicianSpecialty').value;
-            createPhysiciansChart(currentTrendsYear, selectedSpecialty);
+            createPhysiciansChart(currentTrendsYear, selectedSpecialty, currentHospital);
         }
         
         // Enhanced Quality Metrics Data for all years
@@ -1975,7 +2172,7 @@
         
         /**
          * Change Trends Chart Year
-         * Updates all dashboard charts to show data for the selected year
+         * Updates all dashboard charts to show data for the selected year while maintaining hospital filter
          */
         function changeTrendsYear(year) {
             // Update current year
@@ -1987,33 +2184,34 @@
             });
             document.querySelector(`[data-year="${year}"]`).classList.add('active');
             
-            // Update KPIs for the selected year
-            const yearData = healthcareDataByYear[year] || healthcareDataByYear[2024];
-            const departments = yearData.departments;
-            
-            // Calculate year-specific KPIs
-            const totalRevenue = departments.reduce((sum, dept) => sum + (dept.total_patients * dept.average_cost), 0);
-            const avgSatisfaction = departments.reduce((sum, dept) => sum + dept.patient_satisfaction, 0) / departments.length;
-            const avgOccupancy = departments.reduce((sum, dept) => sum + dept.current_occupancy, 0) / departments.length;
-            const avgQuality = departments.reduce((sum, dept) => sum + (dept.quality_score || 90), 0) / departments.length;
-            
-            // Update KPI displays
-            document.getElementById('totalRevenue').textContent = formatCurrency(totalRevenue);
-            document.getElementById('avgSatisfaction').textContent = avgSatisfaction.toFixed(1) + '/5.0';
-            document.getElementById('occupancyRate').textContent = (avgOccupancy * 100).toFixed(1) + '%';
-            document.getElementById('qualityScore').textContent = avgQuality.toFixed(1) + '/100';
-            
-            // Update all synchronized charts
+        function loadDashboardData() {
+            // Initialize with current hospital filter
+            updateKPIsForHospital(currentTrendsYear, currentHospital);
+
+            // Create charts with current year and hospital data
             setTimeout(() => {
-                const selectedSpecialty = document.getElementById('physicianSpecialty').value;
-                const qualityFilter = document.getElementById('qualityMetricFilter').value;
-                createTrendsChart(year);
-                createDepartmentChart(year);
-                createQualityChart(year, qualityFilter);
-                createPhysiciansChart(year, selectedSpecialty);
+                const selectedSpecialty = document.getElementById('physicianSpecialty')?.value || 'all';
+                const qualityFilter = document.getElementById('qualityMetricFilter')?.value || 'departments';
+                
+                createDepartmentChart(currentTrendsYear, currentHospital);
+                createTrendsChart(currentTrendsYear, currentHospital);
+                createQualityChart(currentTrendsYear, qualityFilter, currentHospital);
+                createPhysiciansChart(currentTrendsYear, selectedSpecialty, currentHospital);
+            }, 500);
+        }
+                const selectedSpecialty = document.getElementById('physicianSpecialty')?.value || 'all';
+                const qualityFilter = document.getElementById('qualityMetricFilter')?.value || 'departments';
+                
+                createTrendsChart(year, currentHospital);
+                createDepartmentChart(year, currentHospital);
+                createQualityChart(year, qualityFilter, currentHospital);
+                createPhysiciansChart(year, selectedSpecialty, currentHospital);
+                
+                // Update KPIs for new year with current hospital filter
+                updateKPIsForHospital(year, currentHospital);
             }, 100);
             
-            console.log(`📅 Dashboard synchronized to ${year} data`);
+            console.log(`📅 Dashboard synchronized to ${year} data with hospital: ${currentHospital}`);
         }
         
         // Make function globally available
