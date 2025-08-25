@@ -597,12 +597,74 @@
             color: #374151;
         }
 
+        .value-propositions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .value-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .value-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .value-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .value-card:nth-child(1) .value-icon {
+            color: #10b981; /* Green for Affordable Care */
+        }
+
+        .value-card:nth-child(2) .value-icon {
+            color: #3b82f6; /* Blue for Trusted Doctors */
+        }
+
+        .value-card:nth-child(3) .value-icon {
+            color: #667eea; /* Purple for Transparent Costs */
+        }
+
+        .value-card:nth-child(4) .value-icon {
+            color: #f59e0b; /* Orange for Data-Driven Insights */
+        }
+
+        .value-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 0.75rem;
+        }
+
+        .value-description {
+            color: #4a5568;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
         @media (max-width: 768px) {
             .hero-title { font-size: 2.5rem; }
             .form-grid { grid-template-columns: 1fr; }
             .chart-grid { grid-template-columns: 1fr; }
             .kpi-grid { grid-template-columns: 1fr; }
-            .hero-buttons { flex-direction: column; align-items: center; }
+            .value-propositions { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; }
             .doctor-details { grid-template-columns: 1fr; }
         }
     </style>
@@ -631,16 +693,30 @@
             <div class="hero-section">
                 <h1 class="hero-title">Healthcare Made Transparent</h1>
                 <p class="hero-subtitle">Modern healthcare analytics platform with cost estimation, physician discovery, and real-time insights</p>
-                <div class="hero-buttons">
-                    <button class="btn btn-primary" onclick="showSection('cost-estimator')">
-                        <i class="fas fa-calculator"></i> Estimate Costs
-                    </button>
-                    <button class="btn btn-primary" onclick="showSection('doctor-finder')">
-                        <i class="fas fa-user-md"></i> Find Doctors
-                    </button>
-                    <button class="btn btn-secondary" onclick="showSection('analytics')">
-                        <i class="fas fa-chart-bar"></i> Analytics Dashboard
-                    </button>
+                <div class="value-propositions">
+                    <div class="value-card" onclick="showSection('cost-estimator')">
+                        <i class="fas fa-hand-holding-usd value-icon"></i>
+                        <h3 class="value-title">Affordable Care</h3>
+                        <p class="value-description">Get accurate cost estimates upfront, compare prices, and find the most affordable healthcare options without surprises.</p>
+                    </div>
+                    
+                    <div class="value-card" onclick="showSection('doctor-finder')">
+                        <i class="fas fa-user-md value-icon"></i>
+                        <h3 class="value-title">Trusted Doctors</h3>
+                        <p class="value-description">Access verified physician profiles with real patient ratings, performance metrics, and success rates to make informed choices.</p>
+                    </div>
+                    
+                    <div class="value-card" onclick="showSection('cost-estimator')">
+                        <i class="fas fa-receipt value-icon"></i>
+                        <h3 class="value-title">Transparent Costs</h3>
+                        <p class="value-description">No hidden fees or billing surprises. See exact procedure costs, insurance coverage, and your out-of-pocket expenses clearly.</p>
+                    </div>
+                    
+                    <div class="value-card" onclick="showSection('analytics')">
+                        <i class="fas fa-chart-line value-icon"></i>
+                        <h3 class="value-title">Data-Driven Insights</h3>
+                        <p class="value-description">Make healthcare decisions backed by real-time analytics, performance data, and comprehensive market insights.</p>
+                    </div>
                 </div>
             </div>
         </section>
