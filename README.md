@@ -4,11 +4,9 @@ A comprehensive healthcare analytics platform featuring both backend database sy
 
 ## 🌐 Live Healthcare Website
 
-**🔗 [Visit the Healthcare Platform](https://abdullah-binmadhi.github.io/Cursor_Healthcare/healthcare-website/)** - Main Website
+**🔗 [Visit the Complete Healthcare Platform](https://abdullah-binmadhi.github.io/Cursor_Healthcare/healthcare-website/)** - **ALL-IN-ONE MODERN PLATFORM** 🚀
 
-**📊 [Healthcare Analytics Dashboard](https://abdullah-binmadhi.github.io/Cursor_Healthcare/healthcare-website/analytics.html)** ⭐ **PROFESSIONAL DESIGN & ADVANCED CHARTS**
-
-Experience our interactive healthcare platform featuring:
+Experience our unified healthcare platform featuring:
 - **💰 Healthcare Cost Estimator** - Get transparent pricing for medical procedures
 - **👨‍⚕️ Doctor Finder & Ratings** - Search qualified physicians with performance metrics
 - **📊 Analytics Dashboard** - Professional glassmorphism design with real healthcare insights
@@ -91,12 +89,11 @@ The database contains 8 main tables:
 ## 🚀 Quick Start
 
 ### Use the Live Website (Recommended)
-1. **Visit the main website**: [https://abdullah-binmadhi.github.io/Cursor_Healthcare/healthcare-website/](https://abdullah-binmadhi.github.io/Cursor_Healthcare/healthcare-website/)
-2. **Analytics Dashboard**: [https://abdullah-binmadhi.github.io/Cursor_Healthcare/healthcare-website/analytics.html](https://abdullah-binmadhi.github.io/Cursor_Healthcare/healthcare-website/analytics.html) - **PROFESSIONAL DESIGN** 📊
-3. **Try the Cost Estimator**: Input patient information to get cost estimates
-4. **Search for Doctors**: Filter physicians by specialty, ratings, and availability
-5. **Explore Analytics Dashboard**: Professional glassmorphism design with accurate data visualization
-6. **Interactive Features**: Real-time calculations, responsive design, and modern chart visualization
+1. **Visit the complete platform**: [https://abdullah-binmadhi.github.io/Cursor_Healthcare/healthcare-website/](https://abdullah-binmadhi.github.io/Cursor_Healthcare/healthcare-website/)
+2. **Try the Cost Estimator**: Input patient information to get cost estimates
+3. **Search for Doctors**: Filter physicians by specialty, ratings, and availability
+4. **Explore Analytics Dashboard**: Professional glassmorphism design with accurate data visualization
+5. **Interactive Features**: Real-time calculations, responsive design, and modern chart visualization
 
 ### Run Website Locally
 1. **Clone the repository**:
