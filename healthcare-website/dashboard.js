@@ -23,8 +23,19 @@ document.addEventListener('DOMContentLoaded', function() {
  */
 async function initializeDashboard() {
     try {
+        console.log('Starting dashboard initialization...');
+        
+        // Show loading state
+        showLoadingState();
+        
         // Load data
         await loadDashboardData();
+        console.log('Data loaded successfully:', dashboardData);
+        
+        // Validate data
+        if (!dashboardData.physicians || dashboardData.physicians.length === 0) {
+            throw new Error('No physician data loaded');
+        }
         
         // Setup event listeners
         setupDashboardListeners();
@@ -32,9 +43,14 @@ async function initializeDashboard() {
         // Initialize the first dashboard
         showDashboard('hospital');
         
+        // Hide loading state
+        hideLoadingState();
+        
         console.log('Dashboard initialized successfully');
     } catch (error) {
         console.error('Error initializing dashboard:', error);
+        showError('Failed to load dashboard data. Please refresh the page.');
+        hideLoadingState();
     }
 }
 
@@ -43,6 +59,8 @@ async function initializeDashboard() {
  */
 async function loadDashboardData() {
     try {
+        console.log('Loading dashboard data...');
+        
         const [physicians, financial, departments, demographics] = await Promise.all([
             loadCSV('data/physician_performance.csv'),
             loadCSV('data/financial_performance.csv'),
@@ -51,8 +69,23 @@ async function loadDashboardData() {
         ]);
         
         dashboardData = { physicians, financial, departments, demographics };
+        
+        console.log('Data loaded:', {
+            physicians: physicians.length,
+            financial: financial.length,
+            departments: departments.length,
+            demographics: demographics.length
+        });
+        
+        // Validate data
+        if (!physicians.length) throw new Error('No physician data');
+        if (!financial.length) throw new Error('No financial data');
+        if (!departments.length) throw new Error('No department data');
+        if (!demographics.length) throw new Error('No demographics data');
+        
     } catch (error) {
         console.error('Error loading dashboard data:', error);
+        throw error;
     }
 }
 
@@ -104,11 +137,27 @@ function showDashboard(type) {
  * Load Hospital Performance Dashboard
  */
 function loadHospitalDashboard() {
+    console.log('Loading hospital dashboard...');
+    
+    // Use fallback data if CSV data isn't available
+    const departments = dashboardData.departments.length > 0 ? dashboardData.departments : [
+        { department_name: 'Cardiology', patient_satisfaction: 4.2, current_occupancy: 0.85, total_patients: 150 },
+        { department_name: 'Emergency', patient_satisfaction: 3.8, current_occupancy: 0.92, total_patients: 300 },
+        { department_name: 'Surgery', patient_satisfaction: 4.5, current_occupancy: 0.78, total_patients: 120 },
+        { department_name: 'Pediatrics', patient_satisfaction: 4.6, current_occupancy: 0.65, total_patients: 90 }
+    ];
+    
+    const financial = dashboardData.financial.length > 0 ? dashboardData.financial : [
+        { total_revenue: 150000, department: 'Cardiology' },
+        { total_revenue: 200000, department: 'Emergency' },
+        { total_revenue: 180000, department: 'Surgery' }
+    ];
+    
     // Calculate KPIs
-    const totalRevenue = dashboardData.financial.reduce((sum, item) => sum + (item.total_revenue || 0), 0);
-    const avgSatisfaction = calculateAverage(dashboardData.departments, 'patient_satisfaction');
-    const avgOccupancy = calculateAverage(dashboardData.departments, 'current_occupancy') * 100;
-    const qualityScore = calculateAverage(dashboardData.departments, 'patient_satisfaction') * 20; // Scale to 100
+    const totalRevenue = financial.reduce((sum, item) => sum + (item.total_revenue || 0), 0);
+    const avgSatisfaction = departments.reduce((sum, dept) => sum + (dept.patient_satisfaction || 0), 0) / departments.length;
+    const avgOccupancy = departments.reduce((sum, dept) => sum + (dept.current_occupancy || 0), 0) / departments.length * 100;
+    const qualityScore = avgSatisfaction * 20; // Scale to 100
     
     // Update KPI values
     updateElement('totalRevenue', formatCurrency(totalRevenue));
@@ -116,11 +165,13 @@ function loadHospitalDashboard() {
     updateElement('occupancyRate', avgOccupancy.toFixed(1) + '%');
     updateElement('qualityScore', qualityScore.toFixed(1) + '/100');
     
-    // Create charts
-    createDepartmentChart();
-    createTrendsChart();
-    createQualityChart();
-    createHospitalChart();
+    // Create charts with available data
+    setTimeout(() => {
+        createDepartmentChart();
+        createTrendsChart();
+        createQualityChart();
+        createHospitalChart();
+    }, 100);
 }
 
 /**
@@ -169,22 +220,32 @@ function loadPatientDashboard() {
  * Load Physician Performance Dashboard
  */
 function loadPhysicianDashboard() {
-    const physicians = dashboardData.physicians;
+    console.log('Loading physician dashboard...');
+    
+    // Use fallback data if CSV data isn't available
+    const physicians = dashboardData.physicians.length > 0 ? dashboardData.physicians : [
+        { first_name: 'John', last_name: 'Smith', patient_satisfaction: 4.5, success_rate: 95, availability_status: 'Available' },
+        { first_name: 'Jane', last_name: 'Doe', patient_satisfaction: 4.2, success_rate: 92, availability_status: 'Available' },
+        { first_name: 'Mike', last_name: 'Johnson', patient_satisfaction: 4.7, success_rate: 97, availability_status: 'Limited' }
+    ];
+    
     const activePhysicians = physicians.filter(p => p.availability_status !== 'Unavailable').length;
-    const avgPerformance = calculateAverage(physicians, 'patient_satisfaction');
-    const avgSuccessRate = calculateAverage(physicians, 'success_rate');
-    const topPerformer = physicians.reduce((max, p) => p.patient_satisfaction > max.patient_satisfaction ? p : max, physicians[0]);
+    const avgPerformance = physicians.reduce((sum, p) => sum + (p.patient_satisfaction || 0), 0) / physicians.length;
+    const avgSuccessRate = physicians.reduce((sum, p) => sum + (p.success_rate || 0), 0) / physicians.length;
+    const topPerformer = physicians.reduce((max, p) => (p.patient_satisfaction || 0) > (max.patient_satisfaction || 0) ? p : max, physicians[0]);
     
     updateElement('activePhysicians', activePhysicians);
     updateElement('avgPerformance', avgPerformance.toFixed(1) + '/5.0');
     updateElement('avgSuccessRate', avgSuccessRate.toFixed(1) + '%');
-    updateElement('topPerformer', `Dr. ${topPerformer?.first_name} ${topPerformer?.last_name}`);
+    updateElement('topPerformer', `Dr. ${topPerformer?.first_name || 'John'} ${topPerformer?.last_name || 'Smith'}`);
     
-    // Create physician charts
-    createTopPhysiciansChart();
-    createSpecialtyPerformanceChart();
-    createWorkloadChart();
-    createPhysicianQualityChart();
+    // Create physician charts with delay to ensure DOM is ready
+    setTimeout(() => {
+        createTopPhysiciansChart();
+        createSpecialtyPerformanceChart();
+        createWorkloadChart();
+        createPhysicianQualityChart();
+    }, 100);
 }
 
 /**
@@ -1000,4 +1061,68 @@ function updateDepartmentChart() {
         chartInstances.departmentChart.data.datasets[0].borderColor = color;
         chartInstances.departmentChart.update();
     }
+}
+
+/**
+ * Utility Functions
+ */
+function showLoadingState() {
+    // Add loading indicators to dashboard sections
+    const sections = document.querySelectorAll('.dashboard-section');
+    sections.forEach(section => {
+        const loading = document.createElement('div');
+        loading.className = 'loading-overlay';
+        loading.innerHTML = '<div class="loading-spinner"></div><p>Loading dashboard data...</p>';
+        loading.style.cssText = `
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255,255,255,0.9);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        `;
+        section.style.position = 'relative';
+        section.appendChild(loading);
+    });
+}
+
+function hideLoadingState() {
+    // Remove loading indicators
+    const loadingOverlays = document.querySelectorAll('.loading-overlay');
+    loadingOverlays.forEach(overlay => overlay.remove());
+}
+
+function showError(message) {
+    // Create error message
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'dashboard-error';
+    errorDiv.innerHTML = `
+        <div class="error-content">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h3>Dashboard Error</h3>
+            <p>${message}</p>
+            <button onclick="location.reload()" class="btn btn-primary">Retry</button>
+        </div>
+    `;
+    errorDiv.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+        color: white;
+        text-align: center;
+    `;
+    
+    document.body.appendChild(errorDiv);
 }
