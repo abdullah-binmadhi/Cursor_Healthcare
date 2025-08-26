@@ -306,66 +306,6 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
         }
 
-        .kpi-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 3rem;
-        }
-
-        .kpi-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 1.5rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .kpi-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-        }
-
-        .kpi-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .kpi-title {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #6b7280;
-            text-transform: uppercase;
-        }
-
-        .kpi-icon {
-            font-size: 1.5rem;
-            padding: 0.5rem;
-            border-radius: 12px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-        }
-
-        .kpi-value {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #1a202c;
-            margin-bottom: 0.5rem;
-        }
-
-        .kpi-trend {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #10b981;
-        }
-
         .chart-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
@@ -936,45 +876,6 @@
                 <h2 class="section-title"><i class="fas fa-chart-bar"></i> Healthcare Analytics Dashboard</h2>
                 <p class="section-subtitle">Professional healthcare insights and data visualization</p>
 
-                <!-- KPI Cards -->
-                <div class="kpi-grid">
-                    <div class="kpi-card">
-                        <div class="kpi-header">
-                            <div class="kpi-title">Total Revenue</div>
-                            <div class="kpi-icon"><i class="fas fa-dollar-sign"></i></div>
-                        </div>
-                        <div class="kpi-value" id="totalRevenue">Loading...</div>
-                        <div class="kpi-trend"><i class="fas fa-arrow-up"></i> +12.5% vs last month</div>
-                    </div>
-
-                    <div class="kpi-card">
-                        <div class="kpi-header">
-                            <div class="kpi-title">Patient Satisfaction</div>
-                            <div class="kpi-icon"><i class="fas fa-smile"></i></div>
-                        </div>
-                        <div class="kpi-value" id="avgSatisfaction">Loading...</div>
-                        <div class="kpi-trend"><i class="fas fa-arrow-up"></i> +0.3 vs last month</div>
-                    </div>
-
-                    <div class="kpi-card">
-                        <div class="kpi-header">
-                            <div class="kpi-title">Occupancy Rate</div>
-                            <div class="kpi-icon"><i class="fas fa-bed"></i></div>
-                        </div>
-                        <div class="kpi-value" id="occupancyRate">Loading...</div>
-                        <div class="kpi-trend"><i class="fas fa-minus"></i> -1.2% vs last month</div>
-                    </div>
-
-                    <div class="kpi-card">
-                        <div class="kpi-header">
-                            <div class="kpi-title">Quality Score</div>
-                            <div class="kpi-icon"><i class="fas fa-shield-alt"></i></div>
-                        </div>
-                        <div class="kpi-value" id="qualityScore">Loading...</div>
-                        <div class="kpi-trend"><i class="fas fa-arrow-up"></i> +2.1% vs last month</div>
-                    </div>
-                </div>
-
                 <!-- Global Dashboard Controls -->
                 <div style="background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); border-radius: 20px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 8px 30px rgba(0,0,0,0.1); border: 2px solid #e2e8f0;">
                     <div style="display: flex; align-items: center; justify-content: center; gap: 2rem; flex-wrap: wrap;">
@@ -1480,34 +1381,12 @@
                 createTrendsChart(currentTrendsYear, currentHospital);
                 createQualityChart(currentTrendsYear, qualityFilter, currentHospital);
                 createPhysiciansChart(currentTrendsYear, selectedSpecialty, currentHospital);
-                
-                // Update KPIs based on hospital filter
-                updateKPIsForHospital(currentTrendsYear, currentHospital);
             }, 100);
             
             console.log(`🏥 All charts updated for hospital: ${currentHospital}`);
         }
         
-        // Function to update KPIs based on hospital filter
-        function updateKPIsForHospital(year, hospital) {
-            const filteredData = getFilteredData(year, hospital);
-            const departments = filteredData.departments;
-            
-            if (!departments || departments.length === 0) return;
-            
-            // Calculate hospital-specific KPIs
-            const totalRevenue = departments.reduce((sum, dept) => sum + (dept.total_patients * dept.average_cost), 0);
-            const avgSatisfaction = departments.reduce((sum, dept) => sum + dept.patient_satisfaction, 0) / departments.length;
-            const avgOccupancy = departments.reduce((sum, dept) => sum + dept.current_occupancy, 0) / departments.length;
-            const avgQuality = departments.reduce((sum, dept) => sum + (dept.quality_score || 90), 0) / departments.length;
-            
-            // Update KPI displays
-            document.getElementById('totalRevenue').textContent = formatCurrency(totalRevenue);
-            document.getElementById('avgSatisfaction').textContent = avgSatisfaction.toFixed(1) + '/5.0';
-            document.getElementById('occupancyRate').textContent = (avgOccupancy * 100).toFixed(1) + '%';
-            document.getElementById('qualityScore').textContent = avgQuality.toFixed(1) + '/100';
-        }
-        
+
         // Function to load dashboard data
         function loadDashboardData() {
             // Use year-specific data
@@ -1515,9 +1394,6 @@
             const departments = yearData.departments;
 
             dashboardData.departments = departments;
-
-            // Calculate and display KPIs with hospital filter
-            updateKPIsForHospital(currentTrendsYear, currentHospital);
 
             // Update all synchronized charts
             setTimeout(() => {
@@ -2147,9 +2023,6 @@
             // Get year-specific data
             const yearData = healthcareDataByYear[year] || healthcareDataByYear[2024];
             
-            // Update KPIs with year-specific data and current hospital filter
-            updateKPIsForHospital(year, currentHospital);
-            
             // Update all synchronized charts with smooth transitions
             setTimeout(() => {
                 const selectedSpecialty = document.getElementById('physicianSpecialty')?.value || 'all';
@@ -2175,9 +2048,6 @@
 
             dashboardData.departments = departments;
 
-            // Calculate and display KPIs with hospital filter
-            updateKPIsForHospital(currentTrendsYear, currentHospital);
-
             // Update all synchronized charts
             setTimeout(() => {
                 const selectedSpecialty = document.getElementById('physicianSpecialty')?.value || 'all';
@@ -2189,40 +2059,7 @@
             }, 500);
         }
         
-        /**
-         * Update KPIs for specific hospital
-         */
-        function updateKPIsForHospital(selectedYear, hospitalFilter) {
-            const yearData = healthcareDataByYear[selectedYear] || healthcareDataByYear[2024];
-            let departments = yearData.departments;
-            
-            // Filter departments by hospital if selected
-            if (hospitalFilter !== 'all') {
-                departments = departments.filter(dept => dept.hospital === hospitalFilter);
-            }
-            
-            if (departments.length === 0) {
-                // Show no data message in KPIs
-                document.getElementById('totalRevenue').textContent = 'N/A';
-                document.getElementById('avgSatisfaction').textContent = 'N/A';
-                document.getElementById('occupancyRate').textContent = 'N/A';
-                document.getElementById('qualityScore').textContent = 'N/A';
-                return;
-            }
-            
-            // Calculate filtered KPIs
-            const totalRevenue = departments.reduce((sum, dept) => sum + (dept.total_patients * dept.average_cost), 0);
-            const avgSatisfaction = departments.reduce((sum, dept) => sum + dept.patient_satisfaction, 0) / departments.length;
-            const avgOccupancy = departments.reduce((sum, dept) => sum + dept.current_occupancy, 0) / departments.length;
-            const avgQuality = departments.reduce((sum, dept) => sum + (dept.quality_score || 90), 0) / departments.length;
-            
-            // Update KPI displays
-            document.getElementById('totalRevenue').textContent = formatCurrency(totalRevenue);
-            document.getElementById('avgSatisfaction').textContent = avgSatisfaction.toFixed(1) + '/5.0';
-            document.getElementById('occupancyRate').textContent = (avgOccupancy * 100).toFixed(1) + '%';
-            document.getElementById('qualityScore').textContent = avgQuality.toFixed(1) + '/100';
-        }
-        
+
         // Make function globally available
         window.changeTrendsYear = changeTrendsYear;
     </script>
