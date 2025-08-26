@@ -975,6 +975,28 @@
                     </div>
                 </div>
 
+                <!-- Global Dashboard Controls -->
+                <div style="background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); border-radius: 20px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 8px 30px rgba(0,0,0,0.1); border: 2px solid #e2e8f0;">
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-hospital" style="color: #667eea; font-size: 1.2rem;"></i>
+                            <label for="hospitalSelector" style="font-weight: 600; color: #1a202c; font-size: 1rem;">Hospital:</label>
+                            <select id="hospitalSelector" onchange="updateHospitalFilter()" style="padding: 0.5rem 1rem; border: 2px solid #e2e8f0; border-radius: 10px; background: white; font-weight: 500; min-width: 200px; cursor: pointer;">
+                                <option value="all">All Hospitals</option>
+                                <option value="City General Hospital">City General Hospital</option>
+                                <option value="St. Mary's Medical Center">St. Mary's Medical Center</option>
+                                <option value="University Health System">University Health System</option>
+                                <option value="Memorial Hospital">Memorial Hospital</option>
+                                <option value="Regional Medical Center">Regional Medical Center</option>
+                                <option value="Community Health Hospital">Community Health Hospital</option>
+                                <option value="Metropolitan Medical Center">Metropolitan Medical Center</option>
+                                <option value="Riverside Hospital">Riverside Hospital</option>
+                            </select>
+                        </div>
+                        <div style="font-size: 0.9rem; color: #6b7280; font-style: italic;">💡 Select a hospital to filter all analytics charts</div>
+                    </div>
+                </div>
+
                 <!-- Charts Grid -->
                 <div class="chart-grid">
                     <div class="chart-card">
