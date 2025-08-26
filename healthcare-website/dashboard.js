@@ -1219,37 +1219,45 @@ function createQualityChart(selectedYear = 2024, filterType = 'departments') {
     } else {
         // Hospital-based quality metrics
         const hospitalMetrics = qualityMetrics.hospital;
-        labels = Object.keys(hospitalMetrics);
+        // Filter out 'overall' to remove the overall performance score
+        const filteredHospitalMetrics = Object.keys(hospitalMetrics)
+            .filter(key => key !== 'overall')
+            .reduce((obj, key) => {
+                obj[key] = hospitalMetrics[key];
+                return obj;
+            }, {});
+        
+        labels = Object.keys(filteredHospitalMetrics);
         
         chartData = {
             labels: labels,
             datasets: [{
                 label: `${selectedYear} Safety Score`,
-                data: labels.map(unit => hospitalMetrics[unit].safety),
+                data: labels.map(unit => filteredHospitalMetrics[unit].safety),
                 backgroundColor: 'rgba(239, 68, 68, 0.7)',
                 borderColor: 'rgba(239, 68, 68, 1)',
                 borderWidth: 2
             }, {
                 label: `${selectedYear} Efficiency Score`,
-                data: labels.map(unit => hospitalMetrics[unit].efficiency),
+                data: labels.map(unit => filteredHospitalMetrics[unit].efficiency),
                 backgroundColor: 'rgba(59, 130, 246, 0.7)',
                 borderColor: 'rgba(59, 130, 246, 1)',
                 borderWidth: 2
             }, {
                 label: `${selectedYear} Satisfaction Score`,
-                data: labels.map(unit => hospitalMetrics[unit].satisfaction),
+                data: labels.map(unit => filteredHospitalMetrics[unit].satisfaction),
                 backgroundColor: 'rgba(16, 185, 129, 0.7)',
                 borderColor: 'rgba(16, 185, 129, 1)',
                 borderWidth: 2
             }, {
                 label: `${selectedYear} Outcomes Score`,
-                data: labels.map(unit => hospitalMetrics[unit].outcomes),
+                data: labels.map(unit => filteredHospitalMetrics[unit].outcomes),
                 backgroundColor: 'rgba(139, 92, 246, 0.7)',
                 borderColor: 'rgba(139, 92, 246, 1)',
                 borderWidth: 2
             }, {
                 label: `${selectedYear} Innovation Score`,
-                data: labels.map(unit => hospitalMetrics[unit].innovation),
+                data: labels.map(unit => filteredHospitalMetrics[unit].innovation),
                 backgroundColor: 'rgba(245, 158, 11, 0.7)',
                 borderColor: 'rgba(245, 158, 11, 1)',
                 borderWidth: 2
