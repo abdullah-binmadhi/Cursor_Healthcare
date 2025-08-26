@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HealthCare Analytics - Enhanced v2.0 (6-Card Layout)</title>
+    <title>HealthCare Analytics - Enhanced v2.1 (No Overall Performance)</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
@@ -1051,6 +1051,9 @@
 
     <script src="script.js"></script>
     <script>
+        /* CACHE BUST v2.1 - Overall Performance Removed - 2025-08-26 */
+        console.log('🚀 Dashboard v2.1 - Overall Performance Score Removed!');
+        
         // Navigation functionality
         function showSection(sectionId) {
             // Hide all sections
@@ -1994,7 +1997,7 @@
                                     let performance = 'Excellent';
                                     if (average < 80) performance = 'Needs Improvement';
                                     else if (average < 90) performance = 'Good';
-                                    return [`Overall Performance: ${performance} (${average.toFixed(1)}/100)`];
+                                    return [`Unit Performance: ${performance} (${average.toFixed(1)}/100)`];
                                 }
                             }
                         }
