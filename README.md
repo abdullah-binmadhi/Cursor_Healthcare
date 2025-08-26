@@ -4,7 +4,9 @@
 
 ## 🚀 Live Platform
 
-### **[📊 Healthcare Analytics Dashboard](healthcare-website/index.html)** <sup>🆕</sup>
+### **[🌐 LIVE WEBSITE ➜ Healthcare Analytics Dashboard](https://abdullah-binmadhi.github.io/Cursor_Healthcare/healthcare-website/)** <sup>🔥 LIVE</sup>
+
+> **Click above to access the live healthcare analytics platform!** 👆
 
 **Main Features:**
 - 💰 **Smart Cost Estimator** - Real-time healthcare cost calculations
