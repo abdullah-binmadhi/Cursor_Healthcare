@@ -981,7 +981,7 @@
                         <div style="display: flex; align-items: center; gap: 0.5rem;">
                             <i class="fas fa-hospital" style="color: #667eea; font-size: 1.2rem;"></i>
                             <label for="hospitalSelector" style="font-weight: 600; color: #1a202c; font-size: 1rem;">Hospital:</label>
-                            <select id="hospitalSelector" onchange="updateHospitalFilter()" style="padding: 0.5rem 1rem; border: 2px solid #e2e8f0; border-radius: 10px; background: white; font-weight: 500; min-width: 200px; cursor: pointer;">
+                            <select id="hospitalSelector" onchange="updateAllChartsForHospital()" style="padding: 0.5rem 1rem; border: 2px solid #e2e8f0; border-radius: 10px; background: white; font-weight: 500; min-width: 200px; cursor: pointer;">
                                 <option value="all">All Hospitals</option>
                                 <option value="City General Hospital">City General Hospital</option>
                                 <option value="St. Mary's Medical Center">St. Mary's Medical Center</option>
@@ -1023,19 +1023,6 @@
                                     <button class="year-tab active" data-year="2024" onclick="changeTrendsYear(2024)">2024</button>
                                     <button class="year-tab" data-year="2023" onclick="changeTrendsYear(2023)">2023</button>
                                     <button class="year-tab" data-year="2022" onclick="changeTrendsYear(2022)">2022</button>
-                                </div>
-                                <div class="chart-controls">
-                                    <select id="hospitalSelector" onchange="updateAllChartsForHospital()">
-                                        <option value="all">All Hospitals</option>
-                                        <option value="City General Hospital">City General Hospital</option>
-                                        <option value="St. Mary's Medical Center">St. Mary's Medical Center</option>
-                                        <option value="University Health System">University Health System</option>
-                                        <option value="Memorial Hospital">Memorial Hospital</option>
-                                        <option value="Regional Medical Center">Regional Medical Center</option>
-                                        <option value="Community Health Hospital">Community Health Hospital</option>
-                                        <option value="Metropolitan Medical Center">Metropolitan Medical Center</option>
-                                        <option value="Riverside Hospital">Riverside Hospital</option>
-                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -1536,10 +1523,10 @@
             setTimeout(() => {
                 const selectedSpecialty = document.getElementById('physicianSpecialty')?.value || 'all';
                 const qualityFilter = document.getElementById('qualityMetricFilter')?.value || 'departments';
-                createDepartmentChart(currentTrendsYear);
-                createTrendsChart(currentTrendsYear);
-                createQualityChart(currentTrendsYear, qualityFilter);
-                createPhysiciansChart(currentTrendsYear, selectedSpecialty);
+                createDepartmentChart(currentTrendsYear, currentHospital);
+                createTrendsChart(currentTrendsYear, currentHospital);
+                createQualityChart(currentTrendsYear, qualityFilter, currentHospital);
+                createPhysiciansChart(currentTrendsYear, selectedSpecialty, currentHospital);
             }, 500);
         }
 
@@ -1550,13 +1537,13 @@
             return '$' + amount.toLocaleString();
         }
 
-        function createDepartmentChart(selectedYear = 2024) {
+        function createDepartmentChart(selectedYear = 2024, hospitalFilter = 'all') {
             const ctx = document.getElementById('departmentChart');
             if (!ctx) return;
 
-            // Use year-specific department data
-            const yearData = healthcareDataByYear[selectedYear] || healthcareDataByYear[2024];
-            const departments = yearData.departments;
+            // Get filtered data based on hospital selection
+            const filteredData = getFilteredData(selectedYear, hospitalFilter || currentHospital);
+            const departments = filteredData.departments;
             const metric = document.getElementById('performanceMetric').value;
             let data, label, colors, maxValue, formatter;
 
@@ -1821,51 +1808,7 @@
             });
         }
 
-        function createQualityChart(selectedYear = 2024) {
-            const ctx = document.getElementById('qualityChart');
-            if (!ctx) return;
 
-            // Simplified quality chart for HTML version
-            const qualityData = {
-                2024: [94, 91, 88, 89, 92, 85],
-                2023: [91, 88, 85, 86, 89, 82],
-                2022: [88, 85, 82, 83, 86, 79]
-            };
-            
-            if (chartInstances.qualityChart) {
-                chartInstances.qualityChart.destroy();
-            }
-
-            chartInstances.qualityChart = new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Excellent (90-100)', 'Good (80-89)', 'Average (70-79)', 'Needs Improvement (<70)'],
-                    datasets: [{
-                        data: [
-                            qualityData[selectedYear].filter(score => score >= 90).length * 15,
-                            qualityData[selectedYear].filter(score => score >= 80 && score < 90).length * 12,
-                            qualityData[selectedYear].filter(score => score >= 70 && score < 80).length * 8,
-                            qualityData[selectedYear].filter(score => score < 70).length * 5
-                        ],
-                        backgroundColor: ['#10b981', '#3b82f6', '#f59e0b', '#ef4444']
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { position: 'bottom' },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return `${context.label}: ${context.parsed}% (${selectedYear})`;
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-        }
 
         function createPhysiciansChart(selectedYear = 2024, selectedSpecialty = 'all', selectedHospital = 'all') {
             const ctx = document.getElementById('physiciansChart');
@@ -2182,7 +2125,7 @@
             const performanceMetric = document.getElementById('performanceMetric');
             if (performanceMetric) {
                 performanceMetric.addEventListener('change', function() {
-                    createDepartmentChart(currentTrendsYear);
+                    createDepartmentChart(currentTrendsYear, currentHospital);
                 });
             }
         });
@@ -2212,10 +2155,10 @@
                 const selectedSpecialty = document.getElementById('physicianSpecialty')?.value || 'all';
                 const qualityFilter = document.getElementById('qualityMetricFilter')?.value || 'departments';
                 
-                createTrendsChart(year);
-                createDepartmentChart(year);
+                createTrendsChart(year, currentHospital);
+                createDepartmentChart(year, currentHospital);
                 createQualityChart(year, qualityFilter);
-                createPhysiciansChart(year, selectedSpecialty);
+                createPhysiciansChart(year, selectedSpecialty, currentHospital);
             }, 100);
             
             console.log(`📅 Dashboard synchronized to ${year} data with hospital: ${currentHospital}`);
