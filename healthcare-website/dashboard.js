@@ -1,14 +1,14 @@
 /**
- * Healthcare Analytics Dashboard JavaScript - Version 2.3-FINAL
+ * Healthcare Analytics Dashboard JavaScript - Version 2.6
  * Enhanced Charts with Smart Color Coding & Professional Design
- * CHART FIXES: Accurate Revenue & Occupancy Data Display
- * DEPLOYMENT: 2025-08-25 16:45 UTC - CACHE BUST FORCED
- * Last Updated: 2025-08-25 16:45 - Department Chart Data Fixed
+ * EXTREME PERFORMANCE VARIETY: Crisis-level scores from 32-40 range
+ * DEPLOYMENT: 2025-08-26 - Rock Bottom Performance Data
+ * Last Updated: 2025-08-26 - Extremely Low Scores Added
  * Handles interactive dashboards, charts, and KPI calculations
  */
 
 // CACHE BUSTER - Force fresh load
-console.log('🚀 DASHBOARD LOADING - Version 2.3-FINAL - Chart Fixes Active!');
+console.log('🚀 DASHBOARD LOADING - Version 2.6 - Extreme Performance Variety Active!');
 console.log('⚡ Cache timestamp:', new Date().toISOString());
 
 // Global variables
@@ -50,12 +50,12 @@ const healthcareDataByYear = {
             { first_name: 'David', last_name: 'Martinez', specialty: 'Surgery', patient_satisfaction: 4.5, success_rate: 94, total_patients: 350, hospital: 'University Health System' },
             { first_name: 'Rachel', last_name: 'Brown', specialty: 'Surgery', patient_satisfaction: 4.3, success_rate: 92, total_patients: 290, hospital: 'University Health System' },
             { first_name: 'Steven', last_name: 'Wilson', specialty: 'Surgery', patient_satisfaction: 4.8, success_rate: 97, total_patients: 360, hospital: 'University Health System' },
-            // Emergency (5 doctors) - St. Mary's Medical Center (mix of performance levels)
+            // Emergency (5 doctors) - St. Mary's Medical Center (extreme performance variation)
             { first_name: 'David', last_name: 'Thompson', specialty: 'Emergency', patient_satisfaction: 4.5, success_rate: 94, total_patients: 650, hospital: 'St. Mary\'s Medical Center' },
-            { first_name: 'Christopher', last_name: 'Brown', specialty: 'Emergency', patient_satisfaction: 3.2, success_rate: 78, total_patients: 580, hospital: 'St. Mary\'s Medical Center' }, // Poor performer
-            { first_name: 'Jessica', last_name: 'Miller', specialty: 'Emergency', patient_satisfaction: 2.8, success_rate: 71, total_patients: 620, hospital: 'St. Mary\'s Medical Center' }, // Needs improvement
+            { first_name: 'Christopher', last_name: 'Brown', specialty: 'Emergency', patient_satisfaction: 1.5, success_rate: 35, total_patients: 580, hospital: 'St. Mary\'s Medical Center' }, // Worst crisis performer
+            { first_name: 'Jessica', last_name: 'Miller', specialty: 'Emergency', patient_satisfaction: 1.8, success_rate: 42, total_patients: 620, hospital: 'St. Mary\'s Medical Center' }, // Severely struggling
             { first_name: 'Brian', last_name: 'Garcia', specialty: 'Emergency', patient_satisfaction: 4.3, success_rate: 92, total_patients: 590, hospital: 'St. Mary\'s Medical Center' },
-            { first_name: 'Nicole', last_name: 'Anderson', specialty: 'Emergency', patient_satisfaction: 3.5, success_rate: 82, total_patients: 610, hospital: 'St. Mary\'s Medical Center' }, // Fair performer
+            { first_name: 'Nicole', last_name: 'Anderson', specialty: 'Emergency', patient_satisfaction: 1.6, success_rate: 38, total_patients: 610, hospital: 'St. Mary\'s Medical Center' }, // Crisis performer
             // Pediatrics (5 doctors) - Community Health Hospital
             { first_name: 'Emily', last_name: 'Rodriguez', specialty: 'Pediatrics', patient_satisfaction: 4.9, success_rate: 97, total_patients: 350, hospital: 'Community Health Hospital' },
             { first_name: 'Amanda', last_name: 'Wilson', specialty: 'Pediatrics', patient_satisfaction: 4.7, success_rate: 95, total_patients: 330, hospital: 'Community Health Hospital' },
@@ -68,12 +68,12 @@ const healthcareDataByYear = {
             { first_name: 'Sandra', last_name: 'Johnson', specialty: 'Oncology', patient_satisfaction: 4.7, success_rate: 96, total_patients: 270, hospital: 'Metropolitan Medical Center' },
             { first_name: 'Paul', last_name: 'Davis', specialty: 'Oncology', patient_satisfaction: 4.2, success_rate: 91, total_patients: 240, hospital: 'Metropolitan Medical Center' },
             { first_name: 'Karen', last_name: 'Martinez', specialty: 'Oncology', patient_satisfaction: 4.5, success_rate: 94, total_patients: 260, hospital: 'Metropolitan Medical Center' },
-            // Orthopedics (5 doctors) - Memorial Hospital (struggling department)
+            // Orthopedics (5 doctors) - Memorial Hospital (crisis department)
             { first_name: 'James', last_name: 'Miller', specialty: 'Orthopedics', patient_satisfaction: 4.3, success_rate: 92, total_patients: 310, hospital: 'Memorial Hospital' },
-            { first_name: 'Susan', last_name: 'Thompson', specialty: 'Orthopedics', patient_satisfaction: 3.1, success_rate: 76, total_patients: 290, hospital: 'Memorial Hospital' }, // Poor performer
-            { first_name: 'Richard', last_name: 'Brown', specialty: 'Orthopedics', patient_satisfaction: 3.4, success_rate: 79, total_patients: 300, hospital: 'Memorial Hospital' }, // Below average
-            { first_name: 'Linda', last_name: 'Wilson', specialty: 'Orthopedics', patient_satisfaction: 2.9, success_rate: 72, total_patients: 270, hospital: 'Memorial Hospital' }, // Needs improvement
-            { first_name: 'Thomas', last_name: 'Garcia', specialty: 'Orthopedics', patient_satisfaction: 3.7, success_rate: 84, total_patients: 280, hospital: 'Memorial Hospital' }, // Fair
+            { first_name: 'Susan', last_name: 'Thompson', specialty: 'Orthopedics', patient_satisfaction: 1.5, success_rate: 35, total_patients: 290, hospital: 'Memorial Hospital' }, // Crisis performer - rock bottom
+            { first_name: 'Richard', last_name: 'Brown', specialty: 'Orthopedics', patient_satisfaction: 1.8, success_rate: 40, total_patients: 300, hospital: 'Memorial Hospital' }, // Severely struggling
+            { first_name: 'Linda', last_name: 'Wilson', specialty: 'Orthopedics', patient_satisfaction: 1.2, success_rate: 32, total_patients: 270, hospital: 'Memorial Hospital' }, // Worst performer - rock bottom
+            { first_name: 'Thomas', last_name: 'Garcia', specialty: 'Orthopedics', patient_satisfaction: 1.6, success_rate: 38, total_patients: 280, hospital: 'Memorial Hospital' }, // Crisis level
             // Neurology (5 doctors) - Regional Medical Center
             { first_name: 'Maria', last_name: 'Garcia', specialty: 'Neurology', patient_satisfaction: 4.5, success_rate: 94, total_patients: 270, hospital: 'Regional Medical Center' },
             { first_name: 'John', last_name: 'Anderson', specialty: 'Neurology', patient_satisfaction: 4.3, success_rate: 92, total_patients: 250, hospital: 'Regional Medical Center' },
@@ -82,21 +82,21 @@ const healthcareDataByYear = {
             { first_name: 'Barbara', last_name: 'Lee', specialty: 'Neurology', patient_satisfaction: 3.9, success_rate: 87, total_patients: 230, hospital: 'Regional Medical Center' }
         ],
         qualityMetrics: {
-            // Department-based quality scores with realistic variety
+            // Department-based quality scores with extreme variety (32-96)
             departments: {
                 'Cardiology': { safety: 94, efficiency: 91, satisfaction: 88, outcomes: 92, innovation: 85 },
                 'Surgery': { safety: 96, efficiency: 89, satisfaction: 91, outcomes: 95, innovation: 87 },
-                'Emergency': { safety: 78, efficiency: 72, satisfaction: 68, outcomes: 75, innovation: 70 }, // Challenging department
+                'Emergency': { safety: 32, efficiency: 35, satisfaction: 38, outcomes: 41, innovation: 34 }, // Crisis department - extremely low
                 'Pediatrics': { safety: 95, efficiency: 93, satisfaction: 96, outcomes: 94, innovation: 88 },
                 'Oncology': { safety: 93, efficiency: 88, satisfaction: 89, outcomes: 91, innovation: 92 },
-                'Orthopedics': { safety: 83, efficiency: 79, satisfaction: 76, outcomes: 81, innovation: 74 }, // Needs improvement
+                'Orthopedics': { safety: 38, efficiency: 42, satisfaction: 35, outcomes: 44, innovation: 36 }, // Severely struggling - rock bottom
                 'Neurology': { safety: 92, efficiency: 89, satisfaction: 87, outcomes: 90, innovation: 86 }
             },
             // Hospital-wide metrics
             hospital: {
                 overall: { safety: 92, efficiency: 88, satisfaction: 87, outcomes: 91, innovation: 86 },
                 'Main Campus': { safety: 93, efficiency: 89, satisfaction: 88, outcomes: 92, innovation: 87 },
-                'Emergency Wing': { safety: 76, efficiency: 71, satisfaction: 69, outcomes: 74, innovation: 68 }, // Poor performer
+                'Emergency Wing': { safety: 33, efficiency: 29, satisfaction: 31, outcomes: 37, innovation: 32 }, // Critical condition - rock bottom
                 'Surgical Center': { safety: 95, efficiency: 91, satisfaction: 90, outcomes: 94, innovation: 88 }
             }
         }
@@ -156,21 +156,21 @@ const healthcareDataByYear = {
             { first_name: 'Barbara', last_name: 'Lee', specialty: 'Neurology', patient_satisfaction: 3.7, success_rate: 85, total_patients: 210 }
         ],
         qualityMetrics: {
-            // Department-based quality scores for 2023
+            // Department-based quality scores for 2023 with crisis-level performance
             departments: {
                 'Cardiology': { safety: 91, efficiency: 88, satisfaction: 85, outcomes: 89, innovation: 82 },
                 'Surgery': { safety: 93, efficiency: 86, satisfaction: 88, outcomes: 92, innovation: 84 },
-                'Emergency': { safety: 74, efficiency: 69, satisfaction: 65, outcomes: 72, innovation: 67 }, // Struggling department
+                'Emergency': { safety: 44, efficiency: 39, satisfaction: 42, outcomes: 47, innovation: 43 }, // Historical crisis
                 'Pediatrics': { safety: 92, efficiency: 90, satisfaction: 93, outcomes: 91, innovation: 85 },
                 'Oncology': { safety: 90, efficiency: 85, satisfaction: 86, outcomes: 88, innovation: 89 },
-                'Orthopedics': { safety: 80, efficiency: 76, satisfaction: 73, outcomes: 78, innovation: 71 }, // Poor performance
+                'Orthopedics': { safety: 52, efficiency: 45, satisfaction: 48, outcomes: 54, innovation: 41 }, // Severe struggles
                 'Neurology': { safety: 89, efficiency: 86, satisfaction: 84, outcomes: 87, innovation: 83 }
             },
             // Hospital-wide metrics for 2023
             hospital: {
                 overall: { safety: 89, efficiency: 85, satisfaction: 84, outcomes: 88, innovation: 83 },
                 'Main Campus': { safety: 90, efficiency: 86, satisfaction: 85, outcomes: 89, innovation: 84 },
-                'Emergency Wing': { safety: 73, efficiency: 68, satisfaction: 66, outcomes: 71, innovation: 65 }, // Consistent poor performer
+                'Emergency Wing': { safety: 40, efficiency: 35, satisfaction: 38, outcomes: 43, innovation: 37 }, // Critical historical performance
                 'Surgical Center': { safety: 92, efficiency: 88, satisfaction: 87, outcomes: 91, innovation: 85 }
             }
         }
@@ -230,21 +230,21 @@ const healthcareDataByYear = {
             { first_name: 'Barbara', last_name: 'Lee', specialty: 'Neurology', patient_satisfaction: 3.5, success_rate: 83, total_patients: 190 }
         ],
         qualityMetrics: {
-            // Department-based quality scores for 2022 (baseline year with more challenges)
+            // Department-based quality scores for 2022 (rock bottom performance)
             departments: {
                 'Cardiology': { safety: 88, efficiency: 85, satisfaction: 82, outcomes: 86, innovation: 79 },
                 'Surgery': { safety: 90, efficiency: 83, satisfaction: 85, outcomes: 89, innovation: 81 },
-                'Emergency': { safety: 70, efficiency: 65, satisfaction: 62, outcomes: 68, innovation: 64 }, // Historical struggles
+                'Emergency': { safety: 41, efficiency: 36, satisfaction: 39, outcomes: 44, innovation: 40 }, // Worst historical period
                 'Pediatrics': { safety: 89, efficiency: 87, satisfaction: 90, outcomes: 88, innovation: 82 },
                 'Oncology': { safety: 87, efficiency: 82, satisfaction: 83, outcomes: 85, innovation: 86 },
-                'Orthopedics': { safety: 77, efficiency: 73, satisfaction: 70, outcomes: 75, innovation: 68 }, // Worst performer
+                'Orthopedics': { safety: 49, efficiency: 42, satisfaction: 45, outcomes: 51, innovation: 38 }, // Rock bottom performance
                 'Neurology': { safety: 86, efficiency: 83, satisfaction: 81, outcomes: 84, innovation: 80 }
             },
             // Hospital-wide metrics for 2022
             hospital: {
                 overall: { safety: 86, efficiency: 82, satisfaction: 81, outcomes: 85, innovation: 80 },
                 'Main Campus': { safety: 87, efficiency: 83, satisfaction: 82, outcomes: 86, innovation: 81 },
-                'Emergency Wing': { safety: 70, efficiency: 65, satisfaction: 63, outcomes: 68, innovation: 62 }, // Needs major improvement
+                'Emergency Wing': { safety: 37, efficiency: 32, satisfaction: 35, outcomes: 40, innovation: 34 }, // Crisis-level historical performance
                 'Surgical Center': { safety: 89, efficiency: 85, satisfaction: 84, outcomes: 88, innovation: 82 }
             }
         }
