@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HealthCare Analytics - Enhanced v2.5 (Realistic Performance Data)</title>
+    <title>HealthCare Analytics - Enhanced v2.7 (Realistic Hospital Variations)</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
@@ -1051,8 +1051,8 @@
 
     <script src="script.js"></script>
     <script>
-        /* CACHE BUST v2.5 - Realistic Performance Data with Lower Scores - 2025-08-26 */
-        console.log('🚀 Dashboard v2.5 - Realistic Healthcare Data: Some Hospitals Need Improvement!');
+        /* CACHE BUST v2.7 - Realistic Hospital-Specific Performance Variations - 2025-08-26 */
+        console.log('🚀 Dashboard v2.7 - Realistic Hospital Variations: Different hospitals excel in different departments!');
         
         // Navigation functionality
         function showSection(sectionId) {
@@ -1820,33 +1820,33 @@
         const qualityMetricsByYear = {
             2024: {
                 departments: {
-                    'Cardiology': { safety: 94, efficiency: 91, satisfaction: 88, outcomes: 92, innovation: 85 },
-                    'Surgery': { safety: 96, efficiency: 89, satisfaction: 91, outcomes: 95, innovation: 87 },
-                    'Emergency': { safety: 32, efficiency: 35, satisfaction: 38, outcomes: 41, innovation: 34 }, // Crisis department - extremely low
-                    'Pediatrics': { safety: 95, efficiency: 93, satisfaction: 96, outcomes: 94, innovation: 88 },
-                    'Oncology': { safety: 93, efficiency: 88, satisfaction: 89, outcomes: 91, innovation: 92 },
-                    'Orthopedics': { safety: 38, efficiency: 42, satisfaction: 35, outcomes: 44, innovation: 36 }, // Severely struggling - rock bottom
-                    'Neurology': { safety: 92, efficiency: 89, satisfaction: 87, outcomes: 90, innovation: 86 }
+                    'Cardiology': { safety: 85, efficiency: 88, satisfaction: 82, outcomes: 87, innovation: 83 }, // Good overall with some struggling hospitals
+                    'Surgery': { safety: 96, efficiency: 89, satisfaction: 91, outcomes: 95, innovation: 87 }, // Top performing overall
+                    'Emergency': { safety: 78, efficiency: 82, satisfaction: 75, outcomes: 80, innovation: 77 }, // Mixed performance across hospitals
+                    'Pediatrics': { safety: 95, efficiency: 93, satisfaction: 96, outcomes: 94, innovation: 88 }, // Excellent overall
+                    'Oncology': { safety: 76, efficiency: 73, satisfaction: 70, outcomes: 74, innovation: 68 }, // Struggling department with crisis at some hospitals
+                    'Orthopedics': { safety: 81, efficiency: 84, satisfaction: 79, outcomes: 83, innovation: 76 }, // Good with variations
+                    'Neurology': { safety: 92, efficiency: 89, satisfaction: 87, outcomes: 90, innovation: 86 } // Consistently good
                 },
                 hospital: {
-                    'Main Campus': { safety: 93, efficiency: 89, satisfaction: 88, outcomes: 92, innovation: 87 },
-                    'Emergency Wing': { safety: 33, efficiency: 29, satisfaction: 31, outcomes: 37, innovation: 32 }, // Critical condition - rock bottom
-                    'Surgical Center': { safety: 95, efficiency: 91, satisfaction: 90, outcomes: 94, innovation: 88 }
+                    'Main Campus': { safety: 93, efficiency: 89, satisfaction: 88, outcomes: 92, innovation: 87 }, // Strong overall
+                    'Emergency Wing': { safety: 76, efficiency: 79, satisfaction: 73, outcomes: 78, innovation: 74 }, // Needs improvement
+                    'Surgical Center': { safety: 95, efficiency: 91, satisfaction: 90, outcomes: 94, innovation: 88 } // Excellence center
                 }
             },
             2023: {
                 departments: {
-                    'Cardiology': { safety: 91, efficiency: 88, satisfaction: 85, outcomes: 89, innovation: 82 },
-                    'Surgery': { safety: 93, efficiency: 86, satisfaction: 88, outcomes: 92, innovation: 84 },
-                    'Emergency': { safety: 44, efficiency: 39, satisfaction: 42, outcomes: 47, innovation: 43 }, // Historical crisis
-                    'Pediatrics': { safety: 92, efficiency: 90, satisfaction: 93, outcomes: 91, innovation: 85 },
-                    'Oncology': { safety: 90, efficiency: 85, satisfaction: 86, outcomes: 88, innovation: 89 },
-                    'Orthopedics': { safety: 52, efficiency: 45, satisfaction: 48, outcomes: 54, innovation: 41 }, // Severe struggles
-                    'Neurology': { safety: 89, efficiency: 86, satisfaction: 84, outcomes: 87, innovation: 83 }
+                    'Cardiology': { safety: 83, efficiency: 86, satisfaction: 80, outcomes: 85, innovation: 81 }, // Slightly lower overall
+                    'Surgery': { safety: 93, efficiency: 86, satisfaction: 88, outcomes: 92, innovation: 84 }, // Strong performance
+                    'Emergency': { safety: 75, efficiency: 79, satisfaction: 72, outcomes: 77, innovation: 74 }, // Mixed with some hospitals excelling
+                    'Pediatrics': { safety: 92, efficiency: 90, satisfaction: 93, outcomes: 91, innovation: 85 }, // Consistently good
+                    'Oncology': { safety: 73, efficiency: 70, satisfaction: 67, outcomes: 71, innovation: 65 }, // Struggling department overall
+                    'Orthopedics': { safety: 78, efficiency: 81, satisfaction: 76, outcomes: 80, innovation: 73 }, // Good with hospital variations
+                    'Neurology': { safety: 89, efficiency: 86, satisfaction: 84, outcomes: 87, innovation: 83 } // Solid performance
                 },
                 hospital: {
                     'Main Campus': { safety: 90, efficiency: 86, satisfaction: 85, outcomes: 89, innovation: 84 },
-                    'Emergency Wing': { safety: 40, efficiency: 35, satisfaction: 38, outcomes: 43, innovation: 37 }, // Critical historical performance
+                    'Emergency Wing': { safety: 73, efficiency: 76, satisfaction: 70, outcomes: 75, innovation: 72 }, // Needs improvement but not crisis
                     'Surgical Center': { safety: 92, efficiency: 88, satisfaction: 87, outcomes: 91, innovation: 85 }
                 }
             },
