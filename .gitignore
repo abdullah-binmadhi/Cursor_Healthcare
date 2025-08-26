@@ -70,10 +70,13 @@ Thumbs.db
 *.db
 *.sqlite
 *.sqlite3
+healthcare_*.db
 
 # Logs
 *.log
 logs/
+*pipeline*.log
+*scheduler*.log
 
 # Environment variables
 .env.local
@@ -84,10 +87,22 @@ logs/
 # Backup files
 *.bak
 *.backup
+backups/
 
 # Temporary files
 *.tmp
 *.temp
+
+# Large data files
+*.csv
+!data/sample_*.csv
+!healthcare-website/data/*.csv
+
+# Generated reports
+*.pdf
+reports/
+*_report_*.json
+health_report_*.json
 
 # Healthcare specific
 patient_data_backup/
@@ -100,9 +115,7 @@ config_local.yaml
 secrets.yaml
 database_credentials.txt
 
-# PDF reports (if they contain sensitive data)
-reports/*.pdf
-
 # JSON files with sensitive health data
 *_patient_data.json
 *_health_records.json
+pipeline_metrics.json
