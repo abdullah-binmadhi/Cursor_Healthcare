@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HealthCare Analytics - Enhanced v2.1 (No Overall Performance)</title>
+    <title>HealthCare Analytics - Enhanced v2.2 (Performance Text Only)</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
@@ -1051,8 +1051,8 @@
 
     <script src="script.js"></script>
     <script>
-        /* CACHE BUST v2.1 - Overall Performance Removed - 2025-08-26 */
-        console.log('🚀 Dashboard v2.1 - Overall Performance Score Removed!');
+        /* CACHE BUST v2.2 - Numbers Removed from Tooltips - 2025-08-26 */
+        console.log('🚀 Dashboard v2.2 - Performance Text Only (No Numbers)!');
         
         // Navigation functionality
         function showSection(sectionId) {
@@ -1759,7 +1759,13 @@
                                     return `Dr. ${physician.first_name} ${physician.last_name} (${physician.specialty}) - ${physician.hospital}`;
                                 },
                                 label: function(context) {
-                                    return `${selectedYear} Satisfaction: ${context.parsed.x.toFixed(1)}/5.0`;
+                                    const index = context[0].dataIndex;
+                                    const physician = topPhysicians[index];
+                                    const score = physician.patient_satisfaction;
+                                    let performance = 'Excellent';
+                                    if (score < 4.0) performance = 'Good';
+                                    else if (score < 4.5) performance = 'Very Good';
+                                    return `Performance: ${performance}`;
                                 },
                                 afterBody: function(context) {
                                     const index = context[0].dataIndex;
@@ -1988,7 +1994,11 @@
                                     return `${label} (${selectedYear}) - ${filterType.charAt(0).toUpperCase() + filterType.slice(1)}`;
                                 },
                                 label: function(context) {
-                                    return `${context.dataset.label}: ${context.parsed.y}/100`;
+                                    const score = context.parsed.y;
+                                    let performance = 'Excellent';
+                                    if (score < 80) performance = 'Needs Improvement';
+                                    else if (score < 90) performance = 'Good';
+                                    return `${context.dataset.label}: ${performance}`;
                                 },
                                 afterBody: function(context) {
                                     const index = context[0].dataIndex;
@@ -1997,7 +2007,7 @@
                                     let performance = 'Excellent';
                                     if (average < 80) performance = 'Needs Improvement';
                                     else if (average < 90) performance = 'Good';
-                                    return [`Unit Performance: ${performance} (${average.toFixed(1)}/100)`];
+                                    return [`Unit Performance: ${performance}`];
                                 }
                             }
                         }
