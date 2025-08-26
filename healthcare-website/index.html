@@ -1520,27 +1520,22 @@
             document.getElementById('occupancyRate').textContent = (avgOccupancy * 100).toFixed(1) + '%';
             document.getElementById('qualityScore').textContent = avgQuality.toFixed(1) + '/100';
         }
+        
+        // Function to load dashboard data
+        function loadDashboardData() {
             // Use year-specific data
             const yearData = healthcareDataByYear[currentTrendsYear] || healthcareDataByYear[2024];
             const departments = yearData.departments;
 
             dashboardData.departments = departments;
 
-            // Calculate and display KPIs
-            const totalRevenue = departments.reduce((sum, dept) => sum + (dept.total_patients * dept.average_cost), 0);
-            const avgSatisfaction = departments.reduce((sum, dept) => sum + dept.patient_satisfaction, 0) / departments.length;
-            const avgOccupancy = departments.reduce((sum, dept) => sum + dept.current_occupancy, 0) / departments.length;
-            const avgQuality = departments.reduce((sum, dept) => sum + (dept.quality_score || 90), 0) / departments.length;
-
-            document.getElementById('totalRevenue').textContent = formatCurrency(totalRevenue);
-            document.getElementById('avgSatisfaction').textContent = avgSatisfaction.toFixed(1) + '/5.0';
-            document.getElementById('occupancyRate').textContent = (avgOccupancy * 100).toFixed(1) + '%';
-            document.getElementById('qualityScore').textContent = avgQuality.toFixed(1) + '/100';
+            // Calculate and display KPIs with hospital filter
+            updateKPIsForHospital(currentTrendsYear, currentHospital);
 
             // Update all synchronized charts
             setTimeout(() => {
-                const selectedSpecialty = document.getElementById('physicianSpecialty').value;
-                const qualityFilter = document.getElementById('qualityMetricFilter').value;
+                const selectedSpecialty = document.getElementById('physicianSpecialty')?.value || 'all';
+                const qualityFilter = document.getElementById('qualityMetricFilter')?.value || 'departments';
                 createDepartmentChart(currentTrendsYear);
                 createTrendsChart(currentTrendsYear);
                 createQualityChart(currentTrendsYear, qualityFilter);
@@ -2206,34 +2201,83 @@
             });
             document.querySelector(`[data-year="${year}"]`).classList.add('active');
             
-        function loadDashboardData() {
-            // Initialize with current hospital filter
-            updateKPIsForHospital(currentTrendsYear, currentHospital);
-
-            // Create charts with current year and hospital data
+            // Get year-specific data
+            const yearData = healthcareDataByYear[year] || healthcareDataByYear[2024];
+            
+            // Update KPIs with year-specific data and current hospital filter
+            updateKPIsForHospital(year, currentHospital);
+            
+            // Update all synchronized charts with smooth transitions
             setTimeout(() => {
                 const selectedSpecialty = document.getElementById('physicianSpecialty')?.value || 'all';
                 const qualityFilter = document.getElementById('qualityMetricFilter')?.value || 'departments';
                 
-                createDepartmentChart(currentTrendsYear, currentHospital);
-                createTrendsChart(currentTrendsYear, currentHospital);
-                createQualityChart(currentTrendsYear, qualityFilter, currentHospital);
-                createPhysiciansChart(currentTrendsYear, selectedSpecialty, currentHospital);
-            }, 500);
-        }
-                const selectedSpecialty = document.getElementById('physicianSpecialty')?.value || 'all';
-                const qualityFilter = document.getElementById('qualityMetricFilter')?.value || 'departments';
-                
-                createTrendsChart(year, currentHospital);
-                createDepartmentChart(year, currentHospital);
-                createQualityChart(year, qualityFilter, currentHospital);
-                createPhysiciansChart(year, selectedSpecialty, currentHospital);
-                
-                // Update KPIs for new year with current hospital filter
-                updateKPIsForHospital(year, currentHospital);
+                createTrendsChart(year);
+                createDepartmentChart(year);
+                createQualityChart(year, qualityFilter);
+                createPhysiciansChart(year, selectedSpecialty);
             }, 100);
             
             console.log(`📅 Dashboard synchronized to ${year} data with hospital: ${currentHospital}`);
+        }
+        
+        /**
+         * Load Dashboard Data
+         * Initialize and load all dashboard data with current filters
+         */
+        function loadDashboardData() {
+            // Use year-specific data
+            const yearData = healthcareDataByYear[currentTrendsYear] || healthcareDataByYear[2024];
+            const departments = yearData.departments;
+
+            dashboardData.departments = departments;
+
+            // Calculate and display KPIs with hospital filter
+            updateKPIsForHospital(currentTrendsYear, currentHospital);
+
+            // Update all synchronized charts
+            setTimeout(() => {
+                const selectedSpecialty = document.getElementById('physicianSpecialty')?.value || 'all';
+                const qualityFilter = document.getElementById('qualityMetricFilter')?.value || 'departments';
+                createDepartmentChart(currentTrendsYear);
+                createTrendsChart(currentTrendsYear);
+                createQualityChart(currentTrendsYear, qualityFilter);
+                createPhysiciansChart(currentTrendsYear, selectedSpecialty);
+            }, 500);
+        }
+        
+        /**
+         * Update KPIs for specific hospital
+         */
+        function updateKPIsForHospital(selectedYear, hospitalFilter) {
+            const yearData = healthcareDataByYear[selectedYear] || healthcareDataByYear[2024];
+            let departments = yearData.departments;
+            
+            // Filter departments by hospital if selected
+            if (hospitalFilter !== 'all') {
+                departments = departments.filter(dept => dept.hospital === hospitalFilter);
+            }
+            
+            if (departments.length === 0) {
+                // Show no data message in KPIs
+                document.getElementById('totalRevenue').textContent = 'N/A';
+                document.getElementById('avgSatisfaction').textContent = 'N/A';
+                document.getElementById('occupancyRate').textContent = 'N/A';
+                document.getElementById('qualityScore').textContent = 'N/A';
+                return;
+            }
+            
+            // Calculate filtered KPIs
+            const totalRevenue = departments.reduce((sum, dept) => sum + (dept.total_patients * dept.average_cost), 0);
+            const avgSatisfaction = departments.reduce((sum, dept) => sum + dept.patient_satisfaction, 0) / departments.length;
+            const avgOccupancy = departments.reduce((sum, dept) => sum + dept.current_occupancy, 0) / departments.length;
+            const avgQuality = departments.reduce((sum, dept) => sum + (dept.quality_score || 90), 0) / departments.length;
+            
+            // Update KPI displays
+            document.getElementById('totalRevenue').textContent = formatCurrency(totalRevenue);
+            document.getElementById('avgSatisfaction').textContent = avgSatisfaction.toFixed(1) + '/5.0';
+            document.getElementById('occupancyRate').textContent = (avgOccupancy * 100).toFixed(1) + '%';
+            document.getElementById('qualityScore').textContent = avgQuality.toFixed(1) + '/100';
         }
         
         // Make function globally available
