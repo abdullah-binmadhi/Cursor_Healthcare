@@ -1312,7 +1312,8 @@ function createQualityChart(selectedYear = 2024, filterType = 'departments') {
                             else if (score < 90) performance = 'Good';
                             
                             return [
-                                `${context.dataset.label}: ${performance} 📊`
+                                `${context.dataset.label}: ${score}/100`,
+                                `Performance: ${performance} 📊`
                             ];
                         },
                         afterBody: function(context) {
@@ -2258,6 +2259,7 @@ function createTopPhysiciansChart(selectedYear = 2024, selectedSpecialty = 'all'
                             else if (score < 4.5) performance = 'Very Good';
                             
                             return [
+                                `${selectedYear} Satisfaction: ${score.toFixed(1)}/5.0`,
                                 `Performance: ${performance} ⭐`
                             ];
                         },
