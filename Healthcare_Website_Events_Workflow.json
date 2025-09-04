@@ -1,0 +1,124 @@
+{
+  "name": "Healthcare Website Events Handler",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "1713971d-d977-4988-9efb-9ec8bd234776",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        250,
+        300
+      ],
+      "id": "webhook-trigger",
+      "name": "Healthcare Website Webhook",
+      "webhookId": "1713971d-d977-4988-9efb-9ec8bd234776"
+    },
+    {
+      "parameters": {
+        "jsCode": "const eventType = $json.eventType;\nconst eventData = $json.eventData;\nconst timestamp = $json.timestamp;\nconst userId = eventData.userId || 'unknown';\n\nlet message = `Healthcare Event Received:\\n`;\nmessage += `Event Type: ${eventType}\\n`;\nmessage += `Timestamp: ${timestamp}\\n`;\nmessage += `User ID: ${userId}\\n`;\nmessage += `\\nEvent Details:\\n`;\n\n// Format event data based on event type\nswitch(eventType) {\n  case 'patient_search':\n    message += `- Specialty: ${eventData.searchParams?.specialty || 'N/A'}\\n`;\n    message += `- Hospital: ${eventData.searchParams?.hospital || 'N/A'}\\n`;\n    break;\n  case 'cost_estimate':\n    message += `- Patient Age: ${eventData.estimateData?.patientAge || 'N/A'}\\n`;\n    message += `- Insurance: ${eventData.estimateData?.insuranceType || 'N/A'}\\n`;\n    message += `- Department: ${eventData.estimateData?.department || 'N/A'}\\n`;\n    message += `- Procedure: ${eventData.estimateData?.procedure || 'N/A'}\\n`;\n    break;\n  case 'doctor_rating':\n    message += `- Doctor: ${eventData.ratingData?.doctorName || 'N/A'}\\n`;\n    message += `- Specialty: ${eventData.ratingData?.specialty || 'N/A'}\\n`;\n    message += `- Rating: ${eventData.ratingData?.rating || 'N/A'}\\n`;\n    message += `- Hospital: ${eventData.ratingData?.hospital || 'N/A'}\\n`;\n    break;\n  case 'analytics_view':\n    message += `- View Type: ${eventData.analyticsData?.viewType || 'N/A'}\\n`;\n    message += `- Year: ${eventData.analyticsData?.filters?.year || 'N/A'}\\n`;\n    message += `- Hospital Filter: ${eventData.analyticsData?.filters?.hospital || 'N/A'}\\n`;\n    break;\n  default:\n    message += JSON.stringify(eventData, null, 2);\n}\n\n// Add to output\nreturn [{\n  json: {\n    eventType: eventType,\n    message: message,\n    timestamp: timestamp,\n    userId: userId,\n    rawData: $json\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        450,
+        300
+      ],
+      "id": "process-event-data",
+      "name": "Process Event Data"
+    },
+    {
+      "parameters": {
+        "subject": "=Healthcare Event: {{$json.eventType}}",
+        "to": "admin@healthcare.com",
+        "text": "={{$json.message}}"
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        650,
+        300
+      ],
+      "id": "send-notification",
+      "name": "Send Email Notification"
+    },
+    {
+      "parameters": {
+        "content": "### Healthcare Website Events Handler\\n\\nThis workflow processes events from the healthcare website:\\n\\n1. **Patient Search** - When users search for doctors\\n2. **Cost Estimate** - When users calculate healthcare costs\\n3. **Doctor Rating** - When users view doctor ratings\\n4. **Analytics View** - When users access the analytics dashboard\\n\\n#### Setup\\n- The webhook is already configured with your URL\\n- Update the email node with your notification email address\\n- Add additional processing nodes as needed\\n",
+        "height": 400,
+        "width": 300,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        100,
+        100
+      ],
+      "typeVersion": 1,
+      "id": "workflow-info",
+      "name": "Workflow Info"
+    },
+    {
+      "parameters": {
+        "tableName": "healthcare_events",
+        "columns": "event_type, user_id, timestamp, event_data",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.1,
+      "position": [
+        650,
+        150
+      ],
+      "id": "log-to-sheets",
+      "name": "Log to Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "google-sheets-cred",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Healthcare Website Webhook": {
+      "main": [
+        [
+          {
+            "node": "Process Event Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Event Data": {
+      "main": [
+        [
+          {
+            "node": "Send Email Notification",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Log to Google Sheets",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "executionTimeout": -1
+  },
+  "versionId": "healthcare-website-events-v1",
+  "id": "healthcare-events-handler",
+  "tags": ["healthcare", "webhook", "analytics"]
+}

@@ -1,0 +1,455 @@
+{
+  "name": "Knowledge store agent (with Google Drive)",
+  "nodes": [
+    {
+      "parameters": {
+        "dataType": "binary",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        352,
+        256
+      ],
+      "id": "708d9e4e-6566-4b18-86b8-8301bf0c72dd",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {
+        "model": "deepseek/deepseek-r1-0528-qwen3-8b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        224,
+        256
+      ],
+      "id": "e8db240e-bb3f-43ab-b4ed-527c6c2e8f54",
+      "name": "Embedding model",
+      "credentials": {
+        "openAiApi": {
+          "id": "NkdmhSUmp2GiYaV1",
+          "name": "Qwen"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "# Knowledge Store Agent System Prompt\n\nYou are a data analysis agent that retrieves and analyzes information from a vector store to answer user questions.\n\n## Your Task\n\n1. **Search the vector store** - Use similarity search to find relevant documents and data\n2. **Analyze the results** - Understand what the retrieved data tells you\n3. **Provide clear answers** - Give helpful responses based on the data you found\n\n## How to Work with Vector Data\n\n### Search Process\n- Use the user's question to search for similar content\n- Retrieve multiple relevant chunks of data\n- Look for patterns and connections across the results\n- Consider both exact matches and conceptually similar information\n\n### Analysis Guidelines\n- Read through all retrieved documents carefully\n- Identify key information that answers the user's question\n- Note any conflicting or incomplete information\n- Look for trends, patterns, or insights in the data\n\n### Response Format\n- Start with a direct answer to the user's question\n- Support your answer with specific information from the data\n- Cite which documents or sources your information comes from\n- Be clear about what you found and what you didn't find\n\n## Response Guidelines\n\n### When You Find Good Data\n- Give a confident, detailed answer\n- Include relevant quotes or data points\n- Explain how the information relates to their question\n- Offer additional insights if available\n\n### When Data is Limited\n- Be honest about what information is available\n- Share what you did find, even if partial\n- Suggest related questions you could help with\n- Don't make up information not in the data\n\n### When No Relevant Data is Found\n- Clearly state that you couldn't find relevant information\n- Suggest alternative ways to phrase the question\n- Offer to search for related topics\n\n## Key Principles\n\n- Always base answers on the retrieved data\n- Be transparent about your sources\n- Admit when information is unclear or missing\n- Help users understand what the data shows\n- Ask clarifying questions if the user's request is vague\n\nRemember: Your strength is finding and explaining information that already exists in the vector store. Focus on being accurate and helpful with the data you can retrieve."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -368,
+        336
+      ],
+      "id": "99f9315f-4f3d-48d9-a6f4-8c519b249eba",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -640,
+        336
+      ],
+      "id": "bedf3615-c8b0-4fa8-afc5-574bca1003d4",
+      "name": "When chat message received",
+      "webhookId": "ddf4ea5b-94fc-4fbf-b856-95d39a04eb59"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -288,
+        560
+      ],
+      "id": "167d097a-69f6-4f1b-a741-8c8936adb3d2",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "12nQDFl7dEKUaa18ssfKUpbqm3gnSA_tX",
+          "mode": "list",
+          "cachedResultName": "Cursor_Healthcare_Backup",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/12nQDFl7dEKUaa18ssfKUpbqm3gnSA_tX"
+        },
+        "event": "folderUpdated"
+      },
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        -640,
+        32
+      ],
+      "id": "0cddc21e-a75f-48df-b168-8e288be12469",
+      "name": "File uploaded",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "fC7Ozn9SxVh9a6Bx",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "### Knowledge store agent\nA chat-based AI agent to retrieve, analyze, and answer questions using documents uploaded to Google Drive and stored in a vector database.\n\n#### Set up\n- Configure credentials in the **Google Drive** and **Open AI** nodes\n- Create a folder in Google Drive to store your documents, then select it in the \"File uploaded\" trigger node\n- Upload a file to that folder, return to n8n and click \"Execute workflow\"\n- Once **Insert documents** has been completed you can Open chat and ask the agent questions about your files.\n\n#### Next steps\nTry connecting other data sources to your knowledge base, using other triggers before the **Insert documents** node.\n",
+        "height": 800,
+        "width": 304,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1024,
+        -16
+      ],
+      "typeVersion": 1,
+      "id": "b60fde91-e9bf-4f03-a847-b471af228a95",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "### Embeddings\n\nThe Insert and Retrieve operation use the same embedding node.\n\nThis is to ensure that they are using the **exact same embeddings and settings**.\n\nDifferent embeddings might not work at all, or have unintended consequences.\n",
+        "height": 240,
+        "width": 320,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -208,
+        656
+      ],
+      "typeVersion": 1,
+      "id": "2fa9684d-f20a-4262-9b8b-81babb2fecc5",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "memoryKey": {
+          "__rl": true,
+          "value": "vector_store_key",
+          "mode": "list",
+          "cachedResultName": "vector_store_key"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        208,
+        32
+      ],
+      "id": "64d17551-1637-4a53-a3e0-db45894c12a6",
+      "name": "Insert documents"
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "Use this tool to retrieve any information required.",
+        "memoryKey": {
+          "__rl": true,
+          "value": "vector_store_key",
+          "mode": "list",
+          "cachedResultName": "vector_store_key"
+        },
+        "topK": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        -160,
+        560
+      ],
+      "id": "4f8a4a45-28a4-4684-b838-66011cc6a4a5",
+      "name": "Retrieve documents"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -416,
+        560
+      ],
+      "id": "ca5bf4da-0788-47e3-bec2-e1f768d3b16b",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "JoWQrUVXEWOJnJDz",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "path": "1713971d-d977-4988-9efb-9ec8bd234776",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -640,
+        832
+      ],
+      "id": "1e0ed2b3-ee61-44eb-8e8b-cecb06cf528c",
+      "name": "Webhook1",
+      "webhookId": "1713971d-d977-4988-9efb-9ec8bd234776"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  item.json.myNewField = 1;\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -432,
+        832
+      ],
+      "id": "e7b0dc31-f38e-43a3-9284-3be33a8a43f7",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:5678/webhook/1713971d-d977-4988-9efb-9ec8bd234776",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -224,
+        832
+      ],
+      "id": "ec8ce518-a03d-4012-9216-9c436453027c",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  item.json.myNewField = 1;\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -16,
+        832
+      ],
+      "id": "ee5d060d-0fcb-4ea8-a0c7-192fc610c8da",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chat",
+      "typeVersion": 1,
+      "position": [
+        192,
+        832
+      ],
+      "id": "cce9e8e6-56e5-4b98-888a-2cefb70ba646",
+      "name": "Respond to Chat"
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "filter": {},
+        "options": {
+          "fields": []
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -216,
+        32
+      ],
+      "id": "604a4e5e-5ccc-4db1-94dc-673711bea6af",
+      "name": "Search files and folders",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "fC7Ozn9SxVh9a6Bx",
+          "name": "Google Drive account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Insert documents",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embedding model": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Insert documents",
+            "type": "ai_embedding",
+            "index": 0
+          },
+          {
+            "node": "Retrieve documents",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "File uploaded": {
+      "main": [
+        [
+          {
+            "node": "Search files and folders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retrieve documents": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        []
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Chat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search files and folders": {
+      "main": [
+        [
+          {
+            "node": "Insert documents",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "executionTimeout": -1
+  },
+  "versionId": "38d3d111-e534-4309-8948-af5f902fb785",
+  "meta": {
+    "templateId": "knowledge_store_agent_with_google_drive",
+    "templateCredsSetupCompleted": true,
+    "instanceId": "97cdaab89af73ebd5970b4d23e9d1859d7eb3b935c78db3eb6127ddba5b4902d"
+  },
+  "id": "sWIHcbONZdPWvMGi",
+  "tags": []
+}

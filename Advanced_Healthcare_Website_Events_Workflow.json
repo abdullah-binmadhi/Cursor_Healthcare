@@ -1,0 +1,388 @@
+{
+  "name": "Advanced Healthcare Website Events Handler",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "1713971d-d977-4988-9efb-9ec8bd234776",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        250,
+        300
+      ],
+      "id": "webhook-trigger",
+      "name": "Healthcare Website Webhook",
+      "webhookId": "1713971d-d977-4988-9efb-9ec8bd234776"
+    },
+    {
+      "parameters": {
+        "jsCode": "const eventType = $json.eventType;\nconst eventData = $json.eventData;\nconst timestamp = $json.timestamp;\nconst userId = eventData.userId || 'unknown';\n\n// Extract user type based on behavior patterns\nlet userType = 'regular';\n\nif (eventType === 'cost_estimate') {\n  // High-value users who use cost estimator\n  if (eventData.estimateData?.procedure === 'major-surgery') {\n    userType = 'high_value';\n  }\n} else if (eventType === 'analytics_view') {\n  // Power users who access analytics\n  userType = 'power_user';\n} else if (eventType === 'doctor_rating' && eventData.ratingData?.rating >= 4.5) {\n  // Engaged users who give high ratings\n  userType = 'engaged';\n}\n\n// Format event data based on event type\nlet formattedData = {};\nswitch(eventType) {\n  case 'patient_search':\n    formattedData = {\n      specialty: eventData.searchParams?.specialty || null,\n      hospital: eventData.searchParams?.hospital || null,\n      search_count: 1\n    };\n    break;\n  case 'cost_estimate':\n    formattedData = {\n      patient_age: eventData.estimateData?.patientAge || null,\n      insurance_type: eventData.estimateData?.insuranceType || null,\n      department: eventData.estimateData?.department || null,\n      procedure: eventData.estimateData?.procedure || null,\n      estimated_cost: null // Would be calculated in a real implementation\n    };\n    break;\n  case 'doctor_rating':\n    formattedData = {\n      doctor_name: eventData.ratingData?.doctorName || null,\n      specialty: eventData.ratingData?.specialty || null,\n      rating: eventData.ratingData?.rating || null,\n      hospital: eventData.ratingData?.hospital || null\n    };\n    break;\n  case 'analytics_view':\n    formattedData = {\n      view_type: eventData.analyticsData?.viewType || null,\n      year_filter: eventData.analyticsData?.filters?.year || null,\n      hospital_filter: eventData.analyticsData?.filters?.hospital || null\n    };\n    break;\n  default:\n    formattedData = eventData;\n}\n\n// Add to output\nreturn [{\n  json: {\n    event_type: eventType,\n    user_id: userId,\n    user_type: userType,\n    timestamp: timestamp,\n    event_data: JSON.stringify(formattedData),\n    raw_data: $json\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        450,
+        300
+      ],
+      "id": "process-event-data",
+      "name": "Process & Segment Users"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "=INSERT INTO healthcare_events (event_type, user_id, user_type, timestamp, event_data) VALUES ('{{$json.event_type}}', '{{$json.user_id}}', '{{$json.user_type}}', '{{$json.timestamp}}', '{{$(\"event_data\").escape()}}');"
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 1,
+      "position": [
+        650,
+        200
+      ],
+      "id": "store-in-database",
+      "name": "Store in PostgreSQL",
+      "credentials": {
+        "postgres": {
+          "id": "postgres-cred",
+          "name": "PostgreSQL account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sheetId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEET_ID",
+          "mode": "list"
+        },
+        "sheetName": "Healthcare_Events",
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {
+            "event_type": "event_type",
+            "user_id": "user_id",
+            "user_type": "user_type",
+            "timestamp": "timestamp",
+            "event_data": "event_data"
+          }
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.1,
+      "position": [
+        650,
+        350
+      ],
+      "id": "log-to-sheets",
+      "name": "Log to Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "google-sheets-cred",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "channel": "#healthcare-notifications",
+        "text": "=New Healthcare Event: *{{$json.event_type}}*\nUser: {{$json.user_id}} ({{$json.user_type}})\nTime: {{$json.timestamp}}\n\nEvent Details:\n```{{$json.event_data}}```"
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.1,
+      "position": [
+        650,
+        500
+      ],
+      "id": "slack-notification",
+      "name": "Slack Notification",
+      "credentials": {
+        "slackApi": {
+          "id": "slack-cred",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{$json.user_type}}",
+              "operation": "equals",
+              "value2": "high_value"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [
+        850,
+        200
+      ],
+      "id": "user-type-router",
+      "name": "Route by User Type"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Analyze user behavior patterns\nconst events = $input.all();\n\n// Simple analysis - count events by type\nconst eventCounts = {};\nconst userTypes = {};\n\nfor (const event of events) {\n  const type = event.json.event_type;\n  const userType = event.json.user_type;\n  \n  eventCounts[type] = (eventCounts[type] || 0) + 1;\n  userTypes[userType] = (userTypes[userType] || 0) + 1;\n}\n\nconst totalEvents = events.length;\nconst analysis = {\n  total_events: totalEvents,\n  event_distribution: eventCounts,\n  user_type_distribution: userTypes,\n  most_common_event: Object.keys(eventCounts).reduce((a, b) => eventCounts[a] > eventCounts[b] ? a : b),\n  timestamp: new Date().toISOString()\n};\n\nreturn [{ json: analysis }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1050,
+        200
+      ],
+      "id": "behavior-analysis",
+      "name": "Behavior Analysis"
+    },
+    {
+      "parameters": {
+        "channel": "#healthcare-analytics",
+        "text": "=📊 Healthcare User Behavior Analysis Report\n\nTotal Events: {{$json.total_events}}\nMost Common Event: {{$json.most_common_event}}\n\nEvent Distribution:\n{{Object.entries($json.event_distribution).map(([k, v]) => `- ${k}: ${v}`).join('\\n')}}\n\nUser Type Distribution:\n{{Object.entries($json.user_type_distribution).map(([k, v]) => `- ${k}: ${v}`).join('\\n')}}"
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.1,
+      "position": [
+        1250,
+        200
+      ],
+      "id": "analysis-notification",
+      "name": "Analysis Report",
+      "credentials": {
+        "slackApi": {
+          "id": "slack-cred",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "### High-Value User Path\n\nSpecial handling for high-value users who are interested in major surgical procedures.\n\nActions:\n- Send personalized follow-up\n- Notify sales team\n- Provide premium support",
+        "height": 200,
+        "width": 250,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1050,
+        50
+      ],
+      "typeVersion": 1,
+      "id": "high-value-note",
+      "name": "High-Value User Path"
+    },
+    {
+      "parameters": {
+        "channel": "#healthcare-sales",
+        "text": "=🚨 High-Value User Alert\n\nUser ID: {{$json.user_id}} has shown interest in major surgical procedures.\n\nEvent Details:\n```{{$json.event_data}}```\n\nPlease follow up with personalized care options."
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.1,
+      "position": [
+        1050,
+        350
+      ],
+      "id": "high-value-notification",
+      "name": "High-Value User Alert",
+      "credentials": {
+        "slackApi": {
+          "id": "slack-cred",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "### Advanced Healthcare Events Workflow\n\nThis workflow processes events from the healthcare website with:\n\n1. **Database Storage** - PostgreSQL for permanent storage\n2. **Slack Notifications** - Real-time alerts\n3. **User Segmentation** - Route by user type\n4. **Behavior Analysis** - Pattern recognition\n\n#### Setup Instructions\n1. Configure PostgreSQL credentials\n2. Update Google Sheets ID\n3. Configure Slack credentials\n4. Set up appropriate channels\n",
+        "height": 400,
+        "width": 350,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        50,
+        100
+      ],
+      "typeVersion": 1,
+      "id": "workflow-info",
+      "name": "Workflow Info"
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "analysis_schedule",
+              "value": "daily"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        850,
+        400
+      ],
+      "id": "set-analysis-trigger",
+      "name": "Set Analysis Trigger"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyX",
+              "value": 1,
+              "unit": "days"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.cron",
+      "typeVersion": 1,
+      "position": [
+        650,
+        650
+      ],
+      "id": "daily-trigger",
+      "name": "Daily Analysis Trigger"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM healthcare_events WHERE timestamp >= NOW() - INTERVAL '24 HOURS';"
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 1,
+      "position": [
+        850,
+        650
+      ],
+      "id": "fetch-recent-events",
+      "name": "Fetch Recent Events",
+      "credentials": {
+        "postgres": {
+          "id": "postgres-cred",
+          "name": "PostgreSQL account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Healthcare Website Webhook": {
+      "main": [
+        [
+          {
+            "node": "Process & Segment Users",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process & Segment Users": {
+      "main": [
+        [
+          {
+            "node": "Store in PostgreSQL",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Log to Google Sheets",
+            "type": "main",
+            "index": 1
+          },
+          {
+            "node": "Slack Notification",
+            "type": "main",
+            "index": 2
+          },
+          {
+            "node": "Route by User Type",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "Route by User Type": {
+      "main": [
+        [
+          {
+            "node": "High-Value User Alert",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set Analysis Trigger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Daily Analysis Trigger": {
+      "main": [
+        [
+          {
+            "node": "Fetch Recent Events",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Recent Events": {
+      "main": [
+        [
+          {
+            "node": "Behavior Analysis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Behavior Analysis": {
+      "main": [
+        [
+          {
+            "node": "Analysis Report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Analysis Trigger": {
+      "main": [
+        [
+          {
+            "node": "Behavior Analysis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "executionTimeout": -1,
+    "saveManualExecutions": true
+  },
+  "versionId": "advanced-healthcare-events-v1",
+  "id": "advanced-healthcare-events-handler",
+  "tags": ["healthcare", "webhook", "analytics", "advanced"]
+}
