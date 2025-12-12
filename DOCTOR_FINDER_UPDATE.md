@@ -136,6 +136,7 @@ PHY001,Dr. Michael Chen,Michael,Chen,Emergency Medicine,DEPT000,St. Mary's Medic
 ## Testing
 
 To test the doctor finder:
+
 1. Open `healthcare-website/index.html` in a browser
 2. Navigate to "Find Doctors" section
 3. Verify "110 doctors found" is displayed
@@ -170,4 +171,4 @@ python generate_100_physicians.py
 
 ---
 
-*Last Updated: 2025*
+**Last Updated: 2025**

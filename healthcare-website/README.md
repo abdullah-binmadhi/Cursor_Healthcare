@@ -9,12 +9,14 @@ This website requires a local web server to function properly because it loads C
 1. **Open Terminal** in the `healthcare-website` folder
 
 2. **Start the web server:**
+
    ```bash
    python3 -m http.server 8080
    ```
 
 3. **Open your browser** and navigate to:
-   ```
+
+   ```text
    http://localhost:8080
    ```
 
@@ -23,14 +25,17 @@ This website requires a local web server to function properly because it loads C
 ### Alternative Ports
 
 If port 8080 is already in use, you can use a different port:
+
 ```bash
 python3 -m http.server 3000
 ```
+
 Then open: `http://localhost:3000`
 
 ### Required Files
 
 The following files must be present in the `healthcare-website` folder:
+
 - `index.html` - Main application file
 - `physician_registry.csv` - Physician data (110 doctors)
 - `style.css` - Styling
