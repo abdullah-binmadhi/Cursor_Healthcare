@@ -1,211 +1,37 @@
-department,insurance_type,procedure_type,base_cost,insurance_coverage_pct,average_patient_cost,volume,total_revenue,length_of_stay_days
-Cardiology,Medicare,Consultation,5942,0.8,1188.3999999999996,144,855648,6.8
-Cardiology,Medicare,Diagnostic Test,1054,0.89,115.93999999999994,149,157046,4.0
-Cardiology,Medicare,Minor Surgery,4658,0.77,1071.3399999999997,109,507722,6.2
-Cardiology,Medicare,Major Surgery,856,0.79,179.76,105,89880,2.5
-Cardiology,Medicare,Emergency Visit,633,0.71,183.57000000000005,27,17091,3.1
-Cardiology,Medicare,Follow-up Visit,6504,0.8,1300.7999999999993,36,234144,5.6
-Cardiology,Medicaid,Consultation,6522,0.83,1108.7400000000007,44,286968,1.3
-Cardiology,Medicaid,Diagnostic Test,4972,0.7,1491.6000000000004,174,865128,2.1
-Cardiology,Medicaid,Minor Surgery,6882,0.81,1307.58,188,1293816,3.9
-Cardiology,Medicaid,Major Surgery,1993,0.84,318.8800000000001,26,51818,5.3
-Cardiology,Medicaid,Emergency Visit,4249,0.61,1657.1100000000001,61,259189,1.3
-Cardiology,Medicaid,Follow-up Visit,2134,0.87,277.4200000000001,90,192060,6.6
-Cardiology,Private Insurance,Consultation,4722,0.72,1322.1600000000003,149,703578,3.8
-Cardiology,Private Insurance,Diagnostic Test,799,0.83,135.83000000000004,58,46342,2.7
-Cardiology,Private Insurance,Minor Surgery,7562,0.83,1285.54,177,1338474,3.0
-Cardiology,Private Insurance,Major Surgery,1519,0.84,243.03999999999996,121,183799,6.3
-Cardiology,Private Insurance,Emergency Visit,6589,0.73,1779.0299999999997,108,711612,3.0
-Cardiology,Private Insurance,Follow-up Visit,2030,0.75,507.5,137,278110,3.2
-Cardiology,Self-Pay,Consultation,7031,0.76,1687.4399999999996,31,217961,5.4
-Cardiology,Self-Pay,Diagnostic Test,1146,0.73,309.4200000000001,56,64176,4.3
-Cardiology,Self-Pay,Minor Surgery,3131,0.63,1158.47,93,291183,5.0
-Cardiology,Self-Pay,Major Surgery,3010,0.73,812.7000000000003,193,580930,3.6
-Cardiology,Self-Pay,Emergency Visit,6150,0.73,1660.5,124,762600,1.3
-Cardiology,Self-Pay,Follow-up Visit,7627,0.87,991.5100000000002,167,1273709,7.0
-Cardiology,Commercial,Consultation,2749,0.79,577.29,24,65976,1.5
-Cardiology,Commercial,Diagnostic Test,5722,0.72,1602.1599999999999,141,806802,5.8
-Cardiology,Commercial,Minor Surgery,6065,0.65,2122.75,17,103105,1.9
-Cardiology,Commercial,Major Surgery,5477,0.8,1095.3999999999996,122,668194,1.2
-Cardiology,Commercial,Emergency Visit,1050,0.67,346.5,175,183750,3.2
-Cardiology,Commercial,Follow-up Visit,3636,0.88,436.32000000000016,18,65448,4.6
-Emergency,Medicare,Consultation,6062,0.73,1636.7399999999998,104,630448,3.2
-Emergency,Medicare,Diagnostic Test,6751,0.62,2565.38,45,303795,4.2
-Emergency,Medicare,Minor Surgery,3760,0.69,1165.6000000000004,81,304560,2.5
-Emergency,Medicare,Major Surgery,1429,0.61,557.3100000000001,57,81453,4.0
-Emergency,Medicare,Emergency Visit,3670,0.87,477.0999999999999,40,146800,2.6
-Emergency,Medicare,Follow-up Visit,2632,0.81,500.0799999999999,64,168448,7.0
-Emergency,Medicaid,Consultation,2839,0.81,539.4099999999999,135,383265,2.2
-Emergency,Medicaid,Diagnostic Test,1611,0.86,225.53999999999996,125,201375,2.0
-Emergency,Medicaid,Minor Surgery,6343,0.73,1712.6099999999997,32,202976,5.9
-Emergency,Medicaid,Major Surgery,7426,0.9,742.5999999999995,180,1336680,3.1
-Emergency,Medicaid,Emergency Visit,1031,0.76,247.43999999999994,84,86604,6.3
-Emergency,Medicaid,Follow-up Visit,7474,0.65,2615.8999999999996,191,1427534,6.6
-Emergency,Private Insurance,Consultation,5724,0.65,2003.4,102,583848,4.1
-Emergency,Private Insurance,Diagnostic Test,1494,0.9,149.39999999999986,45,67230,2.4
-Emergency,Private Insurance,Minor Surgery,4547,0.61,1773.33,151,686597,4.4
-Emergency,Private Insurance,Major Surgery,4328,0.84,692.48,151,653528,1.8
-Emergency,Private Insurance,Emergency Visit,7743,0.63,2864.91,89,689127,3.4
-Emergency,Private Insurance,Follow-up Visit,6373,0.82,1147.1400000000003,144,917712,3.5
-Emergency,Self-Pay,Consultation,3854,0.85,578.0999999999999,28,107912,1.8
-Emergency,Self-Pay,Diagnostic Test,3097,0.79,650.3699999999999,125,387125,3.8
-Emergency,Self-Pay,Minor Surgery,4738,0.7,1421.4,151,715438,4.8
-Emergency,Self-Pay,Major Surgery,1990,0.83,338.3000000000002,43,85570,3.6
-Emergency,Self-Pay,Emergency Visit,7960,0.86,1114.4000000000005,41,326360,4.1
-Emergency,Self-Pay,Follow-up Visit,2991,0.65,1046.85,92,275172,6.6
-Emergency,Commercial,Consultation,2347,0.7,704.1000000000001,142,333274,6.4
-Emergency,Commercial,Diagnostic Test,7429,0.62,2823.0200000000004,60,445740,4.8
-Emergency,Commercial,Minor Surgery,5012,0.68,1603.8399999999997,170,852040,2.8
-Emergency,Commercial,Major Surgery,4870,0.63,1801.9,174,847380,2.0
-Emergency,Commercial,Emergency Visit,5256,0.65,1839.6,178,935568,4.7
-Emergency,Commercial,Follow-up Visit,7889,0.78,1735.58,154,1214906,1.2
-Surgery,Medicare,Consultation,7576,0.61,2954.6400000000003,21,159096,6.7
-Surgery,Medicare,Diagnostic Test,6816,0.77,1567.6800000000003,176,1199616,2.3
-Surgery,Medicare,Minor Surgery,5186,0.72,1452.08,173,897178,1.2
-Surgery,Medicare,Major Surgery,7782,0.79,1634.2199999999993,84,653688,4.9
-Surgery,Medicare,Emergency Visit,2974,0.74,773.2400000000002,185,550190,3.4
-Surgery,Medicare,Follow-up Visit,4215,0.62,1601.6999999999998,25,105375,1.9
-Surgery,Medicaid,Consultation,3904,0.75,976.0,62,242048,3.0
-Surgery,Medicaid,Diagnostic Test,1676,0.69,519.5600000000002,193,323468,2.9
-Surgery,Medicaid,Minor Surgery,7551,0.7,2265.3,112,845712,1.8
-Surgery,Medicaid,Major Surgery,3535,0.75,883.75,37,130795,2.9
-Surgery,Medicaid,Emergency Visit,4321,0.64,1555.56,125,540125,2.5
-Surgery,Medicaid,Follow-up Visit,1293,0.62,491.34000000000003,108,139644,6.2
-Surgery,Private Insurance,Consultation,3925,0.67,1295.25,50,196250,5.9
-Surgery,Private Insurance,Diagnostic Test,5232,0.82,941.7600000000002,58,303456,5.6
-Surgery,Private Insurance,Minor Surgery,4581,0.9,458.09999999999945,129,590949,4.0
-Surgery,Private Insurance,Major Surgery,3027,0.75,756.75,33,99891,6.7
-Surgery,Private Insurance,Emergency Visit,4640,0.74,1206.4,71,329440,2.3
-Surgery,Private Insurance,Follow-up Visit,3390,0.61,1322.1,82,277980,4.0
-Surgery,Self-Pay,Consultation,7728,0.85,1159.1999999999998,182,1406496,3.8
-Surgery,Self-Pay,Diagnostic Test,4896,0.6,1958.4,37,181152,3.6
-Surgery,Self-Pay,Minor Surgery,7729,0.68,2473.2799999999997,103,796087,5.6
-Surgery,Self-Pay,Major Surgery,3497,0.61,1363.83,23,80431,4.4
-Surgery,Self-Pay,Emergency Visit,2094,0.71,607.26,83,173802,1.4
-Surgery,Self-Pay,Follow-up Visit,4630,0.74,1203.8000000000002,150,694500,2.7
-Surgery,Commercial,Consultation,5605,0.8,1121.0,40,224200,1.8
-Surgery,Commercial,Diagnostic Test,1292,0.72,361.76,96,124032,4.3
-Surgery,Commercial,Minor Surgery,3495,0.83,594.1500000000001,60,209700,4.6
-Surgery,Commercial,Major Surgery,3788,0.75,947.0,21,79548,1.2
-Surgery,Commercial,Emergency Visit,6345,0.7,1903.5,131,831195,4.1
-Surgery,Commercial,Follow-up Visit,1720,0.78,378.39999999999986,141,242520,1.8
-Orthopedics,Medicare,Consultation,5522,0.7,1656.6000000000004,110,607420,6.9
-Orthopedics,Medicare,Diagnostic Test,6556,0.85,983.4000000000005,161,1055516,3.0
-Orthopedics,Medicare,Minor Surgery,7285,0.75,1821.25,135,983475,5.3
-Orthopedics,Medicare,Major Surgery,2955,0.74,768.3000000000002,14,41370,3.2
-Orthopedics,Medicare,Emergency Visit,6019,0.63,2227.03,116,698204,4.5
-Orthopedics,Medicare,Follow-up Visit,7027,0.87,913.5100000000002,186,1307022,4.8
-Orthopedics,Medicaid,Consultation,5389,0.74,1401.1399999999999,177,953853,5.7
-Orthopedics,Medicaid,Diagnostic Test,6858,0.77,1577.3400000000001,68,466344,5.3
-Orthopedics,Medicaid,Minor Surgery,5280,0.74,1372.8000000000002,144,760320,4.8
-Orthopedics,Medicaid,Major Surgery,5576,0.83,947.9200000000001,107,596632,1.9
-Orthopedics,Medicaid,Emergency Visit,6076,0.67,2005.08,156,947856,6.7
-Orthopedics,Medicaid,Follow-up Visit,1400,0.66,476.0,122,170800,2.9
-Orthopedics,Private Insurance,Consultation,1740,0.72,487.20000000000005,62,107880,3.5
-Orthopedics,Private Insurance,Diagnostic Test,6848,0.78,1506.5599999999995,130,890240,6.2
-Orthopedics,Private Insurance,Minor Surgery,6527,0.82,1174.8600000000006,190,1240130,1.8
-Orthopedics,Private Insurance,Major Surgery,2198,0.77,505.53999999999996,179,393442,3.9
-Orthopedics,Private Insurance,Emergency Visit,3586,0.69,1111.6600000000003,54,193644,3.8
-Orthopedics,Private Insurance,Follow-up Visit,4867,0.7,1460.1000000000004,100,486700,5.1
-Orthopedics,Self-Pay,Consultation,7607,0.82,1369.2600000000002,174,1323618,5.8
-Orthopedics,Self-Pay,Diagnostic Test,2665,0.78,586.2999999999997,59,157235,6.7
-Orthopedics,Self-Pay,Minor Surgery,2785,0.77,640.5499999999997,67,186595,6.6
-Orthopedics,Self-Pay,Major Surgery,2938,0.83,499.46000000000004,190,558220,2.2
-Orthopedics,Self-Pay,Emergency Visit,6275,0.75,1568.75,132,828300,3.1
-Orthopedics,Self-Pay,Follow-up Visit,7015,0.82,1262.7000000000007,83,582245,1.7
-Orthopedics,Commercial,Consultation,6042,0.76,1450.08,111,670662,5.9
-Orthopedics,Commercial,Diagnostic Test,6832,0.84,1093.12,84,573888,1.3
-Orthopedics,Commercial,Minor Surgery,6350,0.62,2413.0,123,781050,4.9
-Orthopedics,Commercial,Major Surgery,6622,0.74,1721.7200000000003,61,403942,6.0
-Orthopedics,Commercial,Emergency Visit,2721,0.88,326.52,188,511548,2.6
-Orthopedics,Commercial,Follow-up Visit,1394,0.78,306.68000000000006,160,223040,2.4
-Neurology,Medicare,Consultation,915,0.8,183.0,145,132675,2.4
-Neurology,Medicare,Diagnostic Test,2407,0.62,914.6600000000001,115,276805,3.0
-Neurology,Medicare,Minor Surgery,4369,0.63,1616.5300000000002,45,196605,1.0
-Neurology,Medicare,Major Surgery,5008,0.89,550.8800000000001,50,250400,3.4
-Neurology,Medicare,Emergency Visit,7714,0.86,1079.96,132,1018248,4.9
-Neurology,Medicare,Follow-up Visit,6692,0.89,736.1199999999999,92,615664,2.7
-Neurology,Medicaid,Consultation,984,0.87,127.91999999999996,32,31488,4.9
-Neurology,Medicaid,Diagnostic Test,2402,0.76,576.48,195,468390,6.1
-Neurology,Medicaid,Minor Surgery,805,0.87,104.64999999999998,54,43470,3.5
-Neurology,Medicaid,Major Surgery,7361,0.65,2576.3499999999995,19,139859,7.0
-Neurology,Medicaid,Emergency Visit,3752,0.84,600.3200000000002,57,213864,6.6
-Neurology,Medicaid,Follow-up Visit,7645,0.88,917.3999999999996,19,145255,1.1
-Neurology,Private Insurance,Consultation,5152,0.78,1133.44,95,489440,2.7
-Neurology,Private Insurance,Diagnostic Test,5753,0.76,1380.7200000000003,136,782408,6.3
-Neurology,Private Insurance,Minor Surgery,1599,0.86,223.86000000000013,129,206271,2.6
-Neurology,Private Insurance,Major Surgery,7125,0.63,2636.25,51,363375,5.4
-Neurology,Private Insurance,Emergency Visit,5810,0.68,1859.1999999999998,57,331170,1.1
-Neurology,Private Insurance,Follow-up Visit,3261,0.84,521.7600000000002,155,505455,5.0
-Neurology,Self-Pay,Consultation,2082,0.65,728.7,173,360186,6.4
-Neurology,Self-Pay,Diagnostic Test,7274,0.73,1963.9800000000005,93,676482,1.5
-Neurology,Self-Pay,Minor Surgery,5982,0.63,2213.34,45,269190,3.9
-Neurology,Self-Pay,Major Surgery,2532,0.6,1012.8,108,273456,2.4
-Neurology,Self-Pay,Emergency Visit,6674,0.68,2135.6799999999994,94,627356,2.8
-Neurology,Self-Pay,Follow-up Visit,6421,0.77,1476.83,76,487996,4.9
-Neurology,Commercial,Consultation,6175,0.67,2037.75,180,1111500,1.7
-Neurology,Commercial,Diagnostic Test,3013,0.65,1054.55,185,557405,4.0
-Neurology,Commercial,Minor Surgery,7832,0.87,1018.1599999999999,89,697048,5.1
-Neurology,Commercial,Major Surgery,5732,0.87,745.1599999999999,85,487220,3.2
-Neurology,Commercial,Emergency Visit,2309,0.67,761.9699999999998,44,101596,3.9
-Neurology,Commercial,Follow-up Visit,4227,0.82,760.8600000000001,165,697455,3.2
-Pediatrics,Medicare,Consultation,6250,0.76,1500.0,130,812500,5.5
-Pediatrics,Medicare,Diagnostic Test,7069,0.8,1413.7999999999993,65,459485,5.6
-Pediatrics,Medicare,Minor Surgery,6073,0.83,1032.4099999999999,30,182190,4.2
-Pediatrics,Medicare,Major Surgery,4826,0.81,916.9399999999996,29,139954,6.5
-Pediatrics,Medicare,Emergency Visit,1419,0.62,539.22,150,212850,6.4
-Pediatrics,Medicare,Follow-up Visit,2156,0.77,495.8799999999999,48,103488,2.0
-Pediatrics,Medicaid,Consultation,7499,0.76,1799.7600000000002,39,292461,5.1
-Pediatrics,Medicaid,Diagnostic Test,6372,0.77,1465.5599999999995,33,210276,6.4
-Pediatrics,Medicaid,Minor Surgery,4149,0.84,663.8400000000001,126,522774,1.8
-Pediatrics,Medicaid,Major Surgery,3903,0.74,1014.7800000000002,24,93672,4.4
-Pediatrics,Medicaid,Emergency Visit,6011,0.84,961.7600000000002,195,1172145,1.1
-Pediatrics,Medicaid,Follow-up Visit,2584,0.84,413.44000000000005,200,516800,2.3
-Pediatrics,Private Insurance,Consultation,1098,0.61,428.22,98,107604,5.2
-Pediatrics,Private Insurance,Diagnostic Test,4933,0.9,493.3000000000002,27,133191,6.9
-Pediatrics,Private Insurance,Minor Surgery,4367,0.61,1703.13,114,497838,2.1
-Pediatrics,Private Insurance,Major Surgery,1609,0.83,273.53,196,315364,4.9
-Pediatrics,Private Insurance,Emergency Visit,3943,0.71,1143.4700000000003,107,421901,3.7
-Pediatrics,Private Insurance,Follow-up Visit,7928,0.71,2299.12,30,237840,5.1
-Pediatrics,Self-Pay,Consultation,5921,0.86,828.9400000000005,44,260524,4.9
-Pediatrics,Self-Pay,Diagnostic Test,3348,0.64,1205.2799999999997,147,492156,3.4
-Pediatrics,Self-Pay,Minor Surgery,1543,0.82,277.74,67,103381,6.0
-Pediatrics,Self-Pay,Major Surgery,6694,0.61,2610.6600000000003,86,575684,3.8
-Pediatrics,Self-Pay,Emergency Visit,6390,0.76,1533.6000000000004,146,932940,3.3
-Pediatrics,Self-Pay,Follow-up Visit,2381,0.67,785.73,98,233338,1.9
-Pediatrics,Commercial,Consultation,2044,0.88,245.27999999999997,195,398580,5.6
-Pediatrics,Commercial,Diagnostic Test,763,0.84,122.08000000000004,117,89271,4.7
-Pediatrics,Commercial,Minor Surgery,7739,0.87,1006.0699999999997,71,549469,2.2
-Pediatrics,Commercial,Major Surgery,1326,0.78,291.72,124,164424,4.6
-Pediatrics,Commercial,Emergency Visit,6261,0.86,876.54,72,450792,5.4
-Pediatrics,Commercial,Follow-up Visit,3795,0.73,1024.65,148,561660,2.3
-Oncology,Medicare,Consultation,7575,0.83,1287.75,45,340875,4.0
-Oncology,Medicare,Diagnostic Test,2869,0.67,946.77,197,565193,4.5
-Oncology,Medicare,Minor Surgery,5230,0.78,1150.6,182,951860,5.9
-Oncology,Medicare,Major Surgery,2440,0.69,756.4000000000001,46,112240,6.9
-Oncology,Medicare,Emergency Visit,4770,0.67,1574.1,86,410220,2.7
-Oncology,Medicare,Follow-up Visit,5060,0.88,607.1999999999998,198,1001880,6.5
-Oncology,Medicaid,Consultation,5628,0.8,1125.5999999999995,152,855456,4.0
-Oncology,Medicaid,Diagnostic Test,3321,0.88,398.52,181,601101,3.3
-Oncology,Medicaid,Minor Surgery,4796,0.7,1438.8000000000002,116,556336,3.4
-Oncology,Medicaid,Major Surgery,2956,0.71,857.2400000000002,147,434532,3.8
-Oncology,Medicaid,Emergency Visit,7457,0.67,2460.8099999999995,191,1424287,1.9
-Oncology,Medicaid,Follow-up Visit,4293,0.87,558.0900000000001,153,656829,3.5
-Oncology,Private Insurance,Consultation,3912,0.77,899.7599999999998,44,172128,3.3
-Oncology,Private Insurance,Diagnostic Test,2588,0.66,879.9199999999998,175,452900,1.5
-Oncology,Private Insurance,Minor Surgery,4184,0.85,627.5999999999999,33,138072,4.2
-Oncology,Private Insurance,Major Surgery,7294,0.66,2479.96,78,568932,3.3
-Oncology,Private Insurance,Emergency Visit,5455,0.78,1200.0999999999995,28,152740,2.1
-Oncology,Private Insurance,Follow-up Visit,6739,0.78,1482.58,181,1219759,4.4
-Oncology,Self-Pay,Consultation,4427,0.66,1505.1799999999998,95,420565,2.8
-Oncology,Self-Pay,Diagnostic Test,7946,0.6,3178.4000000000005,58,460868,6.8
-Oncology,Self-Pay,Minor Surgery,1461,0.82,262.98,132,192852,6.5
-Oncology,Self-Pay,Major Surgery,6198,0.78,1363.5599999999995,62,384276,3.4
-Oncology,Self-Pay,Emergency Visit,2460,0.77,565.8,82,201720,3.3
-Oncology,Self-Pay,Follow-up Visit,4871,0.79,1022.9099999999999,88,428648,2.6
-Oncology,Commercial,Consultation,4700,0.86,658.0,129,606300,1.6
-Oncology,Commercial,Diagnostic Test,6418,0.74,1668.6800000000003,91,584038,6.5
-Oncology,Commercial,Minor Surgery,3536,0.69,1096.1600000000003,21,74256,4.4
-Oncology,Commercial,Major Surgery,2312,0.82,416.1600000000001,14,32368,2.6
-Oncology,Commercial,Emergency Visit,5284,0.77,1215.3199999999997,116,612944,2.8
-Oncology,Commercial,Follow-up Visit,2107,0.7,632.1000000000001,107,225449,4.4
+month,year,total_revenue,total_expenses,net_income,operating_margin,bad_debt,charity_care,insurance_contractual,cash_on_hand
+1,2022,18865625,14398369,4467256,0.237,871197,241948,854715,6499264
+2,2022,19341763,15944695,3397068,0.176,737452,245892,1294495,6877749
+3,2022,17331080,15568570,1762510,0.102,561686,282361,727840,3335051
+4,2022,19705171,15982636,3722535,0.189,931778,288334,1392861,5193762
+5,2022,18041438,13050388,4991050,0.277,685621,223484,758905,5626540
+6,2022,17377081,13160296,4216785,0.243,636462,409237,810805,5167348
+7,2022,20388149,17498741,2889408,0.142,514163,408038,1168184,5265697
+8,2022,17947444,14776675,3170769,0.177,663926,423385,918306,5413629
+9,2022,18728743,13725990,5002753,0.267,778718,414737,1129415,4578134
+10,2022,17223533,15555681,1667852,0.097,802383,221590,1061097,4938159
+11,2022,16014723,14182584,1832139,0.114,767048,355820,570352,5937765
+12,2022,14010624,12658901,1351723,0.096,370200,284319,894851,4256720
+1,2023,19845957,15710979,4134978,0.208,562915,440226,868038,6983167
+2,2023,18499630,16400785,2098845,0.113,665989,383792,1039048,5459770
+3,2023,22286482,16947200,5339282,0.24,868907,406261,1416381,4994922
+4,2023,20310485,14674141,5636344,0.278,919554,550746,1260276,7259798
+5,2023,22427931,20720304,1707627,0.076,991479,570982,996838,8236982
+6,2023,21044182,18406844,2637338,0.125,819048,537745,739630,6204581
+7,2023,21043444,16324164,4719280,0.224,575951,432534,1354091,6609091
+8,2023,21487834,19595427,1892407,0.088,594975,466937,1287984,4982945
+9,2023,20316070,18372784,1943286,0.096,575739,452192,1198260,6878410
+10,2023,21941340,16440734,5500606,0.251,1030729,371957,1624277,7289258
+11,2023,18542412,16998511,1543901,0.083,757320,258434,1350385,3925291
+12,2023,18198260,13733758,4464502,0.245,608808,434510,717380,6032477
+1,2024,20148958,15106707,5042251,0.25,879556,517646,842449,7080392
+2,2024,17961877,13227971,4733906,0.264,597646,266778,949743,5991885
+3,2024,21270028,17526758,3743270,0.176,662656,333846,891534,6688270
+4,2024,24976966,20540603,4436363,0.178,1014750,662604,1080753,6858546
+5,2024,17540621,14249394,3291227,0.188,644610,480099,1257200,6529076
+6,2024,18205535,16823218,1382317,0.076,872521,420567,692571,4103606
+7,2024,22003279,19397751,2605528,0.118,834303,338917,1284123,4113902
+8,2024,20497977,14876771,5621206,0.274,759256,302877,1297494,6914593
+9,2024,18684242,13978015,4706227,0.252,479526,285097,836319,4924763
+10,2024,24368762,22638662,1730100,0.071,877578,295786,1234406,5284704
+11,2024,20792839,18928005,1864834,0.09,757968,420776,1130796,6330214
+12,2024,26204324,22524934,3679390,0.14,821513,558748,1158687,5952023
