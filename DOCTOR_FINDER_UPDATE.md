@@ -1,11 +1,13 @@
 # Doctor Finder Update Summary
 
 ## Overview
+
 Updated the Find Doctors page to display all physicians from the dataset instead of showing a static count.
 
 ## Changes Made
 
 ### 1. Generated 110 Physicians (PHY000-PHY109)
+
 - **Script Created**: `generate_100_physicians.py`
 - **Distribution**: 110 physicians across 17 medical departments
 - **Data Files Updated**:
@@ -14,6 +16,7 @@ Updated the Find Doctors page to display all physicians from the dataset instead
   - `physician_registry.csv` (new file with physician details)
 
 ### 2. Physician Distribution by Department
+
 | Department | Physicians |
 |-----------|-----------|
 | Emergency Medicine | 8 |
@@ -38,6 +41,7 @@ Updated the Find Doctors page to display all physicians from the dataset instead
 ### 3. Doctor Finder Functionality Added
 
 #### JavaScript Functions
+
 - **`loadPhysicians()`**: Loads physicians from CSV files
   - Parses `physician_performance.csv` for core physician data
   - Loads `physician_registry.csv` for specialty and hospital assignments
@@ -55,6 +59,7 @@ Updated the Find Doctors page to display all physicians from the dataset instead
   - Filter by availability (Available This Week, Limited Availability)
 
 #### UI Updates
+
 - **Specialty Filter**: Updated dropdown to include all 17 medical specialties
 - **Hospital Filter**: 8 hospital locations available
 - **Rating Filter**: Minimum rating selection (Any, 3+, 4+, 4.5+)
@@ -65,6 +70,7 @@ Updated the Find Doctors page to display all physicians from the dataset instead
 ### 4. Physician Data Structure
 
 #### Performance Data (`physician_performance.csv`)
+
 ```csv
 physician_id,physician_name,month,year,total_patients,avg_length_of_stay,avg_satisfaction_score,complication_rate,readmission_rate,avg_revenue
 PHY000,Dr. Sarah Johnson,1,2022,28,4.3,4.1,0.145,0.189,15632
@@ -73,6 +79,7 @@ PHY000,Dr. Sarah Johnson,2,2022,31,5.2,4.4,0.112,0.201,18421
 ```
 
 #### Registry Data (`physician_registry.csv`)
+
 ```csv
 physician_id,physician_name,first_name,last_name,specialty,department_id,hospital
 PHY000,Dr. Sarah Johnson,Sarah,Johnson,Emergency Medicine,DEPT000,City General Hospital
@@ -81,6 +88,7 @@ PHY001,Dr. Michael Chen,Michael,Chen,Emergency Medicine,DEPT000,St. Mary's Medic
 ```
 
 ### 5. Features Implemented
+
 ✅ Dynamic loading of physicians from CSV data  
 ✅ Real-time filtering by specialty, hospital, rating, and availability  
 ✅ Professional UI with physician cards  
@@ -92,6 +100,7 @@ PHY001,Dr. Michael Chen,Michael,Chen,Emergency Medicine,DEPT000,St. Mary's Medic
 ### 6. Technical Details
 
 #### Data Flow
+
 1. Page loads → `DOMContentLoaded` event fires
 2. `loadPhysicians()` fetches and parses CSV files
 3. Creates unique physician list (110 doctors)
@@ -100,6 +109,7 @@ PHY001,Dr. Michael Chen,Michael,Chen,Emergency Medicine,DEPT000,St. Mary's Medic
 6. Dynamic count updates based on active filters
 
 #### Files Modified
+
 - `healthcare-website/index.html` - Added doctor finder JavaScript
 - `data/physician_performance.csv` - Updated to 110 physicians
 - `healthcare-website/data/physician_performance.csv` - Synchronized
@@ -107,6 +117,7 @@ PHY001,Dr. Michael Chen,Michael,Chen,Emergency Medicine,DEPT000,St. Mary's Medic
 - `healthcare-website/physician_registry.csv` - Copied for web access
 
 ### 7. Performance Metrics
+
 - **Total Physicians**: 110 doctors
 - **Performance Records**: 3,960 entries (110 × 12 × 3)
 - **Time Period**: 2022-2024 (3 years)
@@ -114,6 +125,7 @@ PHY001,Dr. Michael Chen,Michael,Chen,Emergency Medicine,DEPT000,St. Mary's Medic
 - **Specialties**: 17 medical departments
 
 ### 8. Next Steps (Optional Enhancements)
+
 - [ ] Add search by physician name
 - [ ] Implement appointment booking system
 - [ ] Add physician profile pages with detailed information
@@ -122,6 +134,7 @@ PHY001,Dr. Michael Chen,Michael,Chen,Emergency Medicine,DEPT000,St. Mary's Medic
 - [ ] Implement real-time availability updates
 
 ## Testing
+
 To test the doctor finder:
 1. Open `healthcare-website/index.html` in a browser
 2. Navigate to "Find Doctors" section
@@ -134,6 +147,7 @@ To test the doctor finder:
 5. Clear filters to see all 110 doctors again
 
 ## Verification Commands
+
 ```bash
 # Count unique physicians
 awk -F',' 'NR>1 {print $1}' healthcare-website/data/physician_performance.csv | sort -u | wc -l
@@ -148,10 +162,11 @@ python generate_100_physicians.py
 ```
 
 ## Commit Information
-**Commit**: 97d9998  
-**Message**: "Add doctor finder functionality with 110 physicians from CSV data"  
-**Branch**: main  
-**Status**: Pushed to GitHub (abdullah-binmadhi/Cursor_Healthcare)
+
+- **Commit**: 97d9998
+- **Message**: "Add doctor finder functionality with 110 physicians from CSV data"
+- **Branch**: main
+- **Status**: Pushed to GitHub (abdullah-binmadhi/Cursor_Healthcare)
 
 ---
 
