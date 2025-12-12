@@ -1011,7 +1011,7 @@
                 <div class="form-grid">
                     <div class="form-card">
                         <h3 class="form-title">Patient Information</h3>
-                        <form id="costEstimatorForm">
+                        <form id="costEstimatorForm" onsubmit="return false;">
                             <div class="form-group">
                                 <label for="patientAge">Age</label>
                                 <input type="number" id="patientAge" min="1" max="120" required>
@@ -1395,25 +1395,25 @@
             }
         });
 
-        // Cost estimator form handler - use event delegation for reliability
-        function initCostEstimator() {
-            const form = document.getElementById('costEstimatorForm');
-            if (!form) return;
-            
-            // Remove any existing listeners to prevent duplicates
-            const newForm = form.cloneNode(true);
-            form.parentNode.replaceChild(newForm, form);
-            
-            // Attach the event listener
-            newForm.addEventListener('submit', function(e) {
+        // Cost estimator form handler - bulletproof event delegation from document level
+        document.addEventListener('submit', function(e) {
+            // Check if the submitted form is our cost estimator form
+            if (e.target && e.target.id === 'costEstimatorForm') {
                 e.preventDefault();
                 e.stopPropagation();
+                e.stopImmediatePropagation();
                 
                 // Get form values
                 const age = parseInt(document.getElementById('patientAge').value);
                 const insuranceType = document.getElementById('insuranceType').value;
                 const department = document.getElementById('department').value;
                 const procedure = document.getElementById('procedure').value;
+                
+                // Validate required fields
+                if (!age || !insuranceType || !department || !procedure) {
+                    alert('Please fill in all required fields');
+                    return false;
+                }
                 
                 // Calculate base cost based on procedure
                 let baseCost = 0;
@@ -1424,6 +1424,7 @@
                     case 'major-surgery': baseCost = 25000; break;
                     case 'emergency-visit': baseCost = 1500; break;
                     case 'follow-up': baseCost = 150; break;
+                    default: baseCost = 500;
                 }
                 
                 // Department cost multiplier
@@ -1462,15 +1463,8 @@
                 document.getElementById('costResults').style.display = 'block';
                 
                 return false;
-            });
-        }
-
-        // Initialize cost estimator when DOM is ready
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initCostEstimator);
-        } else {
-            initCostEstimator();
-        }
+            }
+        }, true); // Use capture phase to catch the event early
 
         let chartInstances = {};
         let dashboardData = {};
