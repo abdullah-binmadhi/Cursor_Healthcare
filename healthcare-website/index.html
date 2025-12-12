@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HealthCare Analytics - Enhanced v2.7 (Realistic Hospital Variations)</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>HealthCare Analytics - Supabase v6.0 (Database-Powered)</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
@@ -932,6 +935,9 @@
             <div class="logo">
                 <i class="fas fa-heartbeat"></i>
                 <span>HealthCare Analytics</span>
+                <span style="background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.7rem; font-weight: 600; margin-left: 0.75rem;">
+                    <i class="fas fa-database"></i> Supabase v6.0
+                </span>
             </div>
             <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle menu">
                 <i class="fas fa-bars" id="menu-icon"></i>
@@ -2579,15 +2585,16 @@
                         availability: p.availability || 'available'
                     }));
                 
-                console.log(`✅ Successfully loaded ${allPhysicians.length} unique physicians`);
+                console.log(`✅ ===== SUPABASE DATA LOADED SUCCESSFULLY =====`);
+                console.log(`✅ Total physicians from Supabase: ${allPhysicians.length}`);
                 console.log('👨‍⚕️ First physician:', allPhysicians[0]);
                 console.log('👨‍⚕️ Last physician:', allPhysicians[allPhysicians.length - 1]);
                 
                 // Show unique specialties and hospitals for debugging filters
                 const uniqueSpecialties = [...new Set(allPhysicians.map(p => p.specialty))];
                 const uniqueHospitals = [...new Set(allPhysicians.map(p => p.hospital))];
-                console.log('🏥 Unique specialties:', uniqueSpecialties);
-                console.log('🏥 Unique hospitals:', uniqueHospitals);
+                console.log(`🏥 Unique specialties (${uniqueSpecialties.length}):`, uniqueSpecialties);
+                console.log(`🏥 Unique hospitals (${uniqueHospitals.length}):`, uniqueHospitals);
                 
                 // Populate filter dropdowns with actual data
                 populateFilterDropdowns(uniqueSpecialties, uniqueHospitals);
@@ -2680,7 +2687,7 @@
             }
             
             // Update count
-            doctorCount.textContent = `${doctors.length} doctors found`;
+            doctorCount.textContent = `${doctors.length} doctors found (Supabase)`;
             console.log(`📊 Updated count to: ${doctors.length} doctors found`);
             
             // Clear current list
