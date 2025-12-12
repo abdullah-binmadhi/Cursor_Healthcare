@@ -2518,24 +2518,46 @@
          */
         async function loadPhysicians() {
             try {
-                console.log('🏥 [v3.2] Loading physicians from physician_registry.csv...');
+                console.log('🏥 [v3.3] Loading physicians from physician_registry.csv...');
                 console.log('📍 Current URL:', window.location.href);
                 console.log('📍 Base URL:', window.location.origin);
                 
-                // Try to load the CSV file
-                let response;
-                let csvPath = 'physician_registry.csv?v=' + Date.now();
+                // Try multiple paths for different deployment scenarios
+                const possiblePaths = [
+                    'physician_registry.csv',
+                    './physician_registry.csv',
+                    'healthcare-website/physician_registry.csv',
+                    '../physician_registry.csv'
+                ];
                 
-                console.log('🔍 Trying path:', csvPath);
-                response = await fetch(csvPath);
+                let response = null;
+                let csvText = null;
+                let successPath = null;
                 
-                if (!response.ok) {
-                    console.error(`❌ Failed with status ${response.status}, response:`, response);
-                    throw new Error(`Failed to load CSV: ${response.status} - ${response.statusText}`);
+                for (const path of possiblePaths) {
+                    try {
+                        console.log(`🔍 Trying path: ${path}`);
+                        const testResponse = await fetch(path + '?v=' + Date.now());
+                        
+                        if (testResponse.ok) {
+                            response = testResponse;
+                            csvText = await response.text();
+                            successPath = path;
+                            console.log(`✅ Successfully loaded from: ${path}`);
+                            break;
+                        } else {
+                            console.log(`❌ Path ${path} returned status: ${testResponse.status}`);
+                        }
+                    } catch (err) {
+                        console.log(`❌ Path ${path} failed:`, err.message);
+                    }
                 }
                 
-                const csvText = await response.text();
-                console.log('📄 CSV loaded successfully!');
+                if (!csvText) {
+                    throw new Error(`Failed to load CSV from any path. Tried: ${possiblePaths.join(', ')}`);
+                }
+                
+                console.log('📄 CSV loaded successfully from:', successPath);
                 console.log('📄 CSV Text Preview:', csvText.substring(0, 200));
                 
                 // Parse CSV

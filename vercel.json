@@ -2,7 +2,11 @@
   "rewrites": [
     {
       "source": "/",
-      "destination": "/index.html"
+      "destination": "/healthcare-website/index.html"
+    },
+    {
+      "source": "/physician_registry.csv",
+      "destination": "/healthcare-website/physician_registry.csv"
     }
   ],
   "headers": [
