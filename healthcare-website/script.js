@@ -1,10 +1,11 @@
 /**
  * Healthcare Website JavaScript
- * Handles cost estimation and doctor finder functionality
+ * Handles cost estimation and analytics functionality
+ * NOTE: Doctor finder now uses Supabase (loaded in index.html inline script)
  */
 
 // Global data storage
-let physiciansData = [];
+let physiciansData = []; // This will be populated from Supabase in index.html
 let financialData = [];
 let departmentData = [];
 let filteredDoctors = [];
@@ -19,16 +20,13 @@ document.addEventListener('DOMContentLoaded', function() {
  */
 async function initializeApp() {
     try {
-        // Load data files
+        // Load only CSV data files for analytics (NOT physicians - they come from Supabase)
         await loadDataFiles();
         
         // Set up event listeners
         setupEventListeners();
         
-        // Initialize doctor search with all doctors
-        displayDoctors(physiciansData);
-        
-        console.log('Healthcare app initialized successfully');
+        console.log('✅ Healthcare app initialized (physicians loaded from Supabase)');
     } catch (error) {
         console.error('Error initializing app:', error);
         showError('Failed to load healthcare data. Please refresh the page.');
@@ -36,27 +34,26 @@ async function initializeApp() {
 }
 
 /**
- * Load all CSV data files
+ * Load CSV data files (financial and department data only)
  */
 async function loadDataFiles() {
     try {
-        const [physicians, financial, departments] = await Promise.all([
-            loadCSV('data/physician_performance.csv'),
+        const [financial, departments] = await Promise.all([
             loadCSV('data/financial_performance.csv'),
             loadCSV('data/department_metrics.csv')
         ]);
         
-        physiciansData = physicians;
+        // DO NOT load physicians from CSV - they come from Supabase
         financialData = financial;
         departmentData = departments;
         
-        console.log('Data loaded:', {
-            physicians: physiciansData.length,
+        console.log('📊 CSV Data loaded:', {
             financial: financialData.length,
             departments: departmentData.length
         });
+        console.log('👨‍⚕️ Physicians: Loaded from Supabase (see index.html inline script)');
     } catch (error) {
-        console.error('Error loading data files:', error);
+        console.error('Error loading CSV files:', error);
         throw error;
     }
 }
@@ -272,71 +269,19 @@ function displayCostResults(estimate) {
 }
 
 /**
- * Search and filter doctors
+ * ================================================================
+ * DOCTOR SEARCH FUNCTIONS DISABLED
+ * All doctor/physician functionality now uses Supabase in index.html
+ * The following functions are commented out to prevent conflicts:
+ * - searchDoctors()
+ * - displayDoctors()
+ * - createDoctorCard()
+ * ================================================================
  */
-function searchDoctors() {
-    const specialty = document.getElementById('specialtyFilter').value;
-    const hospital = document.getElementById('hospitalFilter').value;
-    const minRating = parseFloat(document.getElementById('ratingFilter').value) || 0;
-    const availability = document.getElementById('availabilityFilter').value;
-    
-    // Filter doctors based on criteria
-    filteredDoctors = physiciansData.filter(doctor => {
-        // Specialty filter
-        if (specialty && doctor.specialty !== specialty) return false;
-        
-        // Hospital filter
-        if (hospital && doctor.hospital !== hospital) return false;
-        
-        // Rating filter
-        if (doctor.patient_satisfaction < minRating) return false;
-        
-        // Availability filter
-        if (availability === 'available' && doctor.availability_status !== 'Available') return false;
-        if (availability === 'limited' && doctor.availability_status !== 'Limited') return false;
-        
-        return true;
-    });
-    
-    // Sort by rating (highest first)
-    filteredDoctors.sort((a, b) => b.patient_satisfaction - a.patient_satisfaction);
-    
-    // Display filtered doctors
-    displayDoctors(filteredDoctors);
-}
 
-/**
- * Display doctors in the results area
- */
-function displayDoctors(doctors) {
-    const doctorList = document.getElementById('doctorList');
-    const doctorCount = document.getElementById('doctorCount');
-    
-    if (!doctorList) return;
-    
-    // Update count
-    if (doctorCount) {
-        doctorCount.textContent = `${doctors.length} doctor${doctors.length !== 1 ? 's' : ''} found`;
-    }
-    
-    // Clear existing results
-    doctorList.innerHTML = '';
-    
-    // Display doctors
-    doctors.forEach(doctor => {
-        const doctorCard = createDoctorCard(doctor);
-        doctorList.appendChild(doctorCard);
-    });
-    
-    // Show message if no doctors found
-    if (doctors.length === 0) {
-        doctorList.innerHTML = '<div class="no-results">No doctors found matching your criteria. Please adjust your filters.</div>';
-    }
-}
-
-/**
- * Create a doctor card element
- */
+/* COMMENTED OUT - NOW IN INDEX.HTML WITH SUPABASE
+function searchDoctors() { ... }
+function displayDoctors(doctors) { ... }
 function createDoctorCard(doctor) {
     const card = document.createElement('div');
     card.className = 'doctor-card fade-in';
@@ -346,62 +291,17 @@ function createDoctorCard(doctor) {
     const stars = '★'.repeat(Math.floor(rating)) + '☆'.repeat(5 - Math.floor(rating));
     
     // Determine availability class
-    let availabilityClass = 'available';
-    if (doctor.availability_status === 'Limited') availabilityClass = 'limited';
-    if (doctor.availability_status === 'Unavailable') availabilityClass = 'unavailable';
-    
-    card.innerHTML = `
-        <div class="doctor-header">
-            <div class="doctor-info">
-                <h4>Dr. ${doctor.first_name} ${doctor.last_name}</h4>
-                <div class="doctor-specialty">${doctor.specialty}</div>
-                <div class="doctor-hospital">${doctor.hospital}</div>
-            </div>
-            <div class="doctor-rating">
-                <div class="rating-stars">${stars}</div>
-                <div class="rating-score">${rating}/5.0</div>
-            </div>
-        </div>
-        
-        <div class="doctor-metrics">
-            <div class="metric-item">
-                <span class="metric-value">${doctor.years_experience || 0}</span>
-                <span class="metric-label">Years Experience</span>
-            </div>
-            <div class="metric-item">
-                <span class="metric-value">${doctor.success_rate || 0}%</span>
-                <span class="metric-label">Success Rate</span>
-            </div>
-            <div class="metric-item">
-                <span class="metric-value">${doctor.total_patients || 0}</span>
-                <span class="metric-label">Patients Treated</span>
-            </div>
-        </div>
-        
-        <div class="doctor-availability ${availabilityClass}">
-            <i class="fas fa-calendar-alt"></i>
-            ${getAvailabilityText(doctor.availability_status, doctor.average_wait_time)}
-        </div>
-    `;
-    
-    return card;
+    ... (doctor card creation code - see index.html for Supabase version) ...
 }
 
-/**
- * Get availability text based on status
- */
 function getAvailabilityText(status, waitTime) {
-    switch (status) {
-        case 'Available':
-            return `Available - Average wait: ${waitTime || 30} minutes`;
-        case 'Limited':
-            return `Limited availability - Wait time: ${waitTime || 60} minutes`;
-        case 'Unavailable':
-            return 'Currently unavailable - Please check back later';
-        default:
-            return 'Availability unknown';
-    }
+    ... (availability text logic - see index.html for Supabase version) ...
 }
+END OF COMMENTED OUT SECTION */
+
+// ================================================================
+// ACTIVE FUNCTIONS BELOW - These remain active for other features
+// ================================================================
 
 /**
  * Utility function to scroll to a section
