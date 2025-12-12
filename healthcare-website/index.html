@@ -1105,13 +1105,23 @@
                             <label for="specialtyFilter">Specialty</label>
                             <select id="specialtyFilter">
                                 <option value="">All Specialties</option>
-                                <option value="Cardiology">Cardiology</option>
                                 <option value="Emergency Medicine">Emergency Medicine</option>
-                                <option value="Surgery">Surgery</option>
+                                <option value="Cardiology">Cardiology</option>
                                 <option value="Orthopedics">Orthopedics</option>
                                 <option value="Neurology">Neurology</option>
-                                <option value="Pediatrics">Pediatrics</option>
                                 <option value="Oncology">Oncology</option>
+                                <option value="Pediatrics">Pediatrics</option>
+                                <option value="Internal Medicine">Internal Medicine</option>
+                                <option value="Surgery">Surgery</option>
+                                <option value="Psychiatry">Psychiatry</option>
+                                <option value="Radiology">Radiology</option>
+                                <option value="Anesthesiology">Anesthesiology</option>
+                                <option value="Obstetrics">Obstetrics</option>
+                                <option value="Gastroenterology">Gastroenterology</option>
+                                <option value="Dermatology">Dermatology</option>
+                                <option value="Urology">Urology</option>
+                                <option value="Nephrology">Nephrology</option>
+                                <option value="Pulmonology">Pulmonology</option>
                             </select>
                         </div>
 
@@ -2473,6 +2483,213 @@
 
         // Make function globally available
         window.changeTrendsYear = changeTrendsYear;
+
+        // Doctor Finder Functionality
+        let allPhysicians = [];
+        
+        /**
+         * Load physicians from CSV file
+         */
+        async function loadPhysicians() {
+            try {
+                console.log('🏥 Loading physicians from CSV...');
+                const response = await fetch('data/physician_performance.csv');
+                const csvText = await response.text();
+                
+                // Parse CSV
+                const lines = csvText.split('\n');
+                const headers = lines[0].split(',');
+                
+                // Create unique physician list from CSV data
+                const physicianMap = new Map();
+                
+                for (let i = 1; i < lines.length; i++) {
+                    if (!lines[i].trim()) continue;
+                    
+                    const values = lines[i].split(',');
+                    const physicianId = values[0];
+                    
+                    // Only add if not already in map
+                    if (!physicianMap.has(physicianId)) {
+                        const physicianName = values[1].replace(/^Dr\.\s*/, ''); // Remove "Dr." prefix
+                        const nameParts = physicianName.split(' ');
+                        const firstName = nameParts[0];
+                        const lastName = nameParts.slice(1).join(' ');
+                        
+                        // Get average satisfaction score for this physician
+                        const satisfactionScore = parseFloat(values[6]) || 4.0;
+                        
+                        physicianMap.set(physicianId, {
+                            id: physicianId,
+                            firstName: firstName,
+                            lastName: lastName,
+                            fullName: physicianName,
+                            specialty: '', // Will be set from registry
+                            hospital: '', // Will be set from registry
+                            rating: satisfactionScore,
+                            availability: Math.random() > 0.3 ? 'available' : 'limited'
+                        });
+                    }
+                }
+                
+                // Load physician registry to get specialty and hospital info
+                try {
+                    const registryResponse = await fetch('physician_registry.csv');
+                    const registryText = await registryResponse.text();
+                    const registryLines = registryText.split('\n');
+                    
+                    for (let i = 1; i < registryLines.length; i++) {
+                        if (!registryLines[i].trim()) continue;
+                        
+                        const values = registryLines[i].split(',');
+                        const physicianId = values[0];
+                        
+                        if (physicianMap.has(physicianId)) {
+                            const physician = physicianMap.get(physicianId);
+                            physician.specialty = values[4];
+                            physician.hospital = values[6];
+                        }
+                    }
+                } catch (error) {
+                    console.warn('⚠️ Could not load physician registry, using defaults');
+                }
+                
+                allPhysicians = Array.from(physicianMap.values());
+                console.log(`✅ Loaded ${allPhysicians.length} physicians`);
+                
+                // Display all physicians initially
+                displayDoctors(allPhysicians);
+                
+            } catch (error) {
+                console.error('❌ Error loading physicians:', error);
+                document.getElementById('doctorList').innerHTML = 
+                    '<p style="color: #e53e3e; text-align: center; padding: 2rem;">Error loading physicians. Please check data files.</p>';
+            }
+        }
+        
+        /**
+         * Display doctors in the grid
+         */
+        function displayDoctors(doctors) {
+            const doctorList = document.getElementById('doctorList');
+            const doctorCount = document.getElementById('doctorCount');
+            
+            // Update count
+            doctorCount.textContent = `${doctors.length} doctors found`;
+            
+            // Clear current list
+            doctorList.innerHTML = '';
+            
+            // Create doctor cards
+            doctors.forEach(doctor => {
+                const card = document.createElement('div');
+                card.className = 'doctor-card';
+                card.innerHTML = `
+                    <div style="display: flex; flex-direction: column; height: 100%;">
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                            <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; font-weight: 700; flex-shrink: 0;">
+                                ${doctor.firstName.charAt(0)}${doctor.lastName.charAt(0)}
+                            </div>
+                            <div style="flex: 1; min-width: 0;">
+                                <h3 style="margin: 0 0 0.25rem 0; font-size: 1.1rem; color: #1a202c; font-weight: 700;">
+                                    Dr. ${doctor.firstName} ${doctor.lastName}
+                                </h3>
+                                <p style="margin: 0; font-size: 0.9rem; color: #667eea; font-weight: 600;">
+                                    ${doctor.specialty || 'General Medicine'}
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div style="flex: 1; display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <i class="fas fa-hospital" style="color: #667eea; width: 20px;"></i>
+                                <span style="font-size: 0.9rem; color: #4a5568;">${doctor.hospital || 'Multiple Locations'}</span>
+                            </div>
+                            
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <i class="fas fa-star" style="color: #f59e0b; width: 20px;"></i>
+                                <span style="font-size: 0.9rem; color: #4a5568; font-weight: 600;">${doctor.rating.toFixed(1)}/5.0</span>
+                                <span style="font-size: 0.85rem; color: #718096;">(${Math.floor(Math.random() * 50 + 20)} reviews)</span>
+                            </div>
+                            
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <i class="fas fa-calendar-check" style="color: ${doctor.availability === 'available' ? '#10b981' : '#f59e0b'}; width: 20px;"></i>
+                                <span style="font-size: 0.9rem; color: #4a5568;">
+                                    ${doctor.availability === 'available' ? 'Available This Week' : 'Limited Availability'}
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <button style="margin-top: 1rem; padding: 0.75rem; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; width: 100%;" 
+                                onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(102, 126, 234, 0.4)'"
+                                onmouseout="this.style.transform=''; this.style.boxShadow=''">
+                            Book Appointment
+                        </button>
+                    </div>
+                `;
+                doctorList.appendChild(card);
+            });
+            
+            // If no doctors found
+            if (doctors.length === 0) {
+                doctorList.innerHTML = '<p style="text-align: center; color: #718096; padding: 2rem;">No doctors found matching your criteria.</p>';
+            }
+        }
+        
+        /**
+         * Filter doctors based on search criteria
+         */
+        function filterDoctors() {
+            const specialty = document.getElementById('specialtyFilter').value.toLowerCase();
+            const hospital = document.getElementById('hospitalFilter').value.toLowerCase();
+            const rating = parseFloat(document.getElementById('ratingFilter').value);
+            const availability = document.getElementById('availabilityFilter').value;
+            
+            console.log('🔍 Filtering:', { specialty, hospital, rating, availability });
+            
+            let filtered = allPhysicians.filter(doctor => {
+                // Filter by specialty
+                if (specialty && !doctor.specialty.toLowerCase().includes(specialty)) {
+                    return false;
+                }
+                
+                // Filter by hospital
+                if (hospital && !doctor.hospital.toLowerCase().includes(hospital)) {
+                    return false;
+                }
+                
+                // Filter by rating
+                if (rating > 0 && doctor.rating < rating) {
+                    return false;
+                }
+                
+                // Filter by availability
+                if (availability && doctor.availability !== availability) {
+                    return false;
+                }
+                
+                return true;
+            });
+            
+            displayDoctors(filtered);
+        }
+        
+        // Add event listeners for filters
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load physicians when page loads
+            loadPhysicians();
+            
+            // Add filter event listeners
+            const specialtyFilter = document.getElementById('specialtyFilter');
+            const hospitalFilter = document.getElementById('hospitalFilter');
+            const ratingFilter = document.getElementById('ratingFilter');
+            const availabilityFilter = document.getElementById('availabilityFilter');
+            
+            if (specialtyFilter) specialtyFilter.addEventListener('change', filterDoctors);
+            if (hospitalFilter) hospitalFilter.addEventListener('change', filterDoctors);
+            if (ratingFilter) ratingFilter.addEventListener('change', filterDoctors);
+            if (availabilityFilter) availabilityFilter.addEventListener('change', filterDoctors);
+        });
     </script>
     
     <!-- n8n Webhook Integration -->
