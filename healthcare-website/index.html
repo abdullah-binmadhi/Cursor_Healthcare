@@ -2508,7 +2508,9 @@
                 }
             }
             result.push(current.trim());
-            return result;
+            
+            // Remove any remaining quotes from values
+            return result.map(val => val.replace(/^["']|["']$/g, '').trim());
         }
         
         /**
@@ -2684,10 +2686,10 @@
          * Filter doctors based on search criteria
          */
         function filterDoctors() {
-            const specialty = document.getElementById('specialtyFilter').value;
-            const hospital = document.getElementById('hospitalFilter').value;
+            const specialty = document.getElementById('specialtyFilter').value.trim();
+            const hospital = document.getElementById('hospitalFilter').value.trim();
             const rating = parseFloat(document.getElementById('ratingFilter').value) || 0;
-            const availability = document.getElementById('availabilityFilter').value;
+            const availability = document.getElementById('availabilityFilter').value.trim();
             
             console.log('🔍 Filter criteria:', { specialty, hospital, rating, availability });
             console.log('📊 Total physicians to filter:', allPhysicians.length);
@@ -2697,36 +2699,63 @@
                 return;
             }
             
-            let filtered = allPhysicians.filter(doctor => {
-                // Filter by specialty (exact match or empty)
+            // Show sample physician data for debugging
+            if (allPhysicians.length > 0) {
+                console.log('📋 Sample physician data:', {
+                    specialty: `"${allPhysicians[0].specialty}"`,
+                    hospital: `"${allPhysicians[0].hospital}"`,
+                    rating: allPhysicians[0].rating,
+                    availability: `"${allPhysicians[0].availability}"`
+                });
+            }
+            
+            let matchCount = 0;
+            let filtered = allPhysicians.filter((doctor, index) => {
+                // Filter by specialty
                 if (specialty && specialty !== '') {
-                    if (doctor.specialty !== specialty) {
+                    const doctorSpecialty = (doctor.specialty || '').trim();
+                    if (index === 0 && specialty) {
+                        console.log(`🔍 Specialty filter: "${specialty}" vs "${doctorSpecialty}" = ${doctorSpecialty === specialty}`);
+                    }
+                    if (doctorSpecialty !== specialty) {
                         return false;
                     }
                 }
                 
-                // Filter by hospital (exact match or empty)
+                // Filter by hospital
                 if (hospital && hospital !== '') {
-                    if (doctor.hospital !== hospital) {
+                    const doctorHospital = (doctor.hospital || '').trim();
+                    if (index === 0 && hospital) {
+                        console.log(`🔍 Hospital filter: "${hospital}" vs "${doctorHospital}" = ${doctorHospital === hospital}`);
+                    }
+                    if (doctorHospital !== hospital) {
                         return false;
                     }
                 }
                 
-                // Filter by rating (minimum rating)
+                // Filter by rating
                 if (rating > 0) {
                     const doctorRating = parseFloat(doctor.rating);
-                    if (doctorRating < rating) {
+                    if (index === 0 && rating > 0) {
+                        console.log(`🔍 Rating filter: ${doctorRating} >= ${rating} = ${doctorRating >= rating}`);
+                    }
+                    if (isNaN(doctorRating) || doctorRating < rating) {
                         return false;
                     }
                 }
                 
-                // Filter by availability (exact match or empty)
+                // Filter by availability
                 if (availability && availability !== '') {
-                    if (doctor.availability !== availability) {
+                    const doctorAvailability = (doctor.availability || '').trim();
+                    if (index === 0 && availability) {
+                        console.log(`🔍 Availability filter: "${availability}" vs "${doctorAvailability}" = ${doctorAvailability === availability}`);
+                    }
+                    if (doctorAvailability !== availability) {
                         return false;
                     }
                 }
                 
+                matchCount++;
                 return true;
             });
             
