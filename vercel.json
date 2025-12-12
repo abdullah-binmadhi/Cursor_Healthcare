@@ -1,6 +1,7 @@
 {
-  "buildCommand": "cp -r healthcare-website/* .",
+  "buildCommand": "mkdir -p public && cp -r healthcare-website/* public/",
   "installCommand": "echo 'No install needed'",
+  "outputDirectory": "public",
   "headers": [
     {
       "source": "/(.*)",
