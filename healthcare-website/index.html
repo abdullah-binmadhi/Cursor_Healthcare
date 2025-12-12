@@ -1378,70 +1378,83 @@
 
         // Auto-calculate cost estimator function
         function autoCalculateCost() {
-            // Get form values
-            const age = parseInt(document.getElementById('patientAge').value);
-            const insuranceType = document.getElementById('insuranceType').value;
-            const department = document.getElementById('department').value;
-            const procedure = document.getElementById('procedure').value;
-            
-            // Check if all fields are filled
-            if (!age || !insuranceType || !department || !procedure) {
-                // Hide results if fields are incomplete
-                const resultsDiv = document.getElementById('costResults');
-                if (resultsDiv) {
-                    resultsDiv.style.display = 'none';
+            try {
+                // Get form values
+                const age = parseInt(document.getElementById('patientAge').value);
+                const insuranceType = document.getElementById('insuranceType').value;
+                const department = document.getElementById('department').value;
+                const procedure = document.getElementById('procedure').value;
+                
+                console.log('Auto-calculate triggered:', { age, insuranceType, department, procedure });
+                
+                // Check if all fields are filled
+                if (!age || !insuranceType || !department || !procedure) {
+                    // Hide results if fields are incomplete
+                    const resultsDiv = document.getElementById('costResults');
+                    if (resultsDiv) {
+                        resultsDiv.style.display = 'none';
+                    }
+                    return;
                 }
-                return;
+                
+                // Calculate base cost based on procedure
+                let baseCost = 0;
+                switch(procedure) {
+                    case 'consultation': baseCost = 250; break;
+                    case 'diagnostic': baseCost = 800; break;
+                    case 'minor-surgery': baseCost = 3500; break;
+                    case 'major-surgery': baseCost = 25000; break;
+                    case 'emergency-visit': baseCost = 1500; break;
+                    case 'follow-up': baseCost = 150; break;
+                    default: baseCost = 500;
+                }
+                
+                // Department cost multiplier
+                const deptMultipliers = {
+                    'Cardiology': 1.3,
+                    'Emergency': 1.2,
+                    'Surgery': 1.4,
+                    'Orthopedics': 1.25,
+                    'Neurology': 1.35,
+                    'Pediatrics': 0.9,
+                    'Oncology': 1.5
+                };
+                baseCost *= (deptMultipliers[department] || 1.0);
+                
+                // Age adjustment
+                if (age > 65) baseCost *= 1.15;
+                if (age < 18) baseCost *= 0.85;
+                
+                // Insurance coverage calculation
+                let coverageRate = 0;
+                switch(insuranceType) {
+                    case 'medicare': coverageRate = 0.80; break;
+                    case 'medicaid': coverageRate = 0.85; break;
+                    case 'private': coverageRate = 0.75; break;
+                    case 'commercial': coverageRate = 0.70; break;
+                    case 'self-pay': coverageRate = 0; break;
+                }
+                
+                const insuranceCoverage = baseCost * coverageRate;
+                const outOfPocket = baseCost - insuranceCoverage;
+                
+                console.log('Calculated costs:', { baseCost, insuranceCoverage, outOfPocket });
+                
+                // Display results - FIXED: use correct IDs
+                const estimatedCostEl = document.getElementById('estimatedCost');
+                const insuranceCoverageEl = document.getElementById('insuranceCoverage');
+                const patientCostEl = document.getElementById('patientCost'); // FIXED: was 'outOfPocket'
+                const costResultsEl = document.getElementById('costResults');
+                
+                if (estimatedCostEl) estimatedCostEl.textContent = '$' + baseCost.toFixed(2);
+                if (insuranceCoverageEl) insuranceCoverageEl.textContent = '$' + insuranceCoverage.toFixed(2);
+                if (patientCostEl) patientCostEl.textContent = '$' + outOfPocket.toFixed(2);
+                if (costResultsEl) costResultsEl.style.display = 'block';
+                
+                console.log('Results displayed successfully');
+            } catch (error) {
+                console.error('Error in autoCalculateCost:', error);
             }
-            
-            // Calculate base cost based on procedure
-            let baseCost = 0;
-            switch(procedure) {
-                case 'consultation': baseCost = 250; break;
-                case 'diagnostic': baseCost = 800; break;
-                case 'minor-surgery': baseCost = 3500; break;
-                case 'major-surgery': baseCost = 25000; break;
-                case 'emergency-visit': baseCost = 1500; break;
-                case 'follow-up': baseCost = 150; break;
-                default: baseCost = 500;
-            }
-            
-            // Department cost multiplier
-            const deptMultipliers = {
-                'Cardiology': 1.3,
-                'Emergency': 1.2,
-                'Surgery': 1.4,
-                'Orthopedics': 1.25,
-                'Neurology': 1.35,
-                'Pediatrics': 0.9,
-                'Oncology': 1.5
-            };
-            baseCost *= (deptMultipliers[department] || 1.0);
-            
-            // Age adjustment
-            if (age > 65) baseCost *= 1.15;
-            if (age < 18) baseCost *= 0.85;
-            
-            // Insurance coverage calculation
-            let coverageRate = 0;
-            switch(insuranceType) {
-                case 'medicare': coverageRate = 0.80; break;
-                case 'medicaid': coverageRate = 0.85; break;
-                case 'private': coverageRate = 0.75; break;
-                case 'commercial': coverageRate = 0.70; break;
-                case 'self-pay': coverageRate = 0; break;
-            }
-            
-            const insuranceCoverage = baseCost * coverageRate;
-            const outOfPocket = baseCost - insuranceCoverage;
-            
-            // Display results
-            document.getElementById('estimatedCost').textContent = '$' + baseCost.toFixed(2);
-            document.getElementById('insuranceCoverage').textContent = '$' + insuranceCoverage.toFixed(2);
-            document.getElementById('outOfPocket').textContent = '$' + outOfPocket.toFixed(2);
-            document.getElementById('costResults').style.display = 'block';
-            
-            return false;
         }
 
         let chartInstances = {};
