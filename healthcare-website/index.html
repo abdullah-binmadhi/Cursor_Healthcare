@@ -1014,12 +1014,12 @@
                         <form id="costEstimatorForm">
                             <div class="form-group">
                                 <label for="patientAge">Age</label>
-                                <input type="number" id="patientAge" min="1" max="120" required>
+                                <input type="number" id="patientAge" min="1" max="120" required onchange="autoCalculateCost()" oninput="autoCalculateCost()">
                             </div>
 
                             <div class="form-group">
                                 <label for="insuranceType">Insurance Type</label>
-                                <select id="insuranceType" required>
+                                <select id="insuranceType" required onchange="autoCalculateCost()">
                                     <option value="">Select Insurance</option>
                                     <option value="medicare">Medicare</option>
                                     <option value="medicaid">Medicaid</option>
@@ -1031,7 +1031,7 @@
 
                             <div class="form-group">
                                 <label for="department">Department</label>
-                                <select id="department" required>
+                                <select id="department" required onchange="autoCalculateCost()">
                                     <option value="">Select Department</option>
                                     <option value="Cardiology">Cardiology</option>
                                     <option value="Emergency">Emergency</option>
@@ -1045,7 +1045,7 @@
 
                             <div class="form-group">
                                 <label for="procedure">Procedure Type</label>
-                                <select id="procedure" required>
+                                <select id="procedure" required onchange="autoCalculateCost()">
                                     <option value="">Select Procedure</option>
                                     <option value="consultation">Consultation</option>
                                     <option value="diagnostic">Diagnostic Test</option>
@@ -1055,10 +1055,6 @@
                                     <option value="follow-up">Follow-up Visit</option>
                                 </select>
                             </div>
-
-                            <button type="button" class="btn btn-primary" onclick="calculateCostEstimate(); return false;" style="width: 100%; margin-top: 1rem;">
-                                <i class="fas fa-calculator"></i> Calculate Estimate
-                            </button>
                         </form>
                     </div>
 
@@ -1380,18 +1376,22 @@
             }
         });
 
-        // Cost estimator calculation function
-        function calculateCostEstimate() {
+        // Auto-calculate cost estimator function
+        function autoCalculateCost() {
             // Get form values
             const age = parseInt(document.getElementById('patientAge').value);
             const insuranceType = document.getElementById('insuranceType').value;
             const department = document.getElementById('department').value;
             const procedure = document.getElementById('procedure').value;
             
-            // Validate required fields
+            // Check if all fields are filled
             if (!age || !insuranceType || !department || !procedure) {
-                alert('Please fill in all required fields');
-                return false;
+                // Hide results if fields are incomplete
+                const resultsDiv = document.getElementById('costResults');
+                if (resultsDiv) {
+                    resultsDiv.style.display = 'none';
+                }
+                return;
             }
             
             // Calculate base cost based on procedure
