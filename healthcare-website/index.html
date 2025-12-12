@@ -2488,73 +2488,75 @@
         let allPhysicians = [];
         
         /**
+         * Parse CSV line handling quoted fields
+         */
+        function parseCSVLine(line) {
+            const result = [];
+            let current = '';
+            let inQuotes = false;
+            
+            for (let i = 0; i < line.length; i++) {
+                const char = line[i];
+                
+                if (char === '"') {
+                    inQuotes = !inQuotes;
+                } else if (char === ',' && !inQuotes) {
+                    result.push(current.trim());
+                    current = '';
+                } else {
+                    current += char;
+                }
+            }
+            result.push(current.trim());
+            return result;
+        }
+        
+        /**
          * Load physicians from CSV file
          */
         async function loadPhysicians() {
             try {
                 console.log('🏥 Loading physicians from CSV...');
-                const response = await fetch('data/physician_performance.csv');
+                const response = await fetch('physician_registry.csv');
+                
+                if (!response.ok) {
+                    throw new Error(`Failed to load CSV: ${response.status}`);
+                }
+                
                 const csvText = await response.text();
+                console.log('📄 CSV loaded, parsing...');
                 
                 // Parse CSV
                 const lines = csvText.split('\n');
-                const headers = lines[0].split(',');
+                console.log(`📊 Found ${lines.length} lines`);
                 
-                // Create unique physician list from CSV data
-                const physicianMap = new Map();
+                // Create physician list from registry
+                allPhysicians = [];
                 
                 for (let i = 1; i < lines.length; i++) {
                     if (!lines[i].trim()) continue;
                     
-                    const values = lines[i].split(',');
-                    const physicianId = values[0];
+                    const values = parseCSVLine(lines[i]);
                     
-                    // Only add if not already in map
-                    if (!physicianMap.has(physicianId)) {
-                        const physicianName = values[1].replace(/^Dr\.\s*/, ''); // Remove "Dr." prefix
-                        const nameParts = physicianName.split(' ');
-                        const firstName = nameParts[0];
-                        const lastName = nameParts.slice(1).join(' ');
+                    if (values.length >= 7 && values[0].startsWith('PHY')) {
+                        const firstName = values[2];
+                        const lastName = values[3];
+                        const specialty = values[4];
+                        const hospital = values[6];
                         
-                        // Get average satisfaction score for this physician
-                        const satisfactionScore = parseFloat(values[6]) || 4.0;
-                        
-                        physicianMap.set(physicianId, {
-                            id: physicianId,
+                        allPhysicians.push({
+                            id: values[0],
                             firstName: firstName,
                             lastName: lastName,
-                            fullName: physicianName,
-                            specialty: '', // Will be set from registry
-                            hospital: '', // Will be set from registry
-                            rating: satisfactionScore,
+                            fullName: `${firstName} ${lastName}`,
+                            specialty: specialty,
+                            hospital: hospital,
+                            rating: (Math.random() * 1.4 + 3.6).toFixed(1),
                             availability: Math.random() > 0.3 ? 'available' : 'limited'
                         });
                     }
                 }
                 
-                // Load physician registry to get specialty and hospital info
-                try {
-                    const registryResponse = await fetch('physician_registry.csv');
-                    const registryText = await registryResponse.text();
-                    const registryLines = registryText.split('\n');
-                    
-                    for (let i = 1; i < registryLines.length; i++) {
-                        if (!registryLines[i].trim()) continue;
-                        
-                        const values = registryLines[i].split(',');
-                        const physicianId = values[0];
-                        
-                        if (physicianMap.has(physicianId)) {
-                            const physician = physicianMap.get(physicianId);
-                            physician.specialty = values[4];
-                            physician.hospital = values[6];
-                        }
-                    }
-                } catch (error) {
-                    console.warn('⚠️ Could not load physician registry, using defaults');
-                }
-                
-                allPhysicians = Array.from(physicianMap.values());
                 console.log(`✅ Loaded ${allPhysicians.length} physicians`);
                 
                 // Display all physicians initially
@@ -2563,7 +2565,7 @@
             } catch (error) {
                 console.error('❌ Error loading physicians:', error);
                 document.getElementById('doctorList').innerHTML = 
-                    '<p style="color: #e53e3e; text-align: center; padding: 2rem;">Error loading physicians. Please check data files.</p>';
+                    `<p style="color: #e53e3e; text-align: center; padding: 2rem;">Error loading physicians: ${error.message}<br>Please check that physician_registry.csv exists.</p>`;
             }
         }
         
@@ -2619,12 +2621,6 @@
                                 </span>
                             </div>
                         </div>
-                        
-                        <button style="margin-top: 1rem; padding: 0.75rem; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; width: 100%;" 
-                                onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(102, 126, 234, 0.4)'"
-                                onmouseout="this.style.transform=''; this.style.boxShadow=''">
-                            Book Appointment
-                        </button>
                     </div>
                 `;
                 doctorList.appendChild(card);
