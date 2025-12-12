@@ -2516,14 +2516,24 @@
          */
         async function loadPhysicians() {
             try {
-                console.log('🏥 [v3.1] Loading physicians from physician_registry.csv...');
-                const response = await fetch('physician_registry.csv?v=' + Date.now());
+                console.log('🏥 [v3.2] Loading physicians from physician_registry.csv...');
+                console.log('📍 Current URL:', window.location.href);
+                console.log('📍 Base URL:', window.location.origin);
+                
+                // Try to load the CSV file
+                let response;
+                let csvPath = 'physician_registry.csv?v=' + Date.now();
+                
+                console.log('🔍 Trying path:', csvPath);
+                response = await fetch(csvPath);
                 
                 if (!response.ok) {
-                    throw new Error(`Failed to load CSV: ${response.status}`);
+                    console.error(`❌ Failed with status ${response.status}, response:`, response);
+                    throw new Error(`Failed to load CSV: ${response.status} - ${response.statusText}`);
                 }
                 
                 const csvText = await response.text();
+                console.log('📄 CSV loaded successfully!');
                 console.log('📄 CSV Text Preview:', csvText.substring(0, 200));
                 
                 // Parse CSV
@@ -2580,7 +2590,9 @@
                         `<p style="color: #e53e3e; text-align: center; padding: 2rem;">
                             <strong>Error loading physicians:</strong><br>
                             ${error.message}<br><br>
-                            Please check browser console for details.
+                            <strong>⚠️ Important:</strong> This page must be served via HTTP server, not opened directly as a file.<br>
+                            <strong>To fix:</strong> Run <code style="background: #f7fafc; padding: 0.25rem 0.5rem; border-radius: 4px;">python3 -m http.server 8080</code> in the healthcare-website folder,<br>
+                            then open <a href="http://localhost:8080" style="color: #667eea; font-weight: bold;">http://localhost:8080</a>
                         </p>`;
                 }
             }
