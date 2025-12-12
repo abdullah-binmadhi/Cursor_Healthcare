@@ -1,8 +1,6 @@
 {
-  "rewrites": [
-    { "source": "/", "destination": "/healthcare-website/index.html" },
-    { "source": "/:path*", "destination": "/healthcare-website/:path*" }
-  ],
+  "buildCommand": "cp -r healthcare-website/* .",
+  "installCommand": "echo 'No install needed'",
   "headers": [
     {
       "source": "/(.*)",
