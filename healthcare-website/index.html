@@ -746,6 +746,150 @@
             .card {
                 padding: 1.5rem;
             }
+
+            /* Analytics Dashboard Mobile Fixes */
+            #analytics .chart-controls {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            #analytics select {
+                width: 100% !important;
+                min-width: 100% !important;
+                font-size: 0.9rem;
+                padding: 0.5rem !important;
+            }
+
+            #analytics .year-tabs {
+                display: flex;
+                gap: 0.5rem;
+                width: 100%;
+            }
+
+            #analytics .year-tab {
+                flex: 1;
+                padding: 0.5rem 0.75rem;
+                font-size: 0.85rem;
+            }
+
+            #analytics .chart-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            #analytics .chart-title {
+                font-size: 1rem;
+            }
+
+            #analytics .chart-card {
+                padding: 1rem;
+            }
+
+            #analytics .chart-canvas {
+                height: 300px !important;
+            }
+
+            /* Hospital selector mobile fix */
+            #hospitalSelector {
+                min-width: 100% !important;
+                width: 100% !important;
+                padding: 0.75rem 1rem !important;
+            }
+
+            /* Doctor Finder Mobile Fixes */
+            #doctor-finder .doctor-grid {
+                grid-template-columns: 1fr !important;
+            }
+
+            #doctor-finder .doctor-card {
+                padding: 1rem;
+            }
+
+            #doctor-finder .results-header {
+                padding: 0.75rem;
+                font-size: 0.9rem;
+            }
+
+            /* About Section Mobile Fixes */
+            #about .stats-grid {
+                grid-template-columns: 1fr !important;
+                gap: 0.75rem !important;
+            }
+
+            #about .stat-number {
+                font-size: 1.5rem !important;
+            }
+
+            #about .stat-label {
+                font-size: 0.8rem !important;
+            }
+
+            #about h3 {
+                font-size: 1.2rem;
+            }
+
+            #about h4 {
+                font-size: 1rem;
+            }
+
+            #about p, #about ul {
+                font-size: 0.9rem;
+                line-height: 1.6;
+            }
+
+            #about ul {
+                padding-left: 1rem;
+            }
+
+            /* Form cards mobile padding */
+            .form-card {
+                padding: 1.5rem 1rem;
+            }
+
+            .form-title {
+                font-size: 1.2rem;
+            }
+
+            /* Section cards mobile */
+            .section-card {
+                padding: 1.5rem 1rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+                text-align: center;
+            }
+
+            .section-subtitle {
+                font-size: 0.9rem;
+                text-align: center;
+            }
+
+            /* Cost estimator results mobile */
+            #costResults {
+                padding: 1rem;
+            }
+
+            .cost-breakdown {
+                gap: 0.75rem;
+            }
+
+            .cost-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.25rem;
+            }
+
+            /* Responsive overflow fixes */
+            * {
+                overflow-wrap: break-word;
+                word-wrap: break-word;
+            }
+
+            select, input, button {
+                max-width: 100%;
+            }
         }
     </style>
 </head>
@@ -999,12 +1143,12 @@
                 <p class="section-subtitle">Professional healthcare insights and data visualization</p>
 
                 <!-- Global Dashboard Controls -->
-                <div style="background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); border-radius: 20px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 8px 30px rgba(0,0,0,0.1); border: 2px solid #e2e8f0;">
-                    <div style="display: flex; align-items: center; justify-content: center; gap: 2rem; flex-wrap: wrap;">
-                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <div style="background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); border-radius: 20px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 8px 30px rgba(0,0,0,0.1); border: 2px solid #e2e8f0;">
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; justify-content: center; width: 100%;">
                             <i class="fas fa-hospital" style="color: #667eea; font-size: 1.2rem;"></i>
-                            <label for="hospitalSelector" style="font-weight: 600; color: #1a202c; font-size: 1rem;">Hospital:</label>
-                            <select id="hospitalSelector" onchange="updateAllChartsForHospital()" style="padding: 0.5rem 1rem; border: 2px solid #e2e8f0; border-radius: 10px; background: white; font-weight: 500; min-width: 200px; cursor: pointer;">
+                            <label for="hospitalSelector" style="font-weight: 600; color: #1a202c; font-size: 0.95rem;">Hospital:</label>
+                            <select id="hospitalSelector" onchange="updateAllChartsForHospital()" style="padding: 0.5rem 1rem; border: 2px solid #e2e8f0; border-radius: 10px; background: white; font-weight: 500; min-width: 180px; max-width: 100%; cursor: pointer; font-size: 0.9rem;">
                                 <option value="all">All Hospitals</option>
                                 <option value="City General Hospital">City General Hospital</option>
                                 <option value="St. Mary's Medical Center">St. Mary's Medical Center</option>
@@ -1016,7 +1160,7 @@
                                 <option value="Riverside Hospital">Riverside Hospital</option>
                             </select>
                         </div>
-                        <div style="font-size: 0.9rem; color: #6b7280; font-style: italic;">💡 Select a hospital to filter all analytics charts</div>
+                        <div style="font-size: 0.85rem; color: #6b7280; font-style: italic; text-align: center; width: 100%;">💡 Select a hospital to filter all analytics charts</div>
                     </div>
                 </div>
 
@@ -1118,22 +1262,22 @@
 
                     <div class="form-card">
                         <h3 class="form-title">Platform Statistics</h3>
-                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;">
-                            <div style="text-align: center; padding: 1.5rem; background: rgba(16, 185, 129, 0.1); border-radius: 15px;">
-                                <div style="font-size: 2rem; font-weight: 800; color: #10b981; margin-bottom: 0.5rem;">500+</div>
-                                <div style="color: #4a5568; font-weight: 600;">Healthcare Providers</div>
+                        <div class="stats-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+                            <div style="text-align: center; padding: 1.25rem 0.75rem; background: rgba(16, 185, 129, 0.1); border-radius: 15px;">
+                                <div class="stat-number" style="font-size: 1.75rem; font-weight: 800; color: #10b981; margin-bottom: 0.5rem;">500+</div>
+                                <div class="stat-label" style="color: #4a5568; font-weight: 600; font-size: 0.85rem;">Healthcare Providers</div>
                             </div>
-                            <div style="text-align: center; padding: 1.5rem; background: rgba(59, 130, 246, 0.1); border-radius: 15px;">
-                                <div style="font-size: 2rem; font-weight: 800; color: #3b82f6; margin-bottom: 0.5rem;">10K+</div>
-                                <div style="color: #4a5568; font-weight: 600;">Cost Estimates</div>
+                            <div style="text-align: center; padding: 1.25rem 0.75rem; background: rgba(59, 130, 246, 0.1); border-radius: 15px;">
+                                <div class="stat-number" style="font-size: 1.75rem; font-weight: 800; color: #3b82f6; margin-bottom: 0.5rem;">10K+</div>
+                                <div class="stat-label" style="color: #4a5568; font-weight: 600; font-size: 0.85rem;">Cost Estimates</div>
                             </div>
-                            <div style="text-align: center; padding: 1.5rem; background: rgba(139, 92, 246, 0.1); border-radius: 15px;">
-                                <div style="font-size: 2rem; font-weight: 800; color: #8b5cf6; margin-bottom: 0.5rem;">98%</div>
-                                <div style="color: #4a5568; font-weight: 600;">Accuracy Rate</div>
+                            <div style="text-align: center; padding: 1.25rem 0.75rem; background: rgba(139, 92, 246, 0.1); border-radius: 15px;">
+                                <div class="stat-number" style="font-size: 1.75rem; font-weight: 800; color: #8b5cf6; margin-bottom: 0.5rem;">98%</div>
+                                <div class="stat-label" style="color: #4a5568; font-weight: 600; font-size: 0.85rem;">Accuracy Rate</div>
                             </div>
-                            <div style="text-align: center; padding: 1.5rem; background: rgba(245, 158, 11, 0.1); border-radius: 15px;">
-                                <div style="font-size: 2rem; font-weight: 800; color: #f59e0b; margin-bottom: 0.5rem;">24/7</div>
-                                <div style="color: #4a5568; font-weight: 600;">Live Analytics</div>
+                            <div style="text-align: center; padding: 1.25rem 0.75rem; background: rgba(245, 158, 11, 0.1); border-radius: 15px;">
+                                <div class="stat-number" style="font-size: 1.75rem; font-weight: 800; color: #f59e0b; margin-bottom: 0.5rem;">24/7</div>
+                                <div class="stat-label" style="color: #4a5568; font-weight: 600; font-size: 0.85rem;">Live Analytics</div>
                             </div>
                         </div>
                         
