@@ -2514,15 +2514,11 @@
         }
         
         /**
-         * Load physicians from CSV file
+         * Load physicians from Supabase
          */
         async function loadPhysicians() {
             try {
-                console.log('🏥 [v4.0-VERCEL-FIX] Loading physicians from physician_registry.csv...');
-                console.log('📍 Current URL:', window.location.href);
-                console.log('📍 Current path:', window.location.pathname);
-                console.log('📍 Origin:', window.location.origin);
-                console.log('📍 Base URL:', document.baseURI);
+                console.log('🏥 [v5.0-SUPABASE] Loading physicians from Supabase...');
                 
                 // Set loading state
                 const doctorList = document.getElementById('doctorList');
@@ -2534,74 +2530,41 @@
                     doctorCount.textContent = 'Loading...';
                 }
                 
-                // Try multiple paths to ensure we find the CSV
-                const csvPaths = [
-                    '/physician_registry.csv',
-                    'physician_registry.csv',
-                    './physician_registry.csv'
-                ];
+                // Supabase configuration
+                const SUPABASE_URL = 'https://pdgumgpjoeojbojacung.supabase.co';
+                const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBkZ3VtZ3Bqb2VvamJvamFjdW5nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU1NjQ5NTYsImV4cCI6MjA4MTE0MDk1Nn0.aRtltk3EV77kdLEnx135AnOUM2tcuwFO_FeXglrM2P4';
                 
-                let response = null;
-                let successPath = null;
+                // Fetch from Supabase REST API
+                const url = `${SUPABASE_URL}/rest/v1/physicians?select=*&order=id.asc`;
+                console.log('🔍 Fetching from Supabase API...');
                 
-                for (const path of csvPaths) {
-                    const fullPath = path + '?v=' + Date.now();
-                    console.log(`🔍 Trying path: ${fullPath}`);
-                    try {
-                        const testResponse = await fetch(fullPath);
-                        if (testResponse.ok) {
-                            response = testResponse;
-                            successPath = fullPath;
-                            console.log(`✅ SUCCESS with path: ${fullPath}`);
-                            break;
-                        } else {
-                            console.log(`❌ Failed ${fullPath}: ${testResponse.status}`);
-                        }
-                    } catch (err) {
-                        console.log(`❌ Error with ${fullPath}:`, err.message);
+                const response = await fetch(url, {
+                    headers: {
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                        'Content-Type': 'application/json'
                     }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`Supabase API error: ${response.status} - ${response.statusText}`);
                 }
                 
-                if (!response || !response.ok) {
-                    throw new Error(`CSV file not found at any of the expected paths: ${csvPaths.join(', ')}`);
-                }
+                const physicians = await response.json();
+                console.log('✅ Supabase data loaded successfully!');
+                console.log(`📊 Total physicians from database: ${physicians.length}`);
                 
-                console.log('🔍 Loading from successful path:', successPath);
-                const response2 = response;
-                
-                const csvText = await response2.text();
-                console.log('✅ CSV loaded successfully!');
-                console.log('📄 CSV size:', csvText.length, 'bytes');
-                console.log('📄 CSV Text Preview:', csvText.substring(0, 200));
-                
-                // Parse CSV
-                const lines = csvText.split('\n');
-                console.log(`📊 Total lines in CSV: ${lines.length}`);
-                console.log('📋 Headers:', lines[0]);
-                
-                // Create physician list from registry
-                allPhysicians = [];
-                
-                for (let i = 1; i < lines.length; i++) {
-                    const line = lines[i].trim();
-                    if (!line) continue;
-                    
-                    const values = parseCSVLine(line);
-                    
-                    if (values.length >= 7 && values[0].startsWith('PHY')) {
-                        const physician = {
-                            id: values[0],
-                            firstName: values[2],
-                            lastName: values[3],
-                            fullName: `${values[2]} ${values[3]}`,
-                            specialty: values[4],
-                            hospital: values[6],
-                            rating: parseFloat((Math.random() * 1.4 + 3.6).toFixed(1)),
-                            availability: Math.random() > 0.3 ? 'available' : 'limited'
-                        };
-                        allPhysicians.push(physician);
-                    }
-                }
+                // Transform Supabase data to match our UI format
+                allPhysicians = physicians.map(p => ({
+                    id: p.id,
+                    firstName: p.first_name,
+                    lastName: p.last_name,
+                    fullName: `${p.first_name} ${p.last_name}`,
+                    specialty: p.specialty,
+                    hospital: p.hospital,
+                    rating: parseFloat(p.rating) || 4.5,
+                    availability: p.availability || 'available'
+                }));
                 
                 console.log(`✅ Successfully loaded ${allPhysicians.length} unique physicians`);
                 console.log('👨‍⚕️ First physician:', allPhysicians[0]);
@@ -2617,20 +2580,22 @@
                 if (allPhysicians.length > 0) {
                     displayDoctors(allPhysicians);
                 } else {
-                    throw new Error('No physicians found in CSV file');
+                    throw new Error('No physicians found in database');
                 }
                 
             } catch (error) {
-                console.error('❌ Error loading physicians:', error);
+                console.error('❌ Error loading physicians from Supabase:', error);
                 const doctorList = document.getElementById('doctorList');
                 if (doctorList) {
                     doctorList.innerHTML = 
                         `<p style="color: #e53e3e; text-align: center; padding: 2rem;">
                             <strong>Error loading physicians:</strong><br>
                             ${error.message}<br><br>
-                            <strong>⚠️ Important:</strong> This page must be served via HTTP server, not opened directly as a file.<br>
-                            <strong>To fix:</strong> Run <code style="background: #f7fafc; padding: 0.25rem 0.5rem; border-radius: 4px;">python3 -m http.server 8080</code> in the healthcare-website folder,<br>
-                            then open <a href="http://localhost:8080" style="color: #667eea; font-weight: bold;">http://localhost:8080</a>
+                            <strong>Troubleshooting:</strong><br>
+                            1. Check if Supabase database is set up<br>
+                            2. Verify the physicians table exists<br>
+                            3. Run the migration script: <code style="background: #f7fafc; padding: 0.25rem 0.5rem; border-radius: 4px;">node migrate_to_supabase.js</code><br>
+                            4. Check browser console for details
                         </p>`;
                 }
             }
