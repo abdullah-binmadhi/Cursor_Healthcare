@@ -171,4 +171,4 @@ python generate_100_physicians.py
 
 ---
 
-**Last Updated: 2025**
+Last Updated: 2025
