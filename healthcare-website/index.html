@@ -2516,56 +2516,67 @@
          */
         async function loadPhysicians() {
             try {
-                console.log('🏥 Loading physicians from CSV...');
-                const response = await fetch('physician_registry.csv');
+                console.log('🏥 [v3.1] Loading physicians from physician_registry.csv...');
+                const response = await fetch('physician_registry.csv?v=' + Date.now());
                 
                 if (!response.ok) {
                     throw new Error(`Failed to load CSV: ${response.status}`);
                 }
                 
                 const csvText = await response.text();
-                console.log('📄 CSV loaded, parsing...');
+                console.log('📄 CSV Text Preview:', csvText.substring(0, 200));
                 
                 // Parse CSV
                 const lines = csvText.split('\n');
-                console.log(`📊 Found ${lines.length} lines`);
+                console.log(`📊 Total lines in CSV: ${lines.length}`);
+                console.log('📋 Headers:', lines[0]);
                 
                 // Create physician list from registry
                 allPhysicians = [];
                 
                 for (let i = 1; i < lines.length; i++) {
-                    if (!lines[i].trim()) continue;
+                    const line = lines[i].trim();
+                    if (!line) continue;
                     
-                    const values = parseCSVLine(lines[i]);
+                    const values = parseCSVLine(line);
                     
                     if (values.length >= 7 && values[0].startsWith('PHY')) {
-                        const firstName = values[2];
-                        const lastName = values[3];
-                        const specialty = values[4];
-                        const hospital = values[6];
-                        
-                        allPhysicians.push({
+                        const physician = {
                             id: values[0],
-                            firstName: firstName,
-                            lastName: lastName,
-                            fullName: `${firstName} ${lastName}`,
-                            specialty: specialty,
-                            hospital: hospital,
-                            rating: (Math.random() * 1.4 + 3.6).toFixed(1),
+                            firstName: values[2],
+                            lastName: values[3],
+                            fullName: `${values[2]} ${values[3]}`,
+                            specialty: values[4],
+                            hospital: values[6],
+                            rating: parseFloat((Math.random() * 1.4 + 3.6).toFixed(1)),
                             availability: Math.random() > 0.3 ? 'available' : 'limited'
-                        });
+                        };
+                        allPhysicians.push(physician);
                     }
                 }
                 
-                console.log(`✅ Loaded ${allPhysicians.length} physicians`);
+                console.log(`✅ Successfully loaded ${allPhysicians.length} unique physicians`);
+                console.log('👨‍⚕️ First physician:', allPhysicians[0]);
+                console.log('👨‍⚕️ Last physician:', allPhysicians[allPhysicians.length - 1]);
                 
                 // Display all physicians initially
-                displayDoctors(allPhysicians);
+                if (allPhysicians.length > 0) {
+                    displayDoctors(allPhysicians);
+                } else {
+                    throw new Error('No physicians found in CSV file');
+                }
                 
             } catch (error) {
                 console.error('❌ Error loading physicians:', error);
-                document.getElementById('doctorList').innerHTML = 
-                    `<p style="color: #e53e3e; text-align: center; padding: 2rem;">Error loading physicians: ${error.message}<br>Please check that physician_registry.csv exists.</p>`;
+                const doctorList = document.getElementById('doctorList');
+                if (doctorList) {
+                    doctorList.innerHTML = 
+                        `<p style="color: #e53e3e; text-align: center; padding: 2rem;">
+                            <strong>Error loading physicians:</strong><br>
+                            ${error.message}<br><br>
+                            Please check browser console for details.
+                        </p>`;
+                }
             }
         }
         
@@ -2573,17 +2584,39 @@
          * Display doctors in the grid
          */
         function displayDoctors(doctors) {
+            console.log(`🎨 Displaying ${doctors.length} doctors`);
+            
             const doctorList = document.getElementById('doctorList');
             const doctorCount = document.getElementById('doctorCount');
             
+            if (!doctorList) {
+                console.error('❌ doctorList element not found!');
+                return;
+            }
+            
+            if (!doctorCount) {
+                console.error('❌ doctorCount element not found!');
+                return;
+            }
+            
             // Update count
             doctorCount.textContent = `${doctors.length} doctors found`;
+            console.log(`📊 Updated count to: ${doctors.length} doctors found`);
             
             // Clear current list
             doctorList.innerHTML = '';
             
+            // If no doctors found
+            if (doctors.length === 0) {
+                doctorList.innerHTML = '<p style="text-align: center; color: #718096; padding: 2rem;">No doctors found matching your criteria.</p>';
+                return;
+            }
+            
             // Create doctor cards
-            doctors.forEach(doctor => {
+            doctors.forEach((doctor, index) => {
+                if (index < 3) {
+                    console.log(`👨‍⚕️ Creating card ${index + 1}:`, doctor);
+                }
                 const card = document.createElement('div');
                 card.className = 'doctor-card';
                 card.innerHTML = `
@@ -2626,10 +2659,7 @@
                 doctorList.appendChild(card);
             });
             
-            // If no doctors found
-            if (doctors.length === 0) {
-                doctorList.innerHTML = '<p style="text-align: center; color: #718096; padding: 2rem;">No doctors found matching your criteria.</p>';
-            }
+            console.log(`✅ Successfully created ${doctors.length} doctor cards`);
         }
         
         /**
