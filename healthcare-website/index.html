@@ -2518,23 +2518,58 @@
          */
         async function loadPhysicians() {
             try {
-                console.log('🏥 [v3.4] Loading physicians from physician_registry.csv...');
+                console.log('🏥 [v4.0-VERCEL-FIX] Loading physicians from physician_registry.csv...');
                 console.log('📍 Current URL:', window.location.href);
                 console.log('📍 Current path:', window.location.pathname);
+                console.log('📍 Origin:', window.location.origin);
+                console.log('📍 Base URL:', document.baseURI);
                 
-                // Simple path - Vercel serves from healthcare-website as root
-                const csvPath = 'physician_registry.csv?v=' + Date.now();
-                
-                console.log('🔍 Loading from path:', csvPath);
-                const response = await fetch(csvPath);
-                
-                if (!response.ok) {
-                    console.error(`❌ Failed with status ${response.status}`);
-                    console.error('Response:', response);
-                    throw new Error(`Failed to load CSV: ${response.status} - ${response.statusText}. Make sure physician_registry.csv is in the same directory as index.html`);
+                // Set loading state
+                const doctorList = document.getElementById('doctorList');
+                const doctorCount = document.getElementById('doctorCount');
+                if (doctorList) {
+                    doctorList.innerHTML = '<p style="text-align: center; color: #667eea; padding: 2rem;"><i class="fas fa-spinner fa-spin"></i> Loading physicians...</p>';
+                }
+                if (doctorCount) {
+                    doctorCount.textContent = 'Loading...';
                 }
                 
-                const csvText = await response.text();
+                // Try multiple paths to ensure we find the CSV
+                const csvPaths = [
+                    '/physician_registry.csv',
+                    'physician_registry.csv',
+                    './physician_registry.csv'
+                ];
+                
+                let response = null;
+                let successPath = null;
+                
+                for (const path of csvPaths) {
+                    const fullPath = path + '?v=' + Date.now();
+                    console.log(`🔍 Trying path: ${fullPath}`);
+                    try {
+                        const testResponse = await fetch(fullPath);
+                        if (testResponse.ok) {
+                            response = testResponse;
+                            successPath = fullPath;
+                            console.log(`✅ SUCCESS with path: ${fullPath}`);
+                            break;
+                        } else {
+                            console.log(`❌ Failed ${fullPath}: ${testResponse.status}`);
+                        }
+                    } catch (err) {
+                        console.log(`❌ Error with ${fullPath}:`, err.message);
+                    }
+                }
+                
+                if (!response || !response.ok) {
+                    throw new Error(`CSV file not found at any of the expected paths: ${csvPaths.join(', ')}`);
+                }
+                
+                console.log('🔍 Loading from successful path:', successPath);
+                const response2 = response;
+                
+                const csvText = await response2.text();
                 console.log('✅ CSV loaded successfully!');
                 console.log('📄 CSV size:', csvText.length, 'bytes');
                 console.log('📄 CSV Text Preview:', csvText.substring(0, 200));
