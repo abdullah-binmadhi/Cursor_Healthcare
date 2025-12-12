@@ -2576,6 +2576,9 @@
                 console.log('🏥 Unique specialties:', uniqueSpecialties);
                 console.log('🏥 Unique hospitals:', uniqueHospitals);
                 
+                // Populate filter dropdowns with actual data
+                populateFilterDropdowns(uniqueSpecialties, uniqueHospitals);
+                
                 // Display all physicians initially
                 if (allPhysicians.length > 0) {
                     displayDoctors(allPhysicians);
@@ -2598,6 +2601,49 @@
                             4. Check browser console for details
                         </p>`;
                 }
+            }
+        }
+        
+        /**
+         * Populate filter dropdowns with actual data from database
+         */
+        function populateFilterDropdowns(specialties, hospitals) {
+            console.log('🔧 Populating filter dropdowns...');
+            
+            // Populate specialty dropdown
+            const specialtyFilter = document.getElementById('specialtyFilter');
+            if (specialtyFilter) {
+                // Keep the first "All Specialties" option
+                const allOption = specialtyFilter.options[0];
+                specialtyFilter.innerHTML = '';
+                specialtyFilter.appendChild(allOption);
+                
+                // Add actual specialties from database
+                specialties.sort().forEach(specialty => {
+                    const option = document.createElement('option');
+                    option.value = specialty;
+                    option.textContent = specialty;
+                    specialtyFilter.appendChild(option);
+                });
+                console.log(`✅ Added ${specialties.length} specialties to filter`);
+            }
+            
+            // Populate hospital dropdown
+            const hospitalFilter = document.getElementById('hospitalFilter');
+            if (hospitalFilter) {
+                // Keep the first "All Hospitals" option
+                const allOption = hospitalFilter.options[0];
+                hospitalFilter.innerHTML = '';
+                hospitalFilter.appendChild(allOption);
+                
+                // Add actual hospitals from database
+                hospitals.sort().forEach(hospital => {
+                    const option = document.createElement('option');
+                    option.value = hospital;
+                    option.textContent = hospital;
+                    hospitalFilter.appendChild(option);
+                });
+                console.log(`✅ Added ${hospitals.length} hospitals to filter`);
             }
         }
         
