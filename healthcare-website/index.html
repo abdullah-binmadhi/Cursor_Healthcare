@@ -2559,6 +2559,12 @@
                 console.log('👨‍⚕️ First physician:', allPhysicians[0]);
                 console.log('👨‍⚕️ Last physician:', allPhysicians[allPhysicians.length - 1]);
                 
+                // Show unique specialties and hospitals for debugging filters
+                const uniqueSpecialties = [...new Set(allPhysicians.map(p => p.specialty))];
+                const uniqueHospitals = [...new Set(allPhysicians.map(p => p.hospital))];
+                console.log('🏥 Unique specialties:', uniqueSpecialties);
+                console.log('🏥 Unique hospitals:', uniqueHospitals);
+                
                 // Display all physicians initially
                 if (allPhysicians.length > 0) {
                     displayDoctors(allPhysicians);
@@ -2666,36 +2672,56 @@
          * Filter doctors based on search criteria
          */
         function filterDoctors() {
-            const specialty = document.getElementById('specialtyFilter').value.toLowerCase();
-            const hospital = document.getElementById('hospitalFilter').value.toLowerCase();
-            const rating = parseFloat(document.getElementById('ratingFilter').value);
+            const specialty = document.getElementById('specialtyFilter').value;
+            const hospital = document.getElementById('hospitalFilter').value;
+            const rating = parseFloat(document.getElementById('ratingFilter').value) || 0;
             const availability = document.getElementById('availabilityFilter').value;
             
-            console.log('🔍 Filtering:', { specialty, hospital, rating, availability });
+            console.log('🔍 Filter criteria:', { specialty, hospital, rating, availability });
+            console.log('📊 Total physicians to filter:', allPhysicians.length);
+            
+            if (allPhysicians.length === 0) {
+                console.warn('⚠️ No physicians loaded yet!');
+                return;
+            }
             
             let filtered = allPhysicians.filter(doctor => {
-                // Filter by specialty
-                if (specialty && !doctor.specialty.toLowerCase().includes(specialty)) {
-                    return false;
+                // Filter by specialty (exact match or empty)
+                if (specialty && specialty !== '') {
+                    if (doctor.specialty !== specialty) {
+                        return false;
+                    }
                 }
                 
-                // Filter by hospital
-                if (hospital && !doctor.hospital.toLowerCase().includes(hospital)) {
-                    return false;
+                // Filter by hospital (exact match or empty)
+                if (hospital && hospital !== '') {
+                    if (doctor.hospital !== hospital) {
+                        return false;
+                    }
                 }
                 
-                // Filter by rating
-                if (rating > 0 && doctor.rating < rating) {
-                    return false;
+                // Filter by rating (minimum rating)
+                if (rating > 0) {
+                    const doctorRating = parseFloat(doctor.rating);
+                    if (doctorRating < rating) {
+                        return false;
+                    }
                 }
                 
-                // Filter by availability
-                if (availability && doctor.availability !== availability) {
-                    return false;
+                // Filter by availability (exact match or empty)
+                if (availability && availability !== '') {
+                    if (doctor.availability !== availability) {
+                        return false;
+                    }
                 }
                 
                 return true;
             });
+            
+            console.log(`✅ Filtered to ${filtered.length} doctors`);
+            if (filtered.length > 0 && filtered.length <= 5) {
+                console.log('📋 Filtered doctors:', filtered);
+            }
             
             displayDoctors(filtered);
         }
