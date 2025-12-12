@@ -12,10 +12,6 @@
 
 > **Automatic backups of your healthcare analytics project to Google Drive!** 👆
 
-### **[n8n Workflow Integration](scripts/README_N8N_INTEGRATION.md)** <sup>NEW</sup>
-
-> **Connect healthcare website events to n8n workflows for automation!** 👆
-
 **Main Features:**
 - **Smart Cost Estimator** - Real-time healthcare cost calculations
 - **Advanced Doctor Finder** - Specialty-based physician search with filtering
@@ -44,8 +40,6 @@ Cursor_Healthcare/
 │   ├── data_enrichment.py
 │   ├── github_to_drive_sync.js     # Google Apps Script for GitHub backup
 │   ├── README_GITHUB_DRIVE_SYNC.md # Setup guide for Drive sync
-│   ├── n8n_webhook_integration.js  # n8n webhook integration
-│   ├── README_N8N_INTEGRATION.md   # n8n setup guide
 │   └── postgresql_healthcare_setup.py
 ├── data/                        # Sample data and configurations
 │   ├── department_metrics.csv
@@ -107,12 +101,6 @@ python scripts/healthcare_web_app.py
 - **Specialty Filtering**: Search by medical specialties
 - **Location-Based Search**: Find nearby healthcare providers
 - **Rating & Reviews**: Patient satisfaction scores
-
-### n8n Workflow Integration
-- **Webhook Triggers**: Automatically trigger n8n workflows from user actions
-- **Event Tracking**: Monitor user interactions with healthcare platform
-- **Workflow Automation**: Extend platform functionality with n8n automation
-- **Data Integration**: Connect healthcare analytics with external systems
 
 ## Development
 
