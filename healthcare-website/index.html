@@ -2454,7 +2454,7 @@
                 
                 createTrendsChart(year, currentHospital);
                 createDepartmentChart(year, currentHospital);
-                createQualityChart(year, qualityFilter);
+                createQualityChart(year, qualityFilter, currentHospital);
                 createPhysiciansChart(year, selectedSpecialty, currentHospital);
             }, 100);
             
@@ -2472,14 +2472,14 @@
 
             dashboardData.departments = departments;
 
-            // Update all synchronized charts
+            // Update all synchronized charts with hospital filter
             setTimeout(() => {
                 const selectedSpecialty = document.getElementById('physicianSpecialty')?.value || 'all';
                 const qualityFilter = document.getElementById('qualityMetricFilter')?.value || 'departments';
-                createDepartmentChart(currentTrendsYear);
-                createTrendsChart(currentTrendsYear);
-                createQualityChart(currentTrendsYear, qualityFilter);
-                createPhysiciansChart(currentTrendsYear, selectedSpecialty);
+                createDepartmentChart(currentTrendsYear, currentHospital);
+                createTrendsChart(currentTrendsYear, currentHospital);
+                createQualityChart(currentTrendsYear, qualityFilter, currentHospital);
+                createPhysiciansChart(currentTrendsYear, selectedSpecialty, currentHospital);
             }, 500);
         }
         

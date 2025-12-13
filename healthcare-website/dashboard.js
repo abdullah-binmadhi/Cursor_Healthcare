@@ -1059,19 +1059,28 @@ function updateKPIsForHospital(selectedYear, hospitalFilter) {
 
 /**
  * Update department chart based on selected metric
+ * NOTE: This function is called from index.html select onchange event
+ * It should update the chart with current hospital and year filters
  */
 function updateDepartmentChart() {
     console.log('Updating department chart...');
-    createDepartmentChart(currentTrendsYear);
+    createDepartmentChart(currentTrendsYear, currentHospital);
 }
 
 /**
  * Update physicians chart based on specialty selection
+ * NOTE: This function may be redundant - index.html has its own version
+ * Keeping for backwards compatibility, but index.html version should be used
  */
 function updatePhysiciansChart() {
     const selectedSpecialty = document.getElementById('physicianSpecialty')?.value || 'all';
     console.log(`Updating physicians chart for specialty: ${selectedSpecialty}`);
-    createTopPhysiciansChart(currentTrendsYear, selectedSpecialty);
+    // Call createPhysiciansChart instead of createTopPhysiciansChart to match index.html
+    if (typeof createPhysiciansChart === 'function') {
+        createPhysiciansChart(currentTrendsYear, selectedSpecialty, currentHospital);
+    } else if (typeof createTopPhysiciansChart === 'function') {
+        createTopPhysiciansChart(currentTrendsYear, selectedSpecialty);
+    }
 }
 function calculateAverage(data, field) {
     if (!data.length) return 0;
