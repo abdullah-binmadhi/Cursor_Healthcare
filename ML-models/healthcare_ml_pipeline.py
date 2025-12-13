@@ -1,6 +1,7 @@
 """
 Healthcare Predictive Analytics - Random Forest vs XGBoost
 Predicts patient readmission risk based on demographics and clinical data
+WITH CLASS BALANCING: SMOTE + Class Weighting
 """
 
 import pandas as pd
@@ -15,6 +16,7 @@ from sklearn.metrics import (
     accuracy_score, precision_score, recall_score, f1_score,
     confusion_matrix, classification_report, roc_curve, auc, roc_auc_score
 )
+from imblearn.over_sampling import SMOTE
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -35,6 +37,8 @@ class HealthcarePredictiveModel:
         self.X_test = None
         self.y_train = None
         self.y_test = None
+        self.X_train_balanced = None
+        self.y_train_balanced = None
         self.rf_model = None
         self.xgb_model = None
         self.label_encoders = {}
@@ -105,7 +109,7 @@ class HealthcarePredictiveModel:
     def prepare_features(self):
         """Prepare features for modeling"""
         print("\n" + "=" * 70)
-        print("STEP 4: PREPARING FEATURES")
+        print("STEP 4: PREPARING FEATURES & APPLYING SMOTE")
         print("=" * 70)
         
         # Select features
@@ -125,69 +129,90 @@ class HealthcarePredictiveModel:
         print(f"\n✅ Features prepared:")
         print(f"   Total features: {len(feature_cols)}")
         print(f"   Feature names: {feature_cols}")
-        print(f"\n📊 Data Split:")
+        print(f"\n📊 Data Split (BEFORE SMOTE):")
         print(f"   Training set: {len(self.X_train)} samples ({len(self.X_train)/len(X):.1%})")
         print(f"   Test set: {len(self.X_test)} samples ({len(self.X_test)/len(X):.1%})")
         print(f"\n   Training - High Risk: {self.y_train.sum()} ({self.y_train.mean():.2%})")
+        print(f"   Training - Low Risk: {len(self.y_train) - self.y_train.sum()} ({1 - self.y_train.mean():.2%})")
         print(f"   Test - High Risk: {self.y_test.sum()} ({self.y_test.mean():.2%})")
         
-        return self.X_train, self.X_test, self.y_train, self.y_test
+        # Apply SMOTE to balance training data
+        print(f"\n🔧 Applying SMOTE to balance training data...")
+        smote = SMOTE(random_state=42, k_neighbors=5)
+        self.X_train_balanced, self.y_train_balanced = smote.fit_resample(self.X_train, self.y_train)
+        
+        print(f"\n✅ SMOTE Applied Successfully!")
+        print(f"\n📊 Data Split (AFTER SMOTE):")
+        print(f"   Training set: {len(self.X_train_balanced)} samples")
+        print(f"   Training - High Risk: {self.y_train_balanced.sum()} ({self.y_train_balanced.mean():.2%})")
+        print(f"   Training - Low Risk: {len(self.y_train_balanced) - self.y_train_balanced.sum()} ({1 - self.y_train_balanced.mean():.2%})")
+        print(f"   ⚖️ Classes are now PERFECTLY BALANCED!")
+        
+        return self.X_train_balanced, self.X_test, self.y_train_balanced, self.y_test
     
     def train_random_forest(self):
-        """Train Random Forest model"""
+        """Train Random Forest model with class weighting"""
         print("\n" + "=" * 70)
         print("STEP 5: TRAINING RANDOM FOREST MODEL")
         print("=" * 70)
         
+        # Use class_weight='balanced' for extra emphasis on minority class
         self.rf_model = RandomForestClassifier(
-            n_estimators=100,
-            max_depth=10,
-            min_samples_split=10,
-            min_samples_leaf=4,
+            n_estimators=200,
+            max_depth=12,
+            min_samples_split=5,
+            min_samples_leaf=2,
+            class_weight='balanced',
             random_state=42,
             n_jobs=-1
         )
         
-        print("\n🌲 Training Random Forest...")
-        self.rf_model.fit(self.X_train, self.y_train)
+        print("\n🌲 Training Random Forest with balanced class weights...")
+        print(f"   Using SMOTE-balanced data: {len(self.X_train_balanced)} samples")
+        self.rf_model.fit(self.X_train_balanced, self.y_train_balanced)
         
-        # Cross-validation
-        cv_scores = cross_val_score(self.rf_model, self.X_train, self.y_train, cv=5)
-        print(f"✅ Training Complete!")
-        print(f"   Cross-validation scores: {cv_scores}")
-        print(f"   Mean CV Score: {cv_scores.mean():.4f} (+/- {cv_scores.std() * 2:.4f})")
+        # Cross-validation on balanced data
+        cv_scores = cross_val_score(self.rf_model, self.X_train_balanced, self.y_train_balanced, cv=5, scoring='f1')
+        print(f"\n✅ Training Complete!")
+        print(f"   Cross-validation F1 scores: {cv_scores}")
+        print(f"   Mean CV F1 Score: {cv_scores.mean():.4f} (+/- {cv_scores.std() * 2:.4f})")
         
         return self.rf_model
     
     def train_xgboost(self):
-        """Train XGBoost model"""
+        """Train XGBoost model with scale_pos_weight"""
         print("\n" + "=" * 70)
         print("STEP 6: TRAINING XGBOOST MODEL")
         print("=" * 70)
         
+        # Calculate scale_pos_weight (should be 1.0 after SMOTE, but we calculate it anyway)
+        scale_pos_weight = (self.y_train_balanced == 0).sum() / (self.y_train_balanced == 1).sum()
+        
         self.xgb_model = XGBClassifier(
-            n_estimators=100,
-            max_depth=6,
-            learning_rate=0.1,
+            n_estimators=200,
+            max_depth=8,
+            learning_rate=0.05,
             subsample=0.8,
             colsample_bytree=0.8,
+            scale_pos_weight=scale_pos_weight,
             random_state=42,
             eval_metric='logloss'
         )
         
-        print("\n🚀 Training XGBoost...")
-        self.xgb_model.fit(self.X_train, self.y_train)
+        print(f"\n🚀 Training XGBoost with scale_pos_weight={scale_pos_weight:.2f}...")
+        print(f"   Using SMOTE-balanced data: {len(self.X_train_balanced)} samples")
+        self.xgb_model.fit(self.X_train_balanced, self.y_train_balanced)
         
-        # Cross-validation
-        cv_scores = cross_val_score(self.xgb_model, self.X_train, self.y_train, cv=5)
-        print(f"✅ Training Complete!")
-        print(f"   Cross-validation scores: {cv_scores}")
-        print(f"   Mean CV Score: {cv_scores.mean():.4f} (+/- {cv_scores.std() * 2:.4f})")
+        # Cross-validation on balanced data
+        cv_scores = cross_val_score(self.xgb_model, self.X_train_balanced, self.y_train_balanced, cv=5, scoring='f1')
+        print(f"\n✅ Training Complete!")
+        print(f"   Cross-validation F1 scores: {cv_scores}")
+        print(f"   Mean CV F1 Score: {cv_scores.mean():.4f} (+/- {cv_scores.std() * 2:.4f})")
         
         return self.xgb_model
     
     def evaluate_model(self, model, model_name):
-        """Evaluate model performance"""
+        """Evaluate model performance on test set"""
         print(f"\n{'=' * 70}")
         print(f"EVALUATING {model_name.upper()}")
         print("=" * 70)
@@ -196,22 +221,34 @@ class HealthcarePredictiveModel:
         y_pred = model.predict(self.X_test)
         y_pred_proba = model.predict_proba(self.X_test)[:, 1]
         
-        # Metrics
+        # Metrics with zero_division parameter to handle edge cases
         accuracy = accuracy_score(self.y_test, y_pred)
-        precision = precision_score(self.y_test, y_pred)
-        recall = recall_score(self.y_test, y_pred)
-        f1 = f1_score(self.y_test, y_pred)
+        precision = precision_score(self.y_test, y_pred, zero_division=0)
+        recall = recall_score(self.y_test, y_pred, zero_division=0)
+        f1 = f1_score(self.y_test, y_pred, zero_division=0)
         roc_auc = roc_auc_score(self.y_test, y_pred_proba)
         
+        # Calculate additional metrics
+        cm = confusion_matrix(self.y_test, y_pred)
+        tn, fp, fn, tp = cm.ravel()
+        specificity = tn / (tn + fp) if (tn + fp) > 0 else 0
+        
         print(f"\n📊 {model_name} Performance Metrics:")
-        print(f"   Accuracy:  {accuracy:.4f} ({accuracy*100:.2f}%)")
-        print(f"   Precision: {precision:.4f} ({precision*100:.2f}%)")
-        print(f"   Recall:    {recall:.4f} ({recall*100:.2f}%)")
-        print(f"   F1-Score:  {f1:.4f}")
-        print(f"   ROC-AUC:   {roc_auc:.4f}")
+        print(f"   Accuracy:    {accuracy:.4f} ({accuracy*100:.2f}%)")
+        print(f"   Precision:   {precision:.4f} ({precision*100:.2f}%)")
+        print(f"   Recall:      {recall:.4f} ({recall*100:.2f}%)")
+        print(f"   Specificity: {specificity:.4f} ({specificity*100:.2f}%)")
+        print(f"   F1-Score:    {f1:.4f} ({f1*100:.2f}%)")
+        print(f"   ROC-AUC:     {roc_auc:.4f}")
+        
+        print(f"\n📋 Confusion Matrix:")
+        print(f"   True Negatives:  {tn}")
+        print(f"   False Positives: {fp}")
+        print(f"   False Negatives: {fn}")
+        print(f"   True Positives:  {tp}")
         
         print(f"\n📋 Classification Report:")
-        print(classification_report(self.y_test, y_pred, target_names=['Low Risk', 'High Risk']))
+        print(classification_report(self.y_test, y_pred, target_names=['Low Risk', 'High Risk'], zero_division=0))
         
         return {
             'accuracy': accuracy,
@@ -219,8 +256,10 @@ class HealthcarePredictiveModel:
             'recall': recall,
             'f1': f1,
             'roc_auc': roc_auc,
+            'specificity': specificity,
             'y_pred': y_pred,
-            'y_pred_proba': y_pred_proba
+            'y_pred_proba': y_pred_proba,
+            'confusion_matrix': cm
         }
     
     def get_feature_importance(self, model, model_name):
@@ -249,6 +288,7 @@ class HealthcarePredictiveModel:
         print("=" * 70)
         print("Models: Random Forest vs XGBoost")
         print("Task: Predict High Readmission Risk")
+        print("Balancing: SMOTE + Class Weighting")
         print("=" * 70)
         
         # Load and prepare data
@@ -289,4 +329,5 @@ if __name__ == "__main__":
     print("\n" + "=" * 70)
     print("✅ PIPELINE EXECUTION COMPLETED SUCCESSFULLY!")
     print("=" * 70)
-    print("\nNext: Run visualization script to generate graphs")
+    print("\n📊 Models trained with SMOTE + Class Weighting")
+    print("Next: Run visualization script to generate improved graphs")
