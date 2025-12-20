@@ -1,30 +1,27 @@
-# 🏥 Cursor Healthcare Analytics Platform
+# Cursor Healthcare Analytics Platform
 
-> **Professional healthcare analytics and data visualization platform with ML-powered readmission prediction, cost estimation, physician finder, and comprehensive analytics dashboards.**
+> Professional healthcare analytics and data visualization platform with ML-powered readmission prediction, cost estimation, physician finder, and comprehensive analytics dashboards.
 
-[![Live Demo](https://img.shields.io/badge/Live-Demo-success?style=for-the-badge)](https://abdullah-binmadhi.github.io/Cursor_Healthcare/healthcare-website/)
-[![Vercel](https://img.shields.io/badge/Vercel-Deployed-black?style=for-the-badge&logo=vercel)](https://vercel.com)
+## Live Platform
 
-## 🚀 Live Platform
-
-### **[→ Launch Healthcare Analytics Dashboard](https://abdullah-binmadhi.github.io/Cursor_Healthcare/healthcare-website/)**
+**[Launch Healthcare Analytics Dashboard](https://abdullah-binmadhi.github.io/Cursor_Healthcare/healthcare-website/)**
 
 ---
 
-## ✨ Key Features
+## Key Features
 
 | Feature | Description |
 |---------|-------------|
-| 📊 **Analytics Dashboard** | Interactive charts with hospital selection, multi-year data (2022-2024) |
-| 🤖 **ML Readmission Prediction** | Random Forest & XGBoost models with SMOTE balancing |
-| 💰 **Smart Cost Estimator** | Real-time healthcare cost calculations by procedure & insurance |
-| 👨‍⚕️ **Doctor Finder** | Specialty-based physician search with ratings & filtering |
-| 📈 **14 Data Visualizations** | Comprehensive graphs for model comparison, demographics, trends |
-| 📄 **PDF Reports** | Auto-generated comprehensive analysis reports |
+| **Analytics Dashboard** | Interactive charts with hospital selection, multi-year data (2022-2024) |
+| **ML Readmission Prediction** | Random Forest & XGBoost models with SMOTE balancing |
+| **Smart Cost Estimator** | Real-time healthcare cost calculations by procedure & insurance |
+| **Doctor Finder** | Specialty-based physician search with ratings & filtering |
+| **14 Data Visualizations** | Comprehensive graphs for model comparison, demographics, trends |
+| **PDF Reports** | Auto-generated comprehensive analysis reports |
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 Cursor_Healthcare/
@@ -59,7 +56,7 @@ Cursor_Healthcare/
 
 ---
 
-## 🧠 Machine Learning Models
+## Machine Learning Models
 
 ### Readmission Risk Prediction
 
@@ -76,55 +73,7 @@ Cursor_Healthcare/
 
 ---
 
-## 📊 Visualizations
-
-14 comprehensive graphs generated:
-
-1. Model Comparison Metrics
-2. Confusion Matrices
-3. ROC Curves
-4. Feature Importance
-5. Precision-Recall Analysis
-6. Accuracy & F1-Score
-7. Model Summary Table
-8. **Demographics Distribution**
-9. **Readmission Rate Analysis**
-10. **Physician Performance Trends**
-11. **Department Comparison**
-12. **Financial Dashboard**
-13. **Correlation Heatmap**
-14. **Cost Analysis**
-
----
-
-## 🛠️ Quick Start
-
-### Web Application
-
-```bash
-cd healthcare-website-v2
-npm install
-npm run dev
-# Visit: http://localhost:5173
-```
-
-### Generate ML Visualizations
-
-```bash
-cd ML-models
-python generate_all_visualizations.py
-```
-
-### Generate PDF Reports
-
-```bash
-cd ML-models
-python generate_comprehensive_reports.py
-```
-
----
-
-## 🔧 Technology Stack
+## Technology Stack
 
 | Layer | Technologies |
 |-------|-------------|
@@ -137,7 +86,7 @@ python generate_comprehensive_reports.py
 
 ---
 
-## 📦 Datasets
+## Datasets
 
 | Dataset | Records | Description |
 |---------|---------|-------------|
@@ -146,19 +95,3 @@ python generate_comprehensive_reports.py
 | department_metrics.csv | 612 | Department operations |
 | financial_performance.csv | 36 | Hospital financials (2022-2024) |
 | physician_registry.csv | 110 | Physician directory |
-
----
-
-## 🔒 Data Privacy
-
-This platform uses **synthetic healthcare data** for demonstration purposes. All patient information is artificially generated and complies with privacy standards.
-
----
-
-## 📜 License
-
-MIT License - see LICENSE file for details.
-
----
-
-**Built with ❤️ for modern healthcare analytics**
