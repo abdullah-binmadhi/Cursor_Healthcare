@@ -84,6 +84,7 @@ export default function Analytics() {
     const [selectedYear, setSelectedYear] = useState(2024);
     const [selectedHospital, setSelectedHospital] = useState('all');
     const [activeTab, setActiveTab] = useState('overview'); // overview, patients, billing
+    const [conditionFilter, setConditionFilter] = useState('all'); // all, highest, lowest
 
     const yearData = healthcareDataByYear[selectedYear];
 
@@ -102,14 +103,28 @@ export default function Analytics() {
         .sort((a, b) => b.rating - a.rating)
         .slice(0, 6);
 
-    // ============= CHARTS DATA =============
+    // Patients by Medical Condition with filter
+    const filteredConditions = useMemo(() => {
+        const entries = Object.entries(patientsByCondition);
+        const sorted = entries.sort((a, b) => b[1] - a[1]);
 
-    // Patients by Medical Condition
+        if (conditionFilter === 'highest') {
+            return sorted.slice(0, 3); // Top 3
+        } else if (conditionFilter === 'lowest') {
+            return sorted.slice(-3); // Bottom 3
+        }
+        return sorted; // All
+    }, [conditionFilter]);
+
     const conditionChartData = {
-        labels: Object.keys(patientsByCondition),
+        labels: filteredConditions.map(([key]) => key),
         datasets: [{
-            data: Object.values(patientsByCondition),
-            backgroundColor: conditionColors,
+            data: filteredConditions.map(([, val]) => val),
+            backgroundColor: conditionFilter === 'highest'
+                ? ['#115e59', '#14b8a6', '#0d9488']
+                : conditionFilter === 'lowest'
+                    ? ['#5eead4', '#99f6e4', '#ccfbf1']
+                    : conditionColors,
             borderWidth: 0,
         }]
     };
@@ -483,17 +498,41 @@ export default function Analytics() {
                             {/* Patients by Condition - Larger Card */}
                             <Card className="border-stone-200 md:col-span-2">
                                 <CardHeader className="pb-2">
-                                    <CardTitle className="text-base font-display">Patients by Medical Condition</CardTitle>
-                                    <p className="text-sm text-stone-500">Distribution across 55,500 records</p>
+                                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                                        <div>
+                                            <CardTitle className="text-base font-display">Patients by Medical Condition</CardTitle>
+                                            <p className="text-sm text-stone-500">
+                                                {conditionFilter === 'all'
+                                                    ? 'Distribution across 55,500 records'
+                                                    : conditionFilter === 'highest'
+                                                        ? 'Top 3 conditions by patient count'
+                                                        : 'Bottom 3 conditions by patient count'}
+                                            </p>
+                                        </div>
+                                        <Select value={conditionFilter} onValueChange={setConditionFilter}>
+                                            <SelectTrigger className="w-[140px] h-8 text-sm">
+                                                <SelectValue placeholder="Filter" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="all">All Conditions</SelectItem>
+                                                <SelectItem value="highest">Highest</SelectItem>
+                                                <SelectItem value="lowest">Lowest</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
                                 </CardHeader>
                                 <CardContent>
                                     <div className="h-80">
                                         <Bar
                                             data={{
-                                                labels: Object.keys(patientsByCondition),
+                                                labels: filteredConditions.map(([key]) => key),
                                                 datasets: [{
-                                                    data: Object.values(patientsByCondition),
-                                                    backgroundColor: conditionColors,
+                                                    data: filteredConditions.map(([, val]) => val),
+                                                    backgroundColor: conditionFilter === 'highest'
+                                                        ? ['#115e59', '#14b8a6', '#0d9488']
+                                                        : conditionFilter === 'lowest'
+                                                            ? ['#5eead4', '#99f6e4', '#ccfbf1']
+                                                            : conditionColors,
                                                     borderRadius: 4,
                                                 }]
                                             }}
