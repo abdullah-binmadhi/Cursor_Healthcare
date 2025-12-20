@@ -140,8 +140,8 @@ export default function DoctorFinder() {
                             <div className="space-y-2">
                                 <Label>Specialty</Label>
                                 <Select value={filters.specialty || 'all'} onValueChange={(v) => updateFilter('specialty', v)}>
-                                    <SelectTrigger>
-                                        <SelectValue />
+                                    <SelectTrigger className="w-full truncate">
+                                        <SelectValue className="truncate" />
                                     </SelectTrigger>
                                     <SelectContent>
                                         {specialties.map(spec => (
@@ -156,8 +156,8 @@ export default function DoctorFinder() {
                             <div className="space-y-2">
                                 <Label>Hospital</Label>
                                 <Select value={filters.hospital || 'all'} onValueChange={(v) => updateFilter('hospital', v)}>
-                                    <SelectTrigger>
-                                        <SelectValue />
+                                    <SelectTrigger className="w-full truncate">
+                                        <SelectValue className="truncate" />
                                     </SelectTrigger>
                                     <SelectContent>
                                         {hospitals.map(hosp => (
@@ -172,7 +172,7 @@ export default function DoctorFinder() {
                             <div className="space-y-2">
                                 <Label>Minimum Rating</Label>
                                 <Select value={filters.minRating || 'all'} onValueChange={(v) => updateFilter('minRating', v)}>
-                                    <SelectTrigger>
+                                    <SelectTrigger className="w-full">
                                         <SelectValue />
                                     </SelectTrigger>
                                     <SelectContent>
