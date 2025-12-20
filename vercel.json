@@ -2,6 +2,12 @@
   "buildCommand": "cd healthcare-website-v2 && npm install && npm run build",
   "outputDirectory": "healthcare-website-v2/dist",
   "framework": "vite",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
