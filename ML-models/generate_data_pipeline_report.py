@@ -13,6 +13,7 @@ from reportlab.platypus import (
 )
 from reportlab.lib.enums import TA_CENTER, TA_JUSTIFY, TA_LEFT
 from reportlab.lib import colors
+from reportlab.platypus import Paragraph as P
 import os
 from datetime import datetime
 
@@ -62,16 +63,51 @@ class DataPipelineReportGenerator:
         
         return styles
 
+    def _create_table_paragraph_style(self):
+        """Create a style for table cell text to enable wrapping"""
+        return ParagraphStyle('TableCell', parent=self.styles['Normal'],
+            fontSize=8, leading=10, alignment=TA_LEFT)
+    
+    def _wrap_table_data(self, data):
+        """Convert all cell text to Paragraph objects for proper text wrapping"""
+        style = self._create_table_paragraph_style()
+        header_style = ParagraphStyle('TableHeader', parent=style,
+            fontName='Helvetica-Bold', textColor=white)
+        wrapped = []
+        for i, row in enumerate(data):
+            wrapped_row = []
+            for cell in row:
+                if i == 0:  # Header row
+                    wrapped_row.append(Paragraph(str(cell), header_style))
+                else:
+                    wrapped_row.append(Paragraph(str(cell), style))
+            wrapped_row.append(wrapped_row)
+        return wrapped
+    
     def _create_table(self, data, col_widths=None, header_color=DARK_BLUE):
-        table = Table(data, colWidths=col_widths)
+        # Convert data to use Paragraph objects for text wrapping
+        style = self._create_table_paragraph_style()
+        header_style = ParagraphStyle('TableHeader', parent=style,
+            fontName='Helvetica-Bold', textColor=white, fontSize=8)
+        
+        wrapped_data = []
+        for i, row in enumerate(data):
+            wrapped_row = []
+            for cell in row:
+                if i == 0:  # Header row
+                    wrapped_row.append(Paragraph(str(cell), header_style))
+                else:
+                    wrapped_row.append(Paragraph(str(cell), style))
+            wrapped_data.append(wrapped_row)
+        
+        table = Table(wrapped_data, colWidths=col_widths)
         table.setStyle(TableStyle([
             ('BACKGROUND', (0, 0), (-1, 0), header_color),
-            ('TEXTCOLOR', (0, 0), (-1, 0), white),
             ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
-            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-            ('FONTSIZE', (0, 0), (-1, -1), 9),
-            ('BOTTOMPADDING', (0, 0), (-1, -1), 8),
+            ('BOTTOMPADDING', (0, 0), (-1, -1), 6),
             ('TOPPADDING', (0, 0), (-1, -1), 6),
+            ('LEFTPADDING', (0, 0), (-1, -1), 4),
+            ('RIGHTPADDING', (0, 0), (-1, -1), 4),
             ('GRID', (0, 0), (-1, -1), 0.5, colors.gray),
             ('ROWBACKGROUNDS', (0, 1), (-1, -1), [HexColor('#f8f9fa'), HexColor('#ffffff')]),
             ('VALIGN', (0, 0), (-1, -1), 'TOP'),
@@ -139,7 +175,7 @@ class DataPipelineReportGenerator:
             ['5. Supabase Deployment', 'Cloud migration, RLS setup', 'Production database']
         ]
         story.append(Spacer(1, 0.2*inch))
-        story.append(self._create_table(pipeline_overview, [1.2*inch, 2.5*inch, 2.8*inch]))
+        story.append(self._create_table(pipeline_overview, [1.1*inch, 2.2*inch, 3.2*inch]))
         story.append(PageBreak())
         
         # ==================== SECTION 2: SOURCE DATA ====================
@@ -183,7 +219,7 @@ class DataPipelineReportGenerator:
             ['Medication', 'String', 'Prescribed medication', 'Paracetamol, Ibuprofen, Aspirin'],
             ['Test Results', 'String', 'Laboratory findings', 'Normal, Abnormal, Inconclusive']
         ]
-        story.append(self._create_table(columns_data, [1.2*inch, 0.8*inch, 2*inch, 2*inch]))
+        story.append(self._create_table(columns_data, [1.1*inch, 0.7*inch, 2.2*inch, 2.5*inch]))
         story.append(PageBreak())
         
         # ==================== SECTION 3: DATA CLEANING ====================
@@ -207,7 +243,7 @@ class DataPipelineReportGenerator:
             ['Numeric Precision', 'Excessive decimal places in billing amounts', '100% of records', 'Round to 2 decimals'],
             ['Missing Values', 'Null values in optional fields', '<0.5% of records', 'Default value imputation']
         ]
-        story.append(self._create_table(issues_data, [1.2*inch, 2.2*inch, 1*inch, 2*inch]))
+        story.append(self._create_table(issues_data, [1.2*inch, 2.4*inch, 1.0*inch, 1.9*inch]))
         story.append(Spacer(1, 0.2*inch))
         
         story.append(Paragraph("3.2 Cleaning Operations Performed", self.styles['SubSection']))
@@ -255,7 +291,7 @@ class DataPipelineReportGenerator:
             ['Seasonal Admission', 'Quarter extracted from admission date', 'Seasonal pattern analysis'],
             ['Weekend Admission', 'Boolean: Saturday/Sunday admission', 'Staffing analysis']
         ]
-        story.append(self._create_table(features_data, [1.5*inch, 2.5*inch, 2.5*inch]))
+        story.append(self._create_table(features_data, [1.3*inch, 2.7*inch, 2.5*inch]))
         story.append(Spacer(1, 0.2*inch))
         
         story.append(Paragraph("4.2 Data Aggregation Strategy", self.styles['SubSection']))
@@ -316,7 +352,7 @@ class DataPipelineReportGenerator:
             ['avg_cost', 'Float', 'Mean treatment cost in dollars'],
             ['readmission_rate', 'Float', 'Proportion readmitted within 30 days']
         ]
-        story.append(self._create_table(demo_schema, [1.5*inch, 0.8*inch, 4*inch]))
+        story.append(self._create_table(demo_schema, [1.4*inch, 0.7*inch, 4.4*inch]))
         story.append(Spacer(1, 0.2*inch))
         
         story.append(Paragraph("5.2 Physician Registry Dataset", self.styles['SubSection']))
@@ -369,7 +405,7 @@ class DataPipelineReportGenerator:
             ['occupancy_rate', 'Float', 'Bed utilization percentage'],
             ['nurse_patient_ratio', 'Float', 'Nursing staff ratio']
         ]
-        story.append(self._create_table(dept_schema, [1.5*inch, 0.8*inch, 4*inch]))
+        story.append(self._create_table(dept_schema, [1.4*inch, 0.7*inch, 4.4*inch]))
         story.append(Spacer(1, 0.2*inch))
         
         story.append(Paragraph("5.5 Financial Performance Dataset", self.styles['SubSection']))
@@ -418,7 +454,7 @@ class DataPipelineReportGenerator:
             ['department_metrics', 'Composite (department_id, month, year)', 'None', 'idx_occupancy, idx_year_month'],
             ['financial_performance', 'Composite (month, year)', 'None', 'idx_operating_margin']
         ]
-        story.append(self._create_table(ddl_data, [1.5*inch, 2*inch, 1.8*inch, 1.5*inch]))
+        story.append(self._create_table(ddl_data, [1.3*inch, 2.2*inch, 1.7*inch, 1.3*inch]))
         story.append(Spacer(1, 0.2*inch))
         
         story.append(Paragraph("6.3 Indexing Strategy", self.styles['SubSection']))
@@ -488,7 +524,7 @@ class DataPipelineReportGenerator:
             ['department_metrics', 'SELECT', 'true (public)', 'Allow anonymous read'],
             ['financial_performance', 'SELECT', 'auth.uid() IS NOT NULL', 'Authenticated users only']
         ]
-        story.append(self._create_table(rls_data, [1.5*inch, 1.5*inch, 2*inch, 1.5*inch]))
+        story.append(self._create_table(rls_data, [1.3*inch, 1.5*inch, 2.0*inch, 1.7*inch]))
         story.append(PageBreak())
         
         story.append(Paragraph("7.4 API Integration", self.styles['SubSection']))
@@ -528,7 +564,7 @@ class DataPipelineReportGenerator:
             ['Aggregation Accuracy', 'Sum of patient counts equals total patients', 'PASSED'],
             ['Cross-table Consistency', 'Department totals align with physician sums', 'PASSED']
         ]
-        story.append(self._create_table(validation_data, [1.5*inch, 3.5*inch, 1.2*inch]))
+        story.append(self._create_table(validation_data, [1.3*inch, 3.7*inch, 1.5*inch]))
         story.append(PageBreak())
         
         # ==================== SECTION 9: CONCLUSION ====================
