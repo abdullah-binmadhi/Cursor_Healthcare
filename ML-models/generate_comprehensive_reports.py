@@ -105,73 +105,73 @@ class ComprehensivePDFGenerator:
         story.append(self._create_table(overview_data, [2.2*inch, 0.8*inch, 0.8*inch, 2.4*inch]))
         story.append(PageBreak())
         
-        # Data Distribution
+        # Data Distribution (3-panel wide chart: 18x6)
         story.append(Paragraph("2. Patient Demographics Analysis", self.styles['SectionTitle']))
         story.append(Paragraph("""
             The patient demographics dataset contains 1,001 aggregated records representing patient 
             groups by age, gender, and insurance type. Key features include patient count, average 
             length of stay, average treatment cost, and readmission rate.
         """, self.styles['Body']))
-        self._add_graph(story, '8_data_distribution.png', 'Figure 1: Patient Demographics Distribution')
+        self._add_graph(story, '8_data_distribution.png', 'Figure 1: Patient Demographics Distribution', 7, 2.4)
         story.append(PageBreak())
         
-        # Readmission Analysis
+        # Readmission Analysis (2-panel: 16x7)
         story.append(Paragraph("3. Readmission Rate Analysis", self.styles['SectionTitle']))
         story.append(Paragraph("""
             Readmission rates were analyzed across demographic segments to identify high-risk populations. 
             A threshold of 20% was established as the boundary for high-risk classification, enabling 
             targeted intervention strategies.
         """, self.styles['Body']))
-        self._add_graph(story, '9_readmission_analysis.png', 'Figure 2: Readmission Rates by Demographics')
+        self._add_graph(story, '9_readmission_analysis.png', 'Figure 2: Readmission Rates by Demographics', 7, 3)
         story.append(PageBreak())
         
-        # Physician Performance
+        # Physician Performance (2-panel: 16x7)
         story.append(Paragraph("4. Physician Performance Trends", self.styles['SectionTitle']))
         story.append(Paragraph("""
             Analysis of 110 physicians across 36 months reveals performance patterns including 
             patient satisfaction scores and volume trends. Top-performing physicians demonstrate 
             consistent satisfaction scores above 4.0 on a 5-point scale.
         """, self.styles['Body']))
-        self._add_graph(story, '10_physician_performance_trends.png', 'Figure 3: Top 5 Physicians Performance Trends')
+        self._add_graph(story, '10_physician_performance_trends.png', 'Figure 3: Top 5 Physicians Performance Trends', 7, 3)
         story.append(PageBreak())
         
-        # Department Comparison
+        # Department Comparison (3-panel: 18x7)
         story.append(Paragraph("5. Department Metrics Comparison", self.styles['SectionTitle']))
         story.append(Paragraph("""
             Department-level analysis across 17 clinical departments shows variations in admissions, 
             costs, and occupancy rates. Emergency Medicine leads in total admissions while specialty 
             departments show higher per-patient costs.
         """, self.styles['Body']))
-        self._add_graph(story, '11_department_comparison.png', 'Figure 4: Department Performance Comparison')
+        self._add_graph(story, '11_department_comparison.png', 'Figure 4: Department Performance Comparison', 7, 2.8)
         story.append(PageBreak())
         
-        # Financial Trends
+        # Financial Trends (2x2 grid: 16x12)
         story.append(Paragraph("6. Financial Performance Dashboard", self.styles['SectionTitle']))
         story.append(Paragraph("""
             Financial analysis reveals consistent positive operating margins averaging 18.8% across the 
             analysis period, with total revenue of approximately $709 million over three years and 
             net income of $134 million.
         """, self.styles['Body']))
-        self._add_graph(story, '12_financial_trends.png', 'Figure 5: Financial Performance 2022-2024', 6, 4.5)
+        self._add_graph(story, '12_financial_trends.png', 'Figure 5: Financial Performance 2022-2024', 7, 5.2)
         story.append(PageBreak())
         
-        # Cost Analysis
+        # Cost Analysis (2-panel: 16x7)
         story.append(Paragraph("7. Healthcare Cost Analysis", self.styles['SectionTitle']))
         story.append(Paragraph("""
             Cost analysis by insurance type and age group reveals significant variations. Understanding 
             these patterns supports resource allocation and pricing strategies.
         """, self.styles['Body']))
-        self._add_graph(story, '14_cost_analysis.png', 'Figure 6: Cost Analysis by Demographics')
+        self._add_graph(story, '14_cost_analysis.png', 'Figure 6: Cost Analysis by Demographics', 7, 3)
         story.append(PageBreak())
         
-        # Feature Correlations
+        # Feature Correlations (square: 10x8)
         story.append(Paragraph("8. Feature Correlation Analysis", self.styles['SectionTitle']))
         story.append(Paragraph("""
             Correlation analysis of numerical features reveals relationships between patient count, 
             length of stay, cost, and readmission rate. These correlations inform feature selection 
             for machine learning models.
         """, self.styles['Body']))
-        self._add_graph(story, '13_correlation_heatmap.png', 'Figure 7: Feature Correlation Matrix', 4.5, 3.5)
+        self._add_graph(story, '13_correlation_heatmap.png', 'Figure 7: Feature Correlation Matrix', 5, 4)
         
         # Conclusion
         story.append(Paragraph("9. Conclusion", self.styles['SectionTitle']))
